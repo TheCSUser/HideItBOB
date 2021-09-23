@@ -7,8 +7,8 @@
     <ProjectGuid>{9C6AE2EF-88BA-4277-9CDA-E825F5F1D6E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HideItBobby</RootNamespace>
-    <AssemblyName>HideItBobby</AssemblyName>
+    <RootNamespace>com.github.TheCSUser.HideItBobby</RootNamespace>
+    <AssemblyName>TheCSUser.HideItBobby</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -37,6 +37,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -77,24 +78,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Cached.cs" />
-    <Compile Include="Common\Hash.cs" />
-    <Compile Include="Common\IAvailabilityInfo.cs" />
-    <Compile Include="Common\IDisposableEx.cs" />
-    <Compile Include="Common\IErrorInfo.cs" />
-    <Compile Include="Common\IToggleable.cs" />
-    <Compile Include="Common\IInitializable.cs" />
-    <Compile Include="Common\IUpdatable.cs" />
-    <Compile Include="Common\Logging\ILogger.cs" />
-    <Compile Include="Common\Logging\Log.cs" />
-    <Compile Include="Common\Logging\SyncFileLogger.cs" />
-    <Compile Include="Common\Logging\UnityDebugLogger.cs" />
-    <Compile Include="Features\CompatibilityCheckBase.cs" />
-    <Compile Include="Features\ICompatibilityCheck.cs" />
+    <Compile Include="Compatibility\Base\AssetDisabledCheck.cs" />
+    <Compile Include="Compatibility\Base\AssetEnabledCheck.cs" />
+    <Compile Include="Compatibility\Base\ModDisabledCheck.cs" />
+    <Compile Include="Compatibility\Base\ModEnabledCheck.cs" />
+    <Compile Include="Compatibility\Base\RequiredDLCCheck.cs" />
+    <Compile Include="Compatibility\TreeAnarchyModEnabledCheck.cs" />
+    <Compile Include="Compatibility\UIResolutionModEnabledCheck.cs" />
+    <Compile Include="Features\Effects\Base\HideFog.cs" />
+    <Compile Include="Compatibility\TerraformNetworkSubscribedCheck.cs" />
+    <Compile Include="Features\Problems\HideDisconnectedPowerLinesNotification.cs" />
+    <Compile Include="Features\Problems\HideTerraformNetworkFloodNotification.cs" />
+    <Compile Include="Features\UIElements\Shared\UIViewProxy.cs" />
+    <Compile Include="Scripts\Containers\FeaturesContainer.cs" />
+    <Compile Include="Scripts\Base\FeaturesScript.cs" />
+    <Compile Include="Scripts\Containers\IFeaturesContainer.cs" />
+    <Compile Include="Scripts\InGameFeatures.cs" />
+    <Compile Include="Scripts\Containers\ISettingsContainer.cs" />
+    <Compile Include="Scripts\MainMenuFeatures.cs" />
+    <Compile Include="Compatibility\Base\CompatibilityCheck.cs" />
+    <Compile Include="Compatibility\ICheck.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPosition.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPositionByName.cs" />
-    <Compile Include="Features\UIElements\Compatibility\HideThermometerCompatibility.cs" />
-    <Compile Include="Features\UIElements\Compatibility\HideDisastersButtonCompatibility.cs" />
+    <Compile Include="Compatibility\SnowFallDLCEnabledCheck.cs" />
+    <Compile Include="Compatibility\NaturalDisastersDLCEnabledCheck.cs" />
     <Compile Include="Features\Fixes\LowerInfoPanelZOrder.cs" />
     <Compile Include="Features\UIElements\HideThermometer.cs" />
     <Compile Include="Features\UIElements\ToolbarPosition.cs" />
@@ -106,20 +113,14 @@
     <Compile Include="Settings\Paths.cs" />
     <Compile Include="Settings\Providers\Provider_Version.cs" />
     <Compile Include="Settings\SettingsFiles\File_Version.cs" />
-    <Compile Include="Translation\DefaultLanguage.cs" />
-    <Compile Include="Translation\LanguageExtensions.cs" />
-    <Compile Include="Translation\Serialization\StringItem.cs" />
-    <Compile Include="Translation\Serialization\TranslationFile.cs" />
-    <Compile Include="Translation\Serialization\TranslationsReader.cs" />
-    <Compile Include="Translation\Template.cs" />
-    <Compile Include="UserInterface\TranslatedComponent.cs" />
+    <Compile Include="Translation\FallbackLanguage.cs" />
+    <Compile Include="UserInterface\Helpers.cs" />
+    <Compile Include="UserInterface\Styles.cs" />
+    <Compile Include="VersionMigrations\Migrate_1_20_to_1_21.cs" />
+    <Compile Include="VersionMigrations\Migrate_1_18_to_1_21.cs" />
     <Compile Include="VersionMigrations\Migrate_1_24_to_1_25.cs" />
     <Compile Include="VersionMigrations\Migrate_1_21_to_1_22.cs" />
-    <Compile Include="_Imports\Collections\DictionaryExtensions.cs" />
-    <Compile Include="_Imports\Collections\ReadOnlyDictionary.cs" />
-    <Compile Include="_Imports\Collections\IReadOnlyDictionary.cs" />
-    <Compile Include="EntryPoints\Extensions.cs" />
-    <Compile Include="EntryPoints\InGameEntryPoint.cs" />
+    <Compile Include="Scripts\Containers\SettingsContainer.cs" />
     <Compile Include="Features\Decorations\HideGrassDecorations.cs" />
     <Compile Include="Features\Decorations\HideFertileDecorations.cs" />
     <Compile Include="Features\Decorations\HideCliffDecorations.cs" />
@@ -132,8 +133,7 @@
     <Compile Include="Features\Effects\HidePollutedAreaEffect.cs" />
     <Compile Include="Features\Effects\HideBurnedAreaEffect.cs" />
     <Compile Include="Features\Effects\HideOreAreaEffect.cs" />
-    <Compile Include="Features\Effects\Shared\Patches\NaturalResourceManagerUpdateTextureBPatch.cs" />
-    <Compile Include="Features\Effects\Shared\Patches\NaturalResourceManagerUpdateTexturePatch.cs" />
+    <Compile Include="Features\Effects\Shared\Patches\NaturalResourceManagerProxy.cs" />
     <Compile Include="Features\Effects\Shared\TexturesUpdater.cs" />
     <Compile Include="Features\FeatureBase.cs" />
     <Compile Include="Features\FeatureFlags.cs" />
@@ -149,7 +149,6 @@
     <Compile Include="Features\GroundAndWaterColor\DisableGrassFieldGroundColor.cs" />
     <Compile Include="Features\GroundAndWaterColor\Shared\GroundColorOffset.cs" />
     <Compile Include="Features\GroundAndWaterColor\DisableGrassFertilityGroundColor.cs" />
-    <Compile Include="EntryPoints\MainMenuEntryPoint.cs" />
     <Compile Include="Features\UIElements\HideBulldozerBar.cs" />
     <Compile Include="Features\Menu\Base\HideMainMenuElement.cs" />
     <Compile Include="Features\Menu\HideMainMenuVersionNumber.cs" />
@@ -159,13 +158,12 @@
     <Compile Include="Features\Menu\HideMainMenuDLCPanel.cs" />
     <Compile Include="Features\Menu\HideMainMenuWorkshopPanel.cs" />
     <Compile Include="Features\Menu\HideMainMenuParadoxAccountPanel.cs" />
-    <Compile Include="Features\Menu\Shared\Patches\HideMainMenuItemsOnVisibilityChangedPatch.cs" />
-    <Compile Include="Features\Menu\Shared\Patches\HideMainMenuItemsCreditsEndedPatch.cs" />
+    <Compile Include="Features\Menu\Shared\MainMenuProxy.cs" />
     <Compile Include="Features\Objects\HideWildlife.cs" />
     <Compile Include="Features\Objects\HideSeagulls.cs" />
     <Compile Include="Features\Ruining\HidePropRuining.cs" />
     <Compile Include="Features\Ruining\HideTreeRuining.cs" />
-    <Compile Include="Features\Ruining\Compatibility\HideRuiningCompatibility.cs" />
+    <Compile Include="Compatibility\BOBModDisabledCheck.cs" />
     <Compile Include="Features\UIElements\Base\HideUIComponent.cs" />
     <Compile Include="Features\UIElements\Base\HideUIComponentByName.cs" />
     <Compile Include="Features\UIElements\HideCinematicCameraButton.cs" />
@@ -187,7 +185,6 @@
     <Compile Include="Features\UIElements\HideChirperButton.cs" />
     <Compile Include="Features\UIElements\HideCityName.cs" />
     <Compile Include="Features\IFeature.cs" />
-    <Compile Include="Common\Patcher.cs" />
     <Compile Include="Settings\Providers\Provider_1_21.cs" />
     <Compile Include="Settings\Providers\Provider_1_19.cs" />
     <Compile Include="Settings\Providers\Provider_1_17.cs" />
@@ -196,25 +193,21 @@
     <Compile Include="Settings\SettingsFiles\File_1_21.cs" />
     <Compile Include="Translation\Phrase.cs" />
     <Compile Include="UserInterface\Palette.cs" />
-    <Compile Include="UserInterface\SettingsUIBuilder.cs" />
-    <Compile Include="Settings\ModSettings.cs" />
-    <Compile Include="Common\Counter.cs" />
-    <Compile Include="Translation\Language.cs" />
+    <Compile Include="Mod.BuildSettingsUI.cs" />
+    <Compile Include="Settings\SettingsProvider.cs" />
     <Compile Include="Features\Effects\Shared\InfoViewUpdater.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ModProperties.cs" />
-    <Compile Include="UserInterface\UIHelperExtensions.cs" />
-    <Compile Include="_Imports\Lazy.cs" />
-    <Compile Include="_Imports\ObjectDumper.cs" />
-    <Compile Include="_Imports\StringEnum.cs" />
+    <Compile Include="VersionMigrations\Migration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mod.Dependencies.cs" />
     <None Include="packages.config" />
     <None Include="_Resources\PreviewImage.xcf" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserInterface\WhatsNew\" />
+    <None Include="_Resources\hide_it_bobby.ru.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Resources\PreviewImage.png">
@@ -255,12 +248,47 @@
   <ItemGroup>
     <None Include="_Resources\hide_it_bobby.es.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Shared\Shared.csproj">
+      <Project>{d57f3061-d07b-4a98-bbd8-dcde4995e388}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)$(ConfigurationName)"
-del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)$(ConfigurationName)\$(TargetFileName)"
-xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)$(ConfigurationName)"
-xcopy /y "CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)$(ConfigurationName)"
-xcopy /y "_Resources\PreviewImage.png" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)$(ConfigurationName)"</PostBuildEvent>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Dev' ">
+    <PostBuildEvent>
+      mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev"
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev\*.*" /Q /F
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview\*.*" /Q /F
+      del "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277\*.*" /Q /F
+      xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev"
+      xcopy /y "TheCSUser.Shared.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev"
+      xcopy /y "CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev"
+      xcopy /y "_Resources\PreviewImage.png" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev"
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Preview' ">
+    <PostBuildEvent>
+      mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview"
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev\*.*" /Q /F
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview\*.*" /Q /F
+      del "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277\*.*" /Q /F
+      xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview"
+      xcopy /y "TheCSUser.Shared.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview"
+      xcopy /y "CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview"
+      xcopy /y "_Resources\PreviewImage.png" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview"
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PostBuildEvent>
+      mkdir "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Dev\*.*" /Q /F
+      del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)Preview\*.*" /Q /F
+      del "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277\*.*" /Q /F
+      xcopy /y "$(TargetPath)" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
+      xcopy /y "TheCSUser.Shared.dll" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
+      xcopy /y "CitiesHarmony.API.dll" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
+      xcopy /y "_Resources\PreviewImage.png" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

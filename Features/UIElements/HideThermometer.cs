@@ -1,80 +1,78 @@
-﻿using HideItBobby.Common;
-using HideItBobby.Common.Logging;
-using HideItBobby.Features.UIElements.Base;
-using HideItBobby.Features.UIElements.Compatibility;
-using HideItBobby.Settings;
+﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideThermometer : ModifyUIComponentPositionByName
     {
-        public override bool IsAvailable => HideThermometerCompatibility.Instance.IsCompatible;
         public override FeatureKey Key => FeatureKey.HideThermometer;
 
-        private readonly Vector3 defaultThermomenterPosition = new Vector3(-0.2209259f, -0.9351852f, 0);
+        private readonly SnowFallDLCEnabledCheck _snowFallDLCEnabled;
+        public override bool IsAvailable => _snowFallDLCEnabled.Result;
 
-        public HideThermometer() : base("Heat'o'meter")
+        public HideThermometer(IModContext context) : base(context, "Heat'o'meter")
         {
-            TreeAnarchyPanelObject = new Cached<GameObject>(GetTreeAnarchyPanelObject);
+            _treeAnarchyPanelObject = new Cached<GameObject>(GetTreeAnarchyPanelObject);
+            _snowFallDLCEnabled = context.Resolve<SnowFallDLCEnabledCheck>();
+            _treeAnarchyModCheck = context.Resolve<TreeAnarchyModEnabledCheck>();
+        }
+        protected override bool OnTerminate()
+        {
+            _snowFallDLCEnabled.Reset();
+            return base.OnTerminate();
         }
 
-        protected override Vector3? GetDesiredComponentPosition() => new Vector3(defaultThermomenterPosition.x, ModSettings.Data.HideThermometer ? defaultThermomenterPosition.y - 0.1f : defaultThermomenterPosition.y, defaultThermomenterPosition.z);
-        protected override Vector3? GetDefaultComponentPosition() => defaultThermomenterPosition;
+        protected override Vector3? GetDesiredComponentPosition()
+        {
+            var defaultPos = DefaultComponentPosition;
+            if (!defaultPos.HasValue) return null;
+            return new Vector3(
+                x: defaultPos.Value.x,
+                y: Mod.Settings.HideThermometer ? defaultPos.Value.y - 0.1f : defaultPos.Value.y,
+                z: defaultPos.Value.z
+                );
+        }
 
         #region TreeAnarchy mod compatibility
-        private readonly Vector3 treeAnarchyPanelPositionOnEnabled = new Vector3(-0.2f, 0.1f, 0f);
-        private readonly Vector3 treeAnarchyPanelPositionOnDisabled = new Vector3(-0.2f, 0.0f, 0f);
+        private readonly TreeAnarchyModEnabledCheck _treeAnarchyModCheck;
 
-        private readonly Cached<GameObject> TreeAnarchyPanelObject;
+        private readonly Vector3 _treeAnarchyPanelPositionOnEnabled = new Vector3(-0.2f, 0.1f, 0f);
+        private readonly Vector3 _treeAnarchyPanelPositionOnDisabled = new Vector3(-0.2f, 0.0f, 0f);
 
-        public override bool IsCurrent
+        private readonly Cached<GameObject> _treeAnarchyPanelObject;
+
+        protected override bool OnUpdate()
         {
-            get
+            var result = base.OnUpdate();
+            if (_treeAnarchyModCheck.Result)
             {
-                if (!base.IsCurrent) return false;
-
-                var treeAnarchyPanel = TreeAnarchyPanelObject.Value;
-                var isTreeAnarchyPanelPositionCurrent = treeAnarchyPanel is null || treeAnarchyPanel.transform.localPosition == (ModSettings.Data.HideThermometer ? treeAnarchyPanelPositionOnEnabled : treeAnarchyPanelPositionOnDisabled);
-                return isTreeAnarchyPanelPositionCurrent;
-            }
-        }
-
-        protected override bool UpdateImpl()
-        {
-            var result = base.UpdateImpl();
-            var treeAnarchyPanel = TreeAnarchyPanelObject.Value;
-            if (!(treeAnarchyPanel is null))
-            {
-                treeAnarchyPanel.transform.localPosition = ModSettings.Data.HideThermometer ? treeAnarchyPanelPositionOnEnabled : treeAnarchyPanelPositionOnDisabled;
+                var treeAnarchyPanel = _treeAnarchyPanelObject.Value;
+                if (!(treeAnarchyPanel is null) && treeAnarchyPanel.transform.localPosition != _treeAnarchyPanelPositionOnEnabled)
+                {
+                    treeAnarchyPanel.transform.localPosition = _treeAnarchyPanelPositionOnEnabled;
+                }
             }
             return result;
         }
-        protected override bool EnableImpl()
+        protected override bool OnDisable()
         {
-            var result = base.EnableImpl();
-            var treeAnarchyPanel = TreeAnarchyPanelObject.Value;
-            if (!(treeAnarchyPanel is null))
+            if (_treeAnarchyModCheck.Result)
             {
-                treeAnarchyPanel.transform.localPosition = treeAnarchyPanelPositionOnEnabled;
+                var treeAnarchyPanel = _treeAnarchyPanelObject.Value;
+                if (!(treeAnarchyPanel is null))
+                {
+                    treeAnarchyPanel.transform.localPosition = _treeAnarchyPanelPositionOnDisabled;
+                }
+                _treeAnarchyPanelObject.Invalidate();
             }
-            return result;
-        }
-        protected override bool DisableImpl()
-        {
-            var treeAnarchyPanel = TreeAnarchyPanelObject.Value;
-            if (!(treeAnarchyPanel is null))
-            {
-                treeAnarchyPanel.transform.localPosition = treeAnarchyPanelPositionOnDisabled;
-            }
-            var result = base.DisableImpl();
-            if (result) TreeAnarchyPanelObject.Invalidate();
-            return result;
+            return base.OnDisable();
         }
 
         private GameObject GetTreeAnarchyPanelObject()
         {
-            var obj = UnityEngine.GameObject.Find("TreeAnarchyIndicatorPanel");
+            var obj = GameObject.Find("TreeAnarchyIndicatorPanel");
 #if DEV || PREVIEW
             if (obj is null)
             {

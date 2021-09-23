@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HideItBobby.Properties {
+namespace com.github.TheCSUser.HideItBobby.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace HideItBobby.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HideItBobby.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("com.github.TheCSUser.HideItBobby.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -71,7 +71,7 @@ namespace HideItBobby.Properties {
         ///  &lt;!-- features --&gt;
         ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Verfügbare Funktionen&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Nicht verfügbare Funktionen&lt;/string&gt;
-        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;In d [rest of string was truncated]&quot;;.
+        ///  &lt;string name=&quot;UnavailableFeaturesDescrip [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hide_it_bobby_de {
             get {
@@ -109,7 +109,7 @@ namespace HideItBobby.Properties {
         ///  &lt;!-- features --&gt;
         ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Características disponibles&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Características no disponibles&lt;/string&gt;
-        ///  &lt;string name=&quot;UnavailableFeaturesDe [rest of string was truncated]&quot;;.
+        ///  &lt;string name=&quot;Unavailable [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hide_it_bobby_es {
             get {
@@ -153,6 +153,25 @@ namespace HideItBobby.Properties {
         internal static string hide_it_bobby_pl {
             get {
                 return ResourceManager.GetString("hide_it_bobby_pl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;resources&gt;
+        ///  &lt;!-- language --&gt;
+        ///  &lt;string name=&quot;LanguageName&quot;&gt;Русский&lt;/string&gt;
+        ///  &lt;string name=&quot;LanguageHeader&quot;&gt;Язык&lt;/string&gt;
+        ///  &lt;string name=&quot;UseGameLanguage&quot;&gt;Язык игры&lt;/string&gt;
+        ///  &lt;string name=&quot;SelectLanguage&quot;&gt;Выбор языка&lt;/string&gt;
+        ///  &lt;!-- features --&gt;
+        ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Доступные функции&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Недоступные функции&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;Функции, отображаемые в э [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hide_it_bobby_ru {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_ru", resourceCulture);
             }
         }
         

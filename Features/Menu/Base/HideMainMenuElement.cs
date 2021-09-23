@@ -1,12 +1,12 @@
 ﻿using ColossalFramework.UI;
-using HideItBobby.Common.Logging;
-using HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Common;
 
-namespace HideItBobby.Features.Menu.Base
+namespace com.github.TheCSUser.HideItBobby.Features.Menu.Base
 {
     internal abstract class HideMainMenuElement : HideUIComponentByName
     {
-        public HideMainMenuElement(string componentName) : base(componentName) { }
+        public HideMainMenuElement(IModContext context, string componentName) : base(context, componentName) { }
 
         protected override UIComponent GetComponent()
         {

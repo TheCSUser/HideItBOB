@@ -1,25 +1,24 @@
-﻿using HideItBobby.Common.Logging;
+﻿using com.github.TheCSUser.Shared.Common;
 using System;
 using UnityEngine;
 
-namespace HideItBobby.Features.Effects.Shared
+namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
 {
-    internal static class InfoViewUpdater
+    internal sealed class InfoViewUpdater : WithContext
     {
         public static readonly Texture2D ResourceTexture = new Texture2D(512, 512, TextureFormat.RGB24, false, true) { wrapMode = TextureWrapMode.Clamp };
         public static readonly Texture2D DestructionTexture = new Texture2D(512, 512, TextureFormat.RGB24, false, true) { wrapMode = TextureWrapMode.Clamp };
 
         private static InfoManager.InfoMode _cachedInfoMode = InfoManager.InfoMode.None;
 
-        public static void Update()
+        public InfoViewUpdater(IModContext context) : base(context) { }
+
+        public void Update()
         {
             try
             {
                 if (InfoManager.exists && InfoManager.instance.CurrentMode != _cachedInfoMode)
                 {
-#if DEV
-                    Log.Info($"{nameof(InfoViewUpdater)} updating");
-#endif
                     if (InfoManager.instance.CurrentMode == InfoManager.InfoMode.None)
                     {
                         if (NaturalResourceManager.exists)

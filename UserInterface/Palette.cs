@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace HideItBobby.UserInterface
+namespace com.github.TheCSUser.HideItBobby.UserInterface
 {
     internal static class Palette
     {

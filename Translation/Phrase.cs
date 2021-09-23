@@ -1,6 +1,6 @@
-﻿using StringEnum;
+﻿using com.github.TheCSUser.Shared.Imports;
 
-namespace HideItBobby.Translation
+namespace com.github.TheCSUser.HideItBobby.Translation
 {
     ///<completionlist cref="Phrase"/>
     internal sealed class Phrase : StringEnum<Phrase>
@@ -97,5 +97,9 @@ namespace HideItBobby.Translation
         public static readonly Phrase VolumeFog = Create(nameof(VolumeFog));
         public static readonly Phrase DistanceFog = Create(nameof(DistanceFog));
         public static readonly Phrase EdgeFog = Create(nameof(EdgeFog));
+        //Problems
+        public static readonly Phrase ProblemsGroup = Create(nameof(ProblemsGroup));
+        public static readonly Phrase TerraformNetworkFloodNotification = Create(nameof(TerraformNetworkFloodNotification));
+        public static readonly Phrase HideDisconnectedPowerLinesNotification = Create(nameof(HideDisconnectedPowerLinesNotification));
     }
 }

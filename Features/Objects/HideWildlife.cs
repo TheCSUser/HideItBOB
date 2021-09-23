@@ -1,40 +1,43 @@
 ﻿using ColossalFramework;
-using HideItBobby.Common;
-using HideItBobby.Common.Logging;
-using HideItBobby.EntryPoints;
+using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Collections;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using UnityEngine;
-using static HideItBobby.Common.Patcher;
 
-namespace HideItBobby.Features.Objects
+namespace com.github.TheCSUser.HideItBobby.Features.Objects
 {
     internal sealed class HideWildlife : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideWildlife;
 
-        protected override bool InitializeImpl()
+        public HideWildlife(IModContext context) : base(context) { }
+
+        protected override bool OnInitialize()
         {
-            Patch(WildlifeSpawnPointAICountAnimalsPatch.Data);
+            Patcher.Patch(WildlifeSpawnPointAIProxy.Patch);
             return true;
         }
-        protected override bool TerminateImpl()
+        protected override bool OnTerminate()
         {
-            Unpatch(WildlifeSpawnPointAICountAnimalsPatch.Data);
+            Patcher.Unpatch(WildlifeSpawnPointAIProxy.Patch);
             return true;
         }
 
-        protected override bool EnableImpl()
+        protected override bool OnEnable()
         {
             if (!SimulationManager.exists) return false;
-            SimulationManager.instance.AddAction(OnWildlifeRefresh());
+            WildlifeSpawnPointAIProxy.HideWildlife = true;
+            SimulationManager.instance.AddAction(OnWildlifeRefresh(Context));
             return true;
         }
-        protected override bool DisableImpl() => true;
+        protected override bool OnDisable()
+        {
+            WildlifeSpawnPointAIProxy.HideWildlife = false;
+            return true;
+        }
 
-        private static IEnumerator OnWildlifeRefresh()
+        private static IEnumerator OnWildlifeRefresh(IModContext context)
         {
             try
             {
@@ -55,53 +58,32 @@ namespace HideItBobby.Features.Objects
                 else
                 {
 #if DEV
-                    Log.Warning($"{nameof(HideWildlife)}.{nameof(OnWildlifeRefresh)} instance of {nameof(CitizenManager)} does not exist");
+                    context.Log.Warning($"{nameof(HideWildlife)}.{nameof(OnWildlifeRefresh)} instance of {nameof(CitizenManager)} does not exist");
 #endif
                 }
             }
             catch (Exception e)
             {
-                Log.Error($"{nameof(HideWildlife)}.{nameof(OnWildlifeRefresh)} failed", e);
+                context.Log.Error($"{nameof(HideWildlife)}.{nameof(OnWildlifeRefresh)} failed", e);
             }
             yield return null;
         }
     }
 
     #region Harmony patch
-    internal static class WildlifeSpawnPointAICountAnimalsPatch
+    internal static class WildlifeSpawnPointAIProxy
     {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideWildlife)}.{nameof(WildlifeSpawnPointAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static bool HideWildlife;
+
+        public static readonly PatchData Patch = new PatchData(
+            patchId: $"{nameof(Objects.HideWildlife)}.{nameof(WildlifeSpawnPointAIProxy)}.{nameof(Postfix)}",
             target: () => typeof(WildlifeSpawnPointAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(WildlifeSpawnPointAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideWildlife.Invalidate();
-            }
+            postfix: () => typeof(WildlifeSpawnPointAIProxy).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
+            onUnpatch: () => { HideWildlife = false; }
         );
 
-        #region HideWildlife { get; }
-        private static readonly Cached<HideWildlife> _hideWildlife = new Cached<HideWildlife>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideWildlife) as HideWildlife
-            );
-        private static readonly HideWildlife HideWildlife = _hideWildlife.Value;
-        #endregion
-
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideWildlife?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideWildlife)}.{nameof(WildlifeSpawnPointAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
+        public static int Postfix(int __result) => !Patch.IsApplied || !HideWildlife ? __result : int.MaxValue;
     }
     #endregion
 }

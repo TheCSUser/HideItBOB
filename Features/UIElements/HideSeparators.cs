@@ -1,14 +1,17 @@
 ﻿using ColossalFramework.UI;
+using com.github.TheCSUser.Shared.Common;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideSeparators : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideSeparators;
 
-        protected override bool EnableImpl()
+        public HideSeparators(IModContext context) : base(context) { }
+
+        protected override bool OnEnable()
         {
             foreach (var component in GetComponents())
             {
@@ -19,7 +22,7 @@ namespace HideItBobby.Features.UIElements
             }
             return true;
         }
-        protected override bool DisableImpl()
+        protected override bool OnDisable()
         {
             foreach (var component in GetComponents())
             {

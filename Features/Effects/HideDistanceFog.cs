@@ -1,41 +1,32 @@
-﻿using UnityEngine;
+﻿using com.github.TheCSUser.HideItBobby.Features.Effects.Base;
+using com.github.TheCSUser.Shared.Common;
 
-namespace HideItBobby.Features.Effects
+namespace com.github.TheCSUser.HideItBobby.Features.Effects
 {
-    internal sealed class HideDistanceFog : FeatureBase
+    internal sealed class HideDistanceFog : HideFog
     {
         public override FeatureKey Key => FeatureKey.HideDistanceFog;
-        private FogProperties FogProperties;
-        private float Default;
 
-        protected override bool InitializeImpl()
+        public HideDistanceFog(IModContext context) : base(context, Fields.Count) { }
+
+        protected override void SaveValues()
         {
-            FogProperties = Object.FindObjectOfType<FogProperties>();
-            if (FogProperties is null) return false;
-
-            Default = FogProperties.m_ColorDecay;
-            return true;
+            Save(Fields.ColorDecay, FogProperties.m_ColorDecay);
         }
-        protected override bool TerminateImpl()
+        protected override void SetEnabledValues()
         {
-            FogProperties = null;
-            return true;
-        }
-
-        protected override bool EnableImpl()
-        {
-            if (FogProperties is null) return false;
-
             FogProperties.m_ColorDecay = 1f;
-            return true;
         }
-        protected override bool DisableImpl()
+        protected override void SetDisabledValues()
         {
-            if (FogProperties is null) return false;
-
-            FogProperties.m_ColorDecay = Default;
-            return true;
+            if (HasValue(Fields.ColorDecay)) FogProperties.m_ColorDecay = Restore(Fields.ColorDecay);
         }
 
+        private static class Fields
+        {
+            public const byte Count = 1;
+
+            public const byte ColorDecay = 0;
+        }
     }
 }

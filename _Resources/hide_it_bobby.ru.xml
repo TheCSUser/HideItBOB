@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- language -->
+  <string name="LanguageName">Русский</string>
+  <string name="LanguageHeader">Язык</string>
+  <string name="UseGameLanguage">Язык игры</string>
+  <string name="SelectLanguage">Выбор языка</string>
+  <!-- features -->
+  <string name="AvailableFeaturesHeader">Доступные функции</string>
+  <string name="UnavailableFeaturesHeader">Недоступные функции</string>
+  <string name="UnavailableFeaturesDescription">Функции, отображаемые в этом разделе, отключены из-за конфликта с другим модом.</string>
+  <!-- main menu -->
+  <string name="MainMenuGroup">Интерфейс главного меню</string>
+  <string name="MainMenuChirper">Скрыть Чипера</string>
+  <string name="MainMenuDLCPanel">Скрыть панель DLC</string>
+  <string name="MainMenuLogoImage">Скрыть логотип</string>
+  <string name="MainMenuNewsPanel">Скрыть панель новостей</string>
+  <string name="MainMenuParadoxAccountPanel">Скрыть панель учётной записи Paradox</string>
+  <string name="MainMenuVersionNumber">Скрыть версию игры</string>
+  <string name="MainMenuWorkshopPanel">Скрыть панель Мастерской</string>
+  <!-- ui elements -->
+  <string name="InGameUIGroup">Внутриигровой интерфейс</string>
+  <string name="AdvisorButton">Скрыть кнопку советника</string>
+  <string name="BulldozerButton">Скрыть кнопку бульдозера</string>
+  <string name="ChirperButton">Скрыть кнопку Чипера</string>
+  <string name="CinematicCameraButton">Скрыть кнопку кинематографической камеры</string>
+  <string name="CityName">Скрыть название города</string>
+  <string name="DisastersButton">Скрыть кнопку катастроф</string>
+  <string name="FreeCameraButton">Скрыть кнопку свободной камеры</string>
+  <string name="GearButton">Скрыть кнопку Настроек</string>
+  <string name="InfoViewsButton">Скрыть кнопку информационных обзоров</string>
+  <string name="RadioButton">Скрыть кнопку радио</string>
+  <string name="Separators">Скрыть разделители на панели инструментов</string>
+  <string name="TimePanel">Скрыть панель времени</string>
+  <string name="UnlockButton">Скрыть кнопку этапов</string>
+  <string name="ZoomAndUnlockBackground">Убрать фон в масштабировании и этапах</string>
+  <string name="ZoomButton">Скрыть кнопку масштабирования</string>
+  <string name="CongratulationPanel">Скрыть панель поздравлений</string>
+  <string name="AdvisorPanel">Скрыть панель советника</string>
+  <string name="PauseOutlineEffect">Скрыть контур паузы</string>
+  <string name="BulldozerBar">Скрыть кнопки режимов бульдозера</string>
+  <string name="Thermometer">Скрыть термометр</string>
+  <string name="ModifyToolbarPosition">Изменить положение панели инструментов</string>
+  <!-- objects and props -->
+  <string name="ObjectsAndPropsGroup">Объекты и реквизит</string>
+  <string name="Seagulls">Убрать чаек</string>
+  <string name="Wildlife">Убрать диких животных</string>
+  <!-- decorations -->
+  <string name="DecorationsGroup">Спрайты</string>
+  <string name="CliffDecorations">Скрыть декорации на скалах</string>
+  <string name="FertileDecorations">Скрыть декорации травы</string>
+  <string name="GrassDecorations">Скрыть декорации плодородной почвы</string>
+  <!-- ruining -->
+  <string name="RuiningGroup">Разрушение почвы возле объектов</string>
+  <string name="TreeRuining">Скрыть разрушение под деревьями</string>
+  <string name="PropRuining">Скрыть разрушение возле объектов</string>
+  <string name="UpdateRuiningButton">Обновить текстуры разрушения возле существующих деревьев и объектов</string>
+  <string name="RuiningUnavailableDescriptionLine1">Вы используете мод BOB с функцией скрытия разрушения.</string>
+  <string name="RuiningUnavailableDescriptionLine2">Используйте BOB вместо этого мода для скрытия разруш. возле деревьев и объектов.</string>
+  <!-- ground and water colors -->
+  <string name="GroundAndWaterColorGroup">Цвет грунта и воды</string>
+  <string name="GrassFertilityGroundColor">Удалить цвет травы на плодородной почве</string>
+  <string name="GrassFieldGroundColor">Удалить цвет земли травяного поля</string>
+  <string name="GrassForestGroundColor">Удалить цвет травы леса</string>
+  <string name="GrassPollutionGroundColor">Удалить цвет травы загрязнённой земли</string>
+  <string name="DirtyWaterColor">Удалить цвет грязной воды</string>
+  <!-- effects -->
+  <string name="EffectsGroup">Эффекты</string>
+  <string name="OreAreaEffect">Скрыть рудную область</string>
+  <string name="OilAreaEffect">Скрыть нефтяную область</string>
+  <string name="SandAreaEffect">Скрыть песчаную область</string>
+  <string name="FertilityAreaEffect">Скрыть плодородную область</string>
+  <string name="ForestAreaEffect">Скрыть лесную область</string>
+  <string name="ShoreAreaEffect">Скрыть береговую область</string>
+  <string name="PollutedAreaEffect">Скрыть загрязнённую область</string>
+  <string name="BurnedAreaEffect">Скрыть пожарища</string>
+  <string name="DestroyedAreaEffect">Скрыть разрушенную область</string>
+  <string name="PollutionFog">Скрыть промышленный смог</string>
+  <string name="VolumeFog">Скрыть объёмный туман</string>
+  <string name="DistanceFog">Скрыть туман расстояния</string>
+  <string name="EdgeFog">Скрыть туман края карты</string>
+</resources>

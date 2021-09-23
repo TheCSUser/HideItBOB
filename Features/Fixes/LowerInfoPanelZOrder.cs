@@ -1,9 +1,8 @@
 ﻿using ColossalFramework.UI;
-using HideItBobby.Common;
-using HideItBobby.Common.Logging;
+using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.Fixes
+namespace com.github.TheCSUser.HideItBobby.Features.Fixes
 {
     internal sealed class LowerInfoPanelZOrder : FeatureBase
     {
@@ -12,12 +11,12 @@ namespace HideItBobby.Features.Fixes
         private int _originalZOrder = 22;
         private readonly Cached<UIPanel> Component;
 
-        public LowerInfoPanelZOrder() : base()
+        public LowerInfoPanelZOrder(IModContext context) : base(context)
         {
             Component = new Cached<UIPanel>(GetComponent);
         }
 
-        protected override bool EnableImpl()
+        protected override bool OnEnable()
         {
             var infoPanelUIPanel = Component.Value;
             if (infoPanelUIPanel is null) return false;
@@ -25,7 +24,7 @@ namespace HideItBobby.Features.Fixes
             infoPanelUIPanel.zOrder = 1;
             return true;
         }
-        protected override bool DisableImpl()
+        protected override bool OnDisable()
         {
             var infoPanelUIPanel = Component.Value;
             if (infoPanelUIPanel is null) return false;

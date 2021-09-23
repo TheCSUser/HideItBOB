@@ -1,10 +1,11 @@
 ﻿#pragma warning disable 0649
+using com.github.TheCSUser.Shared.Settings;
 using System.Xml.Serialization;
 
-namespace HideItBobby.Settings.SettingsFiles
+namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
 {
     [XmlType("ModConfig")]
-    public sealed class File_1_17
+    public sealed class File_1_17 : ReadOnlySettingsFile
     {
         //Decorations
         [XmlElement("CliffDecorations")]

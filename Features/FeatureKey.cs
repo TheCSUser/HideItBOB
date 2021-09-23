@@ -1,6 +1,6 @@
-﻿using StringEnum;
+﻿using com.github.TheCSUser.Shared.Imports;
 
-namespace HideItBobby.Features
+namespace com.github.TheCSUser.HideItBobby.Features
 {
     ///<completionlist cref="FeatureKey"/>
     internal sealed class FeatureKey : StringEnum<FeatureKey>
@@ -71,6 +71,10 @@ namespace HideItBobby.Features
         //Ruining
         public static readonly FeatureKey HideTreeRuining = Create(nameof(HideTreeRuining));
         public static readonly FeatureKey HidePropRuining = Create(nameof(HidePropRuining));
+
+        //Problems
+        public static readonly FeatureKey HideTerraformNetworkFloodNotification = Create(nameof(HideTerraformNetworkFloodNotification));
+        public static readonly FeatureKey HideDisconnectedPowerLinesNotification = Create(nameof(HideDisconnectedPowerLinesNotification));
 
         //Fixes
         public static readonly FeatureKey LowerInfoPanelZOrder = Create(nameof(LowerInfoPanelZOrder));

@@ -1,14 +1,27 @@
-﻿using HideItBobby.Features.Ruining.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.Shared.Common;
 
-namespace HideItBobby.Features.Ruining
+namespace com.github.TheCSUser.HideItBobby.Features.Ruining
 {
     internal sealed class HideTreeRuining : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideTreeRuining;
 
-        public override bool IsAvailable => HideRuiningCompatibility.Instance.IsCompatible;
+        private readonly ICheck _compatibilityCheck;
+        public override bool IsAvailable => _compatibilityCheck.Result;
 
-        protected override bool EnableImpl()
+        public HideTreeRuining(IModContext context) : base(context)
+        {
+            _compatibilityCheck = context.Resolve<BOBModDisabledCheck>();
+        }
+
+        protected override bool OnTerminate()
+        {
+            _compatibilityCheck.Reset();
+            return base.OnTerminate();
+        }
+
+        protected override bool OnEnable()
         {
             TreeInfo treeInfo;
             for (uint i = 0; i < PrefabCollection<TreeInfo>.LoadedCount(); i++)
@@ -21,7 +34,7 @@ namespace HideItBobby.Features.Ruining
             }
             return true;
         }
-        protected override bool DisableImpl()
+        protected override bool OnDisable()
         {
             TreeInfo treeInfo;
             for (uint i = 0; i < PrefabCollection<TreeInfo>.LoadedCount(); i++)

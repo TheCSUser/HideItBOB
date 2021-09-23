@@ -1,69 +1,121 @@
-﻿using HideItBobby.Common;
+﻿using ColossalFramework.UI;
+using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.HideItBobby.Features.UIElements.Shared;
+using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements.Base
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
 {
     internal abstract class ModifyUIComponentPosition : UpdatableFeatureBase
     {
+        private readonly Cached<GameObject> _gameObject;
+        private Vector3? _defaultComponentPosition = null;
+        private bool _positionConfirmed = false;
+        private bool _positionChecked = false;
+
+        protected virtual Vector3? DefaultComponentPosition
+        {
+            get
+            {
+                if (_positionConfirmed) return _defaultComponentPosition;
+                if (!_positionChecked)
+                {
+                    _positionChecked = true;
+
+                    var currentPosition = ComponentPosition;
+                    if (_defaultComponentPosition.HasValue && _defaultComponentPosition == currentPosition)
+                    {
+                        _positionConfirmed = true;
+                        return _defaultComponentPosition;
+                    }
+                    _defaultComponentPosition = currentPosition;
+                }
+                return null;
+            }
+        }
         protected virtual Vector3? ComponentPosition
         {
             get
             {
-                return GameObject.Value?.transform.position;
+                return _gameObject.Value?.transform?.position;
             }
             set
             {
-                var obj = GameObject.Value;
+                var obj = _gameObject.Value;
                 if (!(obj is null) && value.HasValue) obj.transform.position = value.Value;
             }
         }
-        protected readonly Cached<GameObject> GameObject;
 
-        public ModifyUIComponentPosition()
+        public ModifyUIComponentPosition(IModContext context) : base(context)
         {
-            GameObject = new Cached<GameObject>(GetGameObject);
+            _gameObject = new Cached<GameObject>(GetGameObject);
+            _uiResolutionModCheck = context.Resolve<UIResolutionModEnabledCheck>();
         }
 
         protected abstract GameObject GetGameObject();
         protected abstract Vector3? GetDesiredComponentPosition();
-        protected abstract Vector3? GetDefaultComponentPosition();
 
         #region Updatable
-        public override bool IsCurrent
+        protected override bool OnUpdate()
         {
-            get
-            {
-                if (!IsEnabled) return true;
-                var currentPosition = ComponentPosition;
-                var desiredPosition = GetDesiredComponentPosition();
-                if (!currentPosition.HasValue || !desiredPosition.HasValue) return false;
-                return currentPosition.Value == desiredPosition.Value;
-            }
-        }
-        protected override bool UpdateImpl()
-        {
-            ComponentPosition = GetDesiredComponentPosition();
-            return IsCurrent;
+            _positionChecked = false;
+            if (!DefaultComponentPosition.HasValue) return false;
+
+            var currentPosition = ComponentPosition;
+            var desiredPosition = GetDesiredComponentPosition();
+            if (!currentPosition.HasValue || !desiredPosition.HasValue) return false;
+            if (currentPosition.Value != desiredPosition.Value) ComponentPosition = desiredPosition;
+            return true;
         }
         #endregion
 
         #region Togglable
-        protected override bool EnableImpl()
+        protected override bool OnEnable() => true;
+        protected override bool OnDisable()
         {
-            ComponentPosition = GetDesiredComponentPosition();
-            return IsCurrent;
+            ComponentPosition = DefaultComponentPosition;
+            _gameObject.Value?.GetComponent<UIButton>()?.Invalidate();
+            _gameObject.Invalidate();
+            _positionConfirmed = false;
+            _defaultComponentPosition = null;
+            IsError = false;
+            return true;
         }
-        protected override bool DisableImpl()
-        {
-            var defaultposition = GetDefaultComponentPosition();
-            ComponentPosition = defaultposition;
+        #endregion
 
-            var currentPosition = ComponentPosition;
-            if (!currentPosition.HasValue || !defaultposition.HasValue) return false;
-            var result = currentPosition.Value == defaultposition.Value;
-            if (result) GameObject.Invalidate();
-            return result;
-        } 
+        #region UIResolution mod compatibility
+        private bool _wasEnabled;
+        private readonly UIResolutionModEnabledCheck _uiResolutionModCheck;
+
+        protected override bool OnInitialize()
+        {
+            if (_uiResolutionModCheck.Result)
+            {
+                Patcher.Patch(UIViewProxy.Patches);
+                UIViewProxy.BeforeResolutionChanged += BeforeResolutionChanged;
+                UIViewProxy.AfterResolutionChanged += AfterResolutionChanged;
+            }
+            return true;
+        }
+        protected override bool OnTerminate()
+        {
+            if (_uiResolutionModCheck.Result)
+            {
+                UIViewProxy.BeforeResolutionChanged -= BeforeResolutionChanged;
+                UIViewProxy.AfterResolutionChanged -= AfterResolutionChanged;
+                Patcher.Unpatch(UIViewProxy.Patches);
+            }
+            return true;
+        }
+
+        private void BeforeResolutionChanged(UIView sender, Vector2 oldResolution, Vector2 newResolution)
+        {
+            if (_wasEnabled = IsEnabled) Disable();
+        }
+        private void AfterResolutionChanged(UIView sender, Vector2 oldResolution, Vector2 newResolution)
+        {
+            if (_wasEnabled) Enable();
+        }
         #endregion
     }
 }

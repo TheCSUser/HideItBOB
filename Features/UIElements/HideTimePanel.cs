@@ -1,11 +1,12 @@
-﻿using HideItBobby.Features.UIElements.Base;
+﻿using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Common;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideTimePanel : HideUIComponentByName
     {
         public override FeatureKey Key => FeatureKey.HideTimePanel;
 
-        public HideTimePanel() : base("PanelTime") { }
+        public HideTimePanel(IModContext context) : base(context, "PanelTime") { }
     }
 }

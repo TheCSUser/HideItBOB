@@ -1,13 +1,15 @@
-﻿using HideItBobby.Common.Logging;
+﻿using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideBulldozerBar : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideBulldozerBar;
 
-        protected override bool EnableImpl()
+        public HideBulldozerBar(IModContext context) : base(context) { }
+
+        protected override bool OnEnable()
         {
             var component = GetObject();
             if (component is null)
@@ -17,7 +19,7 @@ namespace HideItBobby.Features.UIElements
             component.SetActive(false);
             return true;
         }
-        protected override bool DisableImpl()
+        protected override bool OnDisable()
         {
             var component = GetObject();
             if (component is null)

@@ -1,13 +1,15 @@
 ﻿using ColossalFramework.UI;
-using HideItBobby.Common.Logging;
-using HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideZoomAndUnlockBackground : HideUIComponent
     {
         public override FeatureKey Key => FeatureKey.HideZoomAndUnlockBackground;
+
+        public HideZoomAndUnlockBackground(IModContext context) : base(context) { }
 
         protected override UIComponent GetComponent()
         {

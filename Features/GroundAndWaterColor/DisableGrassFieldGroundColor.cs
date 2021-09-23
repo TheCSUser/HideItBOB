@@ -1,7 +1,8 @@
-﻿using HideItBobby.Features.GroundAndWaterColor.Shared;
+﻿using com.github.TheCSUser.HideItBobby.Features.GroundAndWaterColor.Shared;
+using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.GroundAndWaterColor
+namespace com.github.TheCSUser.HideItBobby.Features.GroundAndWaterColor
 {
     internal sealed class DisableGrassFieldGroundColor : FeatureBase
     {
@@ -10,13 +11,15 @@ namespace HideItBobby.Features.GroundAndWaterColor
         public override FeatureKey Key => FeatureKey.DisableGrassFieldGroundColor;
         private Vector4 DefaultColorOffset;
 
-        protected override bool EnableImpl()
+        public DisableGrassFieldGroundColor(IModContext context) : base(context) { }
+
+        protected override bool OnEnable()
         {
             if (DefaultColorOffset == GroundColorOffset.None) DefaultColorOffset = Shader.GetGlobalVector(ShaderName);
             Shader.SetGlobalVector(ShaderName, GroundColorOffset.None);
             return true;
         }
-        protected override bool DisableImpl()
+        protected override bool OnDisable()
         {
             Shader.SetGlobalVector(ShaderName, DefaultColorOffset);
             return true;

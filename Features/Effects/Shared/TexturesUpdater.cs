@@ -1,25 +1,25 @@
-﻿using HideItBobby.Common;
-using HideItBobby.Common.Logging;
+﻿using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Collections;
-using UnityEngine;
 
-namespace HideItBobby.Features.Effects.Shared
+namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
 {
-    internal static class TexturesUpdater
+    internal sealed class TexturesUpdater : WithContext
     {
-        private static Counter _counter = int.MaxValue;
+        private Counter _counter = int.MaxValue;
 
-        public static void ResetCounter() => _counter = int.MaxValue;
+        public TexturesUpdater(IModContext context) : base(context) { }
 
-        public static void Update(Counter counter)
+        public void ResetCounter() => _counter = int.MaxValue;
+
+        public void Update(Counter counter)
         {
             if (counter <= _counter) return;
             _counter = counter.Clone();
             try
             {
                 if (SimulationManager.exists)
-                    SimulationManager.instance.AddAction(SetAreaModified());
+                    SimulationManager.instance.AddAction(SetAreaModified(Context));
             }
             catch (Exception e)
             {
@@ -27,7 +27,7 @@ namespace HideItBobby.Features.Effects.Shared
             }
         }
 
-        private static IEnumerator SetAreaModified()
+        private static IEnumerator SetAreaModified(IModContext context)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace HideItBobby.Features.Effects.Shared
             }
             catch (Exception e)
             {
-                Log.Error($"{nameof(TexturesUpdater)}.{nameof(SetAreaModified)} failed", e);
+                context.Log.Error($"{nameof(TexturesUpdater)}.{nameof(SetAreaModified)} failed", e);
             }
             yield return null;
         }

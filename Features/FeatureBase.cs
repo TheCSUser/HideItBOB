@@ -1,26 +1,30 @@
-﻿using HideItBobby.Common;
-using HideItBobby.Common.Logging;
+﻿using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Threading;
-using UnityEngine;
 
-namespace HideItBobby.Features
+namespace com.github.TheCSUser.HideItBobby.Features
 {
-    internal abstract class FeatureBase : IFeature, IInitializable<FeatureFlags>, IForceToggleable<FeatureFlags>, IErrorInfo, IAvailabilityInfo, IDisposableEx
+    internal abstract class FeatureBase : WithContext, IFeature
     {
+        protected readonly Mod Mod;
+
         public abstract FeatureKey Key { get; }
         public virtual bool IsAvailable => true;
 
-        protected virtual bool InitializeImpl() => true;
-        protected virtual bool TerminateImpl() => true;
-        protected virtual bool EnableImpl() => true;
-        protected virtual bool DisableImpl() => true;
+        protected FeatureBase(IModContext context) : base(context) {
+            Mod = context.Resolve<Mod>();
+        }
+
+        protected virtual bool OnInitialize() => true;
+        protected virtual bool OnTerminate() => true;
+        protected virtual bool OnEnable() => true;
+        protected virtual bool OnDisable() => true;
 
         #region Error
 #if DEV || PREVIEW
-        private const int ErrorTreshold = 10;
+        private const int ErrorTreshold = 3;
 #else
-        private const int ErrorTreshold = 30;
+        private const int ErrorTreshold = 10;
 #endif
         private int _errorCount;
         public int ErrorCount => _errorCount;
@@ -50,8 +54,8 @@ namespace HideItBobby.Features
             if (disposing)
             {
                 // dispose managed state (managed objects)
-                if (IsEnabled) try { _isEnabled = !DisableImpl(); } catch { IsError = true; }
-                if (IsInitialized) try { _isInitialized = !TerminateImpl(); } catch { IsError = true; }
+                if (IsEnabled) try { _isEnabled = !OnDisable(); } catch { IsError = true; }
+                if (IsInitialized) try { _isInitialized = !OnTerminate(); } catch { IsError = true; }
             }
             // free unmanaged resources (unmanaged objects) and override finalizer
             // set large fields to null
@@ -93,14 +97,14 @@ namespace HideItBobby.Features
 #if DEV
                 Log.Info($"{GetType().Name} initializing");
 #endif
-                _isInitialized = InitializeImpl();
+                _isInitialized = OnInitialize();
                 return Result(IsInitialized, true);
             }
             catch (Exception e)
             {
                 _isInitialized = false;
                 IsError = true;
-                Log.Error($"{GetType().Name}.{nameof(InitializeImpl)} failed", e);
+                Log.Error($"{GetType().Name}.{nameof(OnInitialize)} failed", e);
                 return Result(false);
             }
         }
@@ -122,12 +126,12 @@ namespace HideItBobby.Features
 #if DEV
                     Log.Info($"{GetType().Name} disabling");
 #endif
-                    _isEnabled = !DisableImpl();
+                    _isEnabled = !OnDisable();
                 }
                 catch (Exception e)
                 {
                     IsError = true;
-                    Log.Error($"{GetType().Name}.{nameof(DisableImpl)} failed", e);
+                    Log.Error($"{GetType().Name}.{nameof(OnDisable)} failed", e);
                     return Result(false);
                 }
             }
@@ -136,13 +140,13 @@ namespace HideItBobby.Features
 #if DEV
                 Log.Info($"{GetType().Name} terminating");
 #endif
-                _isInitialized = !TerminateImpl();
+                _isInitialized = !OnTerminate();
                 return Result(!IsInitialized, true);
             }
             catch (Exception e)
             {
                 IsError = true;
-                Log.Error($"{GetType().Name}.{nameof(TerminateImpl)} failed", e);
+                Log.Error($"{GetType().Name}.{nameof(OnTerminate)} failed", e);
                 return Result(false);
             }
         }
@@ -168,14 +172,14 @@ namespace HideItBobby.Features
 #if DEV
                     Log.Info($"{GetType().Name} initializing");
 #endif
-                    _isInitialized = InitializeImpl();
+                    _isInitialized = OnInitialize();
                     if (!IsInitialized) return Result(false, true);
                 }
                 catch (Exception e)
                 {
                     _isInitialized = false;
                     IsError = true;
-                    Log.Error($"{GetType().Name}.{nameof(InitializeImpl)} failed", e);
+                    Log.Error($"{GetType().Name}.{nameof(OnInitialize)} failed", e);
                     return Result(false);
                 }
             }
@@ -184,14 +188,14 @@ namespace HideItBobby.Features
 #if DEV
                 Log.Info($"{GetType().Name} enabling");
 #endif
-                _isEnabled = EnableImpl();
+                _isEnabled = OnEnable();
                 return Result(IsEnabled, true);
             }
             catch (Exception e)
             {
                 _isEnabled = false;
                 IsError = true;
-                Log.Error($"{GetType().Name}.{nameof(EnableImpl)} failed", e);
+                Log.Error($"{GetType().Name}.{nameof(OnEnable)} failed", e);
                 return Result(false);
             }
         }
@@ -205,14 +209,14 @@ namespace HideItBobby.Features
 #if DEV
                 Log.Info($"{GetType().Name} disabling");
 #endif
-                _isEnabled = !DisableImpl();
+                _isEnabled = !OnDisable();
                 return Result(!IsEnabled, true);
             }
             catch (Exception e)
             {
                 _isEnabled = true;
                 IsError = true;
-                Log.Error($"{GetType().Name}.{nameof(DisableImpl)} failed", e);
+                Log.Error($"{GetType().Name}.{nameof(OnDisable)} failed", e);
                 return Result(false);
             }
         }
@@ -229,39 +233,31 @@ namespace HideItBobby.Features
         #endregion
     }
 
-    internal abstract class UpdatableFeatureBase : FeatureBase, IForceUpdatable<FeatureFlags>
+    internal abstract class UpdatableFeatureBase : FeatureBase, IUpdatableFeature
     {
-        protected virtual bool UpdateImpl() => true;
+        protected abstract bool OnUpdate();
+
+        protected UpdatableFeatureBase(IModContext context) : base(context) { }
 
         #region Updatable
-        private bool _isCurrent;
-
-        public virtual bool IsCurrent => _isCurrent;
-
-        public FeatureFlags Update() => Update(false);
-        public FeatureFlags Update(bool force)
+        public FeatureFlags Update()
         {
-            if (IsDisposed || IsError || !IsAvailable || !IsInitialized || !IsEnabled) return Result(false);
-            if (IsCurrent && !force) return Result(true);
+            if (IsDisposed || IsError || !IsAvailable || !IsInitialized) return Result(false);
+            if (!IsEnabled) return Result(true);
             try
             {
-#if DEV
-                Log.Info($"{GetType().Name} updating");
-#endif
-                _isCurrent = UpdateImpl();
-                return Result(IsCurrent, true);
+                var result = OnUpdate();
+                return Result(result, true);
             }
             catch (Exception e)
             {
-                _isCurrent = false;
                 IsError = true;
-                Log.Error($"{GetType().Name}.{nameof(UpdateImpl)} failed", e);
+                Log.Error($"{GetType().Name}.{nameof(OnUpdate)} failed", e);
                 return Result(false);
             }
         }
 
         void IUpdatable.Update() => Update();
-        void IForceUpdatable.Update(bool force) => Update(force);
         #endregion
     }
 }

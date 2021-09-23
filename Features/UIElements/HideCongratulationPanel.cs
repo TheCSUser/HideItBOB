@@ -1,65 +1,52 @@
-﻿using HideItBobby.Common;
-using HideItBobby.Common.Logging;
-using HideItBobby.EntryPoints;
-using System;
+﻿using com.github.TheCSUser.Shared.Common;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using UnityEngine;
-using static HideItBobby.Common.Patcher;
 
-namespace HideItBobby.Features.UIElements
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 {
     internal sealed class HideCongratulationPanel : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideCongratulationPanel;
 
-        protected override bool InitializeImpl()
+        public HideCongratulationPanel(IModContext context) : base(context) { }
+
+        protected override bool OnInitialize()
         {
-            Patch(HideCongratulationsPanelUnlockingPanelShowModalPatch.Data);
+            Patcher.Patch(UnlockingPanelProxy.Patch);
             return true;
         }
-        protected override bool TerminateImpl()
+        protected override bool OnTerminate()
         {
-            Unpatch(HideCongratulationsPanelUnlockingPanelShowModalPatch.Data);
+            Patcher.Unpatch(UnlockingPanelProxy.Patch);
+            return true;
+        }
+
+        protected override bool OnEnable()
+        {
+            UnlockingPanelProxy.Hide = true;
+            return true;
+        }
+        protected override bool OnDisable()
+        {
+            UnlockingPanelProxy.Hide = false;
             return true;
         }
     }
 
     #region Harmony patch
-    internal static class HideCongratulationsPanelUnlockingPanelShowModalPatch
+    internal static class UnlockingPanelProxy
     {
-        public static readonly PatchData Data = new PatchData(
-                patchId: $"{nameof(HideCongratulationPanel)}.{nameof(HideCongratulationsPanelUnlockingPanelShowModalPatch)}.{nameof(Prefix)}",
-                target: () => typeof(UnlockingPanel).GetMethod("ShowModal", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-                prefix: () => typeof(HideCongratulationsPanelUnlockingPanelShowModalPatch).GetMethod(nameof(Prefix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-                onUnpatch: () =>
-                {
-                    _hideCongratulationPanel.Invalidate();
-                }
-            );
+        public static bool Hide;
 
-        #region HideCongratulationPanel { get; }
-        private static readonly Cached<HideCongratulationPanel> _hideCongratulationPanel = new Cached<HideCongratulationPanel>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideCongratulationPanel) as HideCongratulationPanel
+        public static readonly PatchData Patch = new PatchData(
+                patchId: $"{nameof(HideCongratulationPanel)}.{nameof(UnlockingPanelProxy)}.{nameof(Prefix)}",
+                target: () => typeof(UnlockingPanel).GetMethod("ShowModal", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
+                prefix: () => typeof(UnlockingPanelProxy).GetMethod(nameof(Prefix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
+                onUnpatch: () => { Hide = false; }
             );
-        private static readonly HideCongratulationPanel HideCongratulationPanel = _hideCongratulationPanel.Value;
-        #endregion
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool Prefix()
-        {
-            if (!Data.IsPatchApplied) return true;
-            try
-            {
-                var isEnabled = (HideCongratulationPanel?.IsEnabled) ?? false;
-                return !isEnabled;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideCongratulationsPanelUnlockingPanelShowModalPatch)}.{nameof(Prefix)} failed", e);
-                return true;
-            }
-        }
+        public static bool Prefix() => !Patch.IsApplied || !Hide;
     }
     #endregion
 }

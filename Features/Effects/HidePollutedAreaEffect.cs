@@ -1,23 +1,33 @@
-﻿using HideItBobby.Features.Effects.Shared.Patches;
-using static HideItBobby.Common.Patcher;
+﻿using com.github.TheCSUser.HideItBobby.Features.Effects.Shared.Patches;
+using com.github.TheCSUser.Shared.Common;
 
-namespace HideItBobby.Features.Effects
+namespace com.github.TheCSUser.HideItBobby.Features.Effects
 {
     internal sealed class HidePollutedAreaEffect : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HidePollutedAreaEffect;
 
-        public override bool IsInitialized => NaturalResourceManagerUpdateTextureBPatch.Data.IsPatchApplied;
+        public HidePollutedAreaEffect(IModContext context) : base(context) { }
 
-        protected override bool InitializeImpl()
+        protected override bool OnInitialize()
         {
-            Patch(NaturalResourceManagerUpdateTextureBPatch.Data);
+            Patcher.Patch(NaturalResourceManagerProxy.UpdateTexturePatch);
+            return true;
+        }
+        protected override bool OnTerminate()
+        {
+            Patcher.Unpatch(NaturalResourceManagerProxy.UpdateTexturePatch);
             return true;
         }
 
-        protected override bool TerminateImpl()
+        protected override bool OnEnable()
         {
-            Unpatch(NaturalResourceManagerUpdateTextureBPatch.Data);
+            NaturalResourceManagerProxy.HidePollutedAreaEffect = true;
+            return true;
+        }
+        protected override bool OnDisable()
+        {
+            NaturalResourceManagerProxy.HidePollutedAreaEffect = false;
             return true;
         }
     }

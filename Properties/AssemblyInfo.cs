@@ -1,4 +1,4 @@
-﻿using HideItBobby.Properties;
+﻿using com.github.TheCSUser.HideItBobby.Properties;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

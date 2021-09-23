@@ -1,53 +1,44 @@
 ﻿using ColossalFramework;
-using HideItBobby.Common;
-using HideItBobby.Common.Logging;
-using HideItBobby.EntryPoints;
+using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using UnityEngine;
-using static HideItBobby.Common.Patcher;
 
-namespace HideItBobby.Features.Objects
+namespace com.github.TheCSUser.HideItBobby.Features.Objects
 {
     internal sealed class HideSeagulls : FeatureBase
     {
         public override FeatureKey Key => FeatureKey.HideSeagulls;
 
-        protected override bool InitializeImpl()
+        public HideSeagulls(IModContext context) : base(context) { }
+
+        protected override bool OnInitialize()
         {
-            Patch(CargoHarborAICountAnimalsPatch.Data);
-            Patch(HarborAICountAnimalsPatch.Data);
-            Patch(IndustryBuildingAICountAnimalsPatch.Data);
-            Patch(LandfillSiteAICountAnimalsPatch.Data);
-            Patch(ParkAICountAnimalsPatch.Data);
-            Patch(ParkBuildingAICountAnimalsPatch.Data);
-            Patch(WarehouseAICountAnimalsPatch.Data);
+            Patcher.Patch(CountAnimalsProxy.Patches);
             return true;
         }
-        protected override bool TerminateImpl()
+        protected override bool OnTerminate()
         {
-            Unpatch(CargoHarborAICountAnimalsPatch.Data);
-            Unpatch(HarborAICountAnimalsPatch.Data);
-            Unpatch(IndustryBuildingAICountAnimalsPatch.Data);
-            Unpatch(LandfillSiteAICountAnimalsPatch.Data);
-            Unpatch(ParkAICountAnimalsPatch.Data);
-            Unpatch(ParkBuildingAICountAnimalsPatch.Data);
-            Unpatch(WarehouseAICountAnimalsPatch.Data);
+            Patcher.Unpatch(CountAnimalsProxy.Patches);
             return true;
         }
 
-        protected override bool EnableImpl()
+        protected override bool OnEnable()
         {
             if (!SimulationManager.exists) return false;
-
-            SimulationManager.instance.AddAction(OnSeagullsRefresh());
+            CountAnimalsProxy.HideSeagulls = true;
+            SimulationManager.instance.AddAction(OnSeagullsRefresh(Context));
             return true;
         }
-        protected override bool DisableImpl() => true;
+        protected override bool OnDisable()
+        {
+            CountAnimalsProxy.HideSeagulls = false;
+            return true;
+        }
 
-        private static IEnumerator OnSeagullsRefresh()
+        private static IEnumerator OnSeagullsRefresh(IModContext context)
         {
             try
             {
@@ -68,13 +59,13 @@ namespace HideItBobby.Features.Objects
                 else
                 {
 #if DEV
-                    Log.Warning($"{nameof(HideSeagulls)}.{nameof(OnSeagullsRefresh)} instance of {nameof(CitizenManager)} does not exist");
+                    context.Log.Warning($"{nameof(HideSeagulls)}.{nameof(OnSeagullsRefresh)} instance of {nameof(CitizenManager)} does not exist");
 #endif
                 }
             }
             catch (Exception e)
             {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(OnSeagullsRefresh)} failed", e);
+                context.Log.Error($"{nameof(HideSeagulls)}.{nameof(OnSeagullsRefresh)} failed", e);
             }
 
             yield return null;
@@ -82,256 +73,74 @@ namespace HideItBobby.Features.Objects
     }
 
     #region Harmony patches
-    internal static class CargoHarborAICountAnimalsPatch
+    internal static class CountAnimalsProxy
     {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(CargoHarborAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static bool HideSeagulls;
+
+        public static IEnumerable<PatchData> Patches
+        {
+            get
+            {
+                yield return CargoHarborAIPatch;
+                yield return HarborAIPatch;
+                yield return IndustryBuildingAIPatch;
+                yield return LandfillSiteAIPatch;
+                yield return ParkAIPatch;
+                yield return ParkBuildingAIPatch;
+                yield return WarehouseAIPatch;
+            }
+        }
+
+        public static readonly PatchData CargoHarborAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(CargoHarborAI_CountAnimals_Postfix)}",
             target: () => typeof(CargoHarborAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(CargoHarborAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(CargoHarborAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(CargoHarborAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class HarborAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(HarborAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData HarborAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(HarborAI_CountAnimals_Postfix)}",
             target: () => typeof(HarborAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(HarborAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(HarborAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(HarborAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class IndustryBuildingAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(IndustryBuildingAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData IndustryBuildingAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(IndustryBuildingAI_CountAnimals_Postfix)}",
             target: () => typeof(IndustryBuildingAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(IndustryBuildingAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(IndustryBuildingAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(IndustryBuildingAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class LandfillSiteAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(LandfillSiteAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData LandfillSiteAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(LandfillSiteAI_CountAnimals_Postfix)}",
             target: () => typeof(LandfillSiteAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(LandfillSiteAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(LandfillSiteAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(LandfillSiteAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class ParkAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(ParkAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData ParkAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(ParkAI_CountAnimals_Postfix)}",
             target: () => typeof(ParkAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(ParkAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(ParkAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(ParkAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class ParkBuildingAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(ParkBuildingAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData ParkBuildingAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(ParkBuildingAI_CountAnimals_Postfix)}",
             target: () => typeof(ParkBuildingAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(ParkBuildingAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(ParkBuildingAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
-
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(ParkBuildingAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
-    }
-
-    internal static class WarehouseAICountAnimalsPatch
-    {
-        public static readonly PatchData Data = new PatchData(
-            patchId: $"{nameof(HideSeagulls)}.{nameof(WarehouseAICountAnimalsPatch)}.{nameof(Postfix)}",
+        public static readonly PatchData WarehouseAIPatch = new PatchData(
+            patchId: $"{nameof(Objects.HideSeagulls)}.{nameof(CountAnimalsProxy)}.{nameof(WarehouseAI_CountAnimals_Postfix)}",
             target: () => typeof(WarehouseAI).GetMethod("CountAnimals", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance),
-            postfix: () => typeof(WarehouseAICountAnimalsPatch).GetMethod(nameof(Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static),
-            onUnpatch: () =>
-            {
-                _hideSeagulls.Invalidate();
-            }
+            postfix: () => typeof(CountAnimalsProxy).GetMethod(nameof(WarehouseAI_CountAnimals_Postfix), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
 
-        #region HideSeagulls { get; }
-        private static readonly Cached<HideSeagulls> _hideSeagulls = new Cached<HideSeagulls>(
-            () => InGameEntryPoint.Features.Resolve(FeatureKey.HideSeagulls) as HideSeagulls
-            );
-        private static readonly HideSeagulls HideSeagulls = _hideSeagulls.Value;
-        #endregion
-
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int Postfix(int __result)
-        {
-            if (!Data.IsPatchApplied) return __result;
-            try
-            {
-                var isEnabled = (HideSeagulls?.IsEnabled) ?? false;
-                return isEnabled ? int.MaxValue : __result;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{nameof(HideSeagulls)}.{nameof(WarehouseAICountAnimalsPatch)}.{nameof(Postfix)} failed", e);
-                return __result;
-            }
-        }
+        public static int CargoHarborAI_CountAnimals_Postfix(int __result) => !CargoHarborAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int HarborAI_CountAnimals_Postfix(int __result) => !HarborAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int IndustryBuildingAI_CountAnimals_Postfix(int __result) => !IndustryBuildingAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int LandfillSiteAI_CountAnimals_Postfix(int __result) => !LandfillSiteAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int ParkAI_CountAnimals_Postfix(int __result) => !ParkAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int ParkBuildingAI_CountAnimals_Postfix(int __result) => !ParkBuildingAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int WarehouseAI_CountAnimals_Postfix(int __result) => !WarehouseAIPatch.IsApplied || !HideSeagulls ? __result : int.MaxValue;
     }
     #endregion
 }

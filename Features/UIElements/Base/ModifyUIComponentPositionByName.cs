@@ -1,13 +1,13 @@
-﻿using HideItBobby.Common.Logging;
+﻿using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
-namespace HideItBobby.Features.UIElements.Base
+namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
 {
     internal abstract class ModifyUIComponentPositionByName : ModifyUIComponentPosition
     {
         protected virtual string ComponentName { get; private set; }
 
-        public ModifyUIComponentPositionByName(string componentName)
+        public ModifyUIComponentPositionByName(IModContext context, string componentName) : base(context)
         {
             ComponentName = componentName;
         }

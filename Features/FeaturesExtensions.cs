@@ -1,6 +1,4 @@
-﻿using HideItBobby.Common;
-
-namespace HideItBobby.Features
+﻿namespace com.github.TheCSUser.HideItBobby.Features
 {
     internal static class FeaturesExtensions
     {
@@ -9,12 +7,12 @@ namespace HideItBobby.Features
             if (feature is null) return FeatureFlags.False;
             if (enable)
             {
-                if (feature is IToggleable<FeatureFlags> toggleable && !toggleable.IsEnabled) return toggleable.Enable();
-                if (feature is IUpdatable<FeatureFlags> updateable && !updateable.IsCurrent) return updateable.Update();
+                if (feature is IFeature toggleable && !toggleable.IsEnabled) return toggleable.Enable();
+                if (feature is IUpdatableFeature updateable) return updateable.Update();
             }
             else
             {
-                if (feature is IToggleable<FeatureFlags> toggleable && toggleable.IsEnabled) return toggleable.Disable();
+                if (feature is IFeature toggleable && toggleable.IsEnabled) return toggleable.Disable();
             }
             return FeatureFlags.True;
         }
@@ -22,9 +20,9 @@ namespace HideItBobby.Features
         public static FeatureFlags Run(this IFeature feature)
         {
             if (feature is null) return FeatureFlags.False;
-            if (feature is IForceToggleable<FeatureFlags> toDisable && !toDisable.IsEnabled) return toDisable.Disable(true);
-            if (feature is IForceUpdatable<FeatureFlags> toUpdate && !toUpdate.IsCurrent) return toUpdate.Update(true);
-            if (feature is IForceToggleable<FeatureFlags> toEnable) return toEnable.Enable(true);
+            if (feature is IFeature toDisable && !toDisable.IsEnabled) return toDisable.Disable(true);
+            if (feature is IUpdatableFeature toUpdate) return toUpdate.Update();
+            if (feature is IFeature toEnable) return toEnable.Enable(true);
             return FeatureFlags.True;
         }
     }
