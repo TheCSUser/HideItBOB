@@ -4,7 +4,7 @@ namespace com.github.TheCSUser.HideItBobby
 {
 	public sealed partial class Mod
 	{
-		private void InitDependencies()
+		private void RegisterDependencies()
 		{
 			Context
 			.Register(Use(new NaturalDisastersDLCEnabledCheck(Context)))

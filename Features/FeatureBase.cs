@@ -103,7 +103,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
             catch (Exception e)
             {
                 _isInitialized = false;
-                IsError = true;
+                IncreaseErrorCount();
                 Log.Error($"{GetType().Name}.{nameof(OnInitialize)} failed", e);
                 return Result(false);
             }
@@ -130,7 +130,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
                 }
                 catch (Exception e)
                 {
-                    IsError = true;
+                    IncreaseErrorCount();
                     Log.Error($"{GetType().Name}.{nameof(OnDisable)} failed", e);
                     return Result(false);
                 }
@@ -145,7 +145,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
             }
             catch (Exception e)
             {
-                IsError = true;
+                IncreaseErrorCount();
                 Log.Error($"{GetType().Name}.{nameof(OnTerminate)} failed", e);
                 return Result(false);
             }
@@ -178,7 +178,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
                 catch (Exception e)
                 {
                     _isInitialized = false;
-                    IsError = true;
+                    IncreaseErrorCount();
                     Log.Error($"{GetType().Name}.{nameof(OnInitialize)} failed", e);
                     return Result(false);
                 }
@@ -194,7 +194,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
             catch (Exception e)
             {
                 _isEnabled = false;
-                IsError = true;
+                IncreaseErrorCount();
                 Log.Error($"{GetType().Name}.{nameof(OnEnable)} failed", e);
                 return Result(false);
             }
@@ -215,7 +215,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
             catch (Exception e)
             {
                 _isEnabled = true;
-                IsError = true;
+                IncreaseErrorCount();
                 Log.Error($"{GetType().Name}.{nameof(OnDisable)} failed", e);
                 return Result(false);
             }
@@ -240,7 +240,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
         protected UpdatableFeatureBase(IModContext context) : base(context) { }
 
         #region Updatable
-        public FeatureFlags Update()
+        public virtual FeatureFlags Update()
         {
             if (IsDisposed || IsError || !IsAvailable || !IsInitialized) return Result(false);
             if (!IsEnabled) return Result(true);
@@ -251,7 +251,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
             }
             catch (Exception e)
             {
-                IsError = true;
+                IncreaseErrorCount();
                 Log.Error($"{GetType().Name}.{nameof(OnUpdate)} failed", e);
                 return Result(false);
             }

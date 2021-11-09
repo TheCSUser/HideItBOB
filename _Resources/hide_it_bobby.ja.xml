@@ -48,8 +48,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">スプライト</string>
   <string name="CliffDecorations">崖のデコレーションを非表示</string>
-  <string name="FertileDecorations">芝生のデコレーションを非表示</string>
-  <string name="GrassDecorations">肥沃のデコレーションを非表示</string>
+  <string name="GrassDecorations">芝生のデコレーションを非表示</string>
+  <string name="FertileDecorations">肥沃のデコレーションを非表示</string>
   <!-- ruining -->
   <string name="RuiningGroup">荒れ地</string>
   <string name="TreeRuining">ツリー下の荒れ地を非表示</string>

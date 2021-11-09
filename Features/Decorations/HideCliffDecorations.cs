@@ -1,26 +1,24 @@
-﻿using ColossalFramework;
-using com.github.TheCSUser.Shared.Common;
+﻿using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Decorations
 {
-    internal sealed class HideCliffDecorations : FeatureBase
+    internal sealed class HideCliffDecorations : HideDecorations
     {
         public override FeatureKey Key => FeatureKey.HideCliffDecorations;
 
         public HideCliffDecorations(IModContext context) : base(context) { }
 
-        protected override bool OnEnable()
+        protected override bool OnUpdate()
         {
-            if (!Singleton<TerrainManager>.exists) return false;
-
-            Singleton<TerrainManager>.instance.m_properties.m_useCliffDecorations = false;
-            return true;
-        }
-        protected override bool OnDisable()
-        {
-            if (!Singleton<TerrainManager>.exists) return false;
-
-            Singleton<TerrainManager>.instance.m_properties.m_useCliffDecorations = true;
+            var properties = TerrainProperties;
+            if (properties is null)
+            {
+#if DEV
+                Log.Info($"{GetType().Name}.{nameof(OnUpdate)} {nameof(TerrainProperties)} is null");
+#endif
+                return false;
+            }
+            properties.m_useCliffDecorations = !IsEnabled;
             return true;
         }
     }

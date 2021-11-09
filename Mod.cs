@@ -1,14 +1,11 @@
 ﻿using com.github.TheCSUser.HideItBobby.Scripts;
 using com.github.TheCSUser.HideItBobby.Properties;
 using com.github.TheCSUser.HideItBobby.Settings;
-using com.github.TheCSUser.HideItBobby.Settings.Providers;
 using com.github.TheCSUser.HideItBobby.Settings.SettingsFiles;
 using com.github.TheCSUser.HideItBobby.Translation;
-using com.github.TheCSUser.HideItBobby.VersionMigrations;
 using com.github.TheCSUser.Shared.Common;
 using System;
 using System.IO;
-using System.Collections.Generic;
 
 namespace com.github.TheCSUser.HideItBobby
 {
@@ -25,68 +22,37 @@ namespace com.github.TheCSUser.HideItBobby
 
         public Mod() : base()
         {
-            InitDependencies();
-            InitMigrations();
-
-            UseLogger(Paths.Logs.Directory, ModProperties.LongName);
-            Use(Migrate);
-            Use(UnpackLocaleFiles);
-            UseHarmony(ModProperties.HarmonyId);
-            UseLocalization(Paths.Translations.Directory, FallbackLanguage.Build);
-            UseSettings(new SettingsProvider(Context));
-            Use(() =>
-            {
-                if (Settings is null || Settings.UseGameLanguage) LocaleManager.ChangeToGameLanguage();
-                else LocaleManager.ChangeTo(Settings.SelectedLanguage);
-            });
-            UseMode(ApplicationMode.MainMenu)
-                .Add(MainMenuFeatures = new MainMenuFeatures(this));
-            UseMode(ApplicationMode.Game)
-                .Add(InGameFeatures = new InGameFeatures(this));
-        }
-
-        #region Version & Migrations
-        private Provider_Version VersionProvider;
-        private List<Migration> _migrations;
-        internal File_Version VersionFile;
-
-        private void InitMigrations()
-        {
-            VersionProvider = new Provider_Version(Context);
-
-            _migrations = new List<Migration>
-            {
-                new Migrate_1_18_to_1_21(Context),
-                new Migrate_1_20_to_1_21(Context),
-                new Migrate_1_21_to_1_22(Context),
-                new Migrate_1_24_to_1_25(Context),
-            };
-        }
-
-        private void Migrate()
-        {
             try
             {
-                VersionFile = VersionProvider.Load();
-                if (VersionFile is null || VersionFile.Version < ModProperties.VersionInteger)
-                {
-                    foreach (var migration in _migrations)
-                    {
-                        if (!(migration is null)) migration.Migrate();
-                    }
+                RegisterDependencies();
 
-                    VersionProvider.Save(VersionFile = new File_Version()
-                    {
-                        Version = ModProperties.VersionInteger
-                    });
-                }
+                UseLateInit();
+
+                UseOnce(InitMigrations);
+
+                UseLogger(Paths.Logs.Directory, ModProperties.LongName);
+                Use(Migrate);
+                Use(UnpackLocaleFiles);
+                UseHarmony(ModProperties.HarmonyId);
+                UseLocalization(Paths.Translations.Directory, FallbackLanguage.Build);
+                UseSettings(new SettingsProvider(Context));
+                Use(() =>
+                {
+                    if (Settings is null || Settings.UseGameLanguage) LocaleManager.ChangeToGameLanguage();
+                    else LocaleManager.ChangeTo(Settings.SelectedLanguage);
+                });
+
+                UseMode(ApplicationMode.MainMenu)
+                    .Add(MainMenuFeatures = new MainMenuFeatures(this));
+                UseMode(ApplicationMode.Game)
+                    .Add(InGameFeatures = new InGameFeatures(this));
             }
             catch (Exception e)
             {
-                Log.Error($"{nameof(Mod)}.{nameof(Migrate)} failed", e);
+                Shared.Logging.Log.Shared.Error($"{ModProperties.ShortName}.{nameof(Mod)}.Constructor failed", e);
+                throw;
             }
         }
-        #endregion
 
         internal void UnpackLocaleFiles()
         {

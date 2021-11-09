@@ -49,8 +49,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">Dekorationen</string>
   <string name="CliffDecorations">Klippendekorationen ausblenden</string>
-  <string name="FertileDecorations">Grasdekorationen ausblenden</string>
-  <string name="GrassDecorations">Fruchtbarkeitsdekorationen verstecken</string>
+  <string name="GrassDecorations">Grasdekorationen ausblenden</string>
+  <string name="FertileDecorations">Fruchtbarkeitsdekorationen verstecken</string>
   <!-- ruining -->
   <string name="RuiningGroup">Abgenutzte Oberfläche</string>
   <string name="TreeRuining">Abgenutzte Oberfläche unter Bäumen ausblenden</string>

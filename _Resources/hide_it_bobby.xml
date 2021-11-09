@@ -48,8 +48,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">Sprites</string>
   <string name="CliffDecorations">Hide cliff decorations</string>
-  <string name="FertileDecorations">Hide grass decorations</string>
-  <string name="GrassDecorations">Hide fertile decorations</string>
+  <string name="GrassDecorations">Hide grass decorations</string>
+  <string name="FertileDecorations">Hide fertile decorations</string>
   <!-- ruining -->
   <string name="RuiningGroup">Ruining</string>
   <string name="TreeRuining">Hide trees ruining</string>

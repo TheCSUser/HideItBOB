@@ -48,8 +48,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">Dekoracje</string>
   <string name="CliffDecorations">Ukryj dekoracje klifów</string>
-  <string name="FertileDecorations">Ukryj dekoracje trawy</string>
-  <string name="GrassDecorations">Ukryj dekoracje żyznej ziemi</string>
+  <string name="GrassDecorations">Ukryj dekoracje trawy</string>
+  <string name="FertileDecorations">Ukryj dekoracje żyznej ziemi</string>
   <!-- ruining -->
   <string name="RuiningGroup">Zmiany terenu</string>
   <string name="TreeRuining">Wyłącz zmiany pod drzewami</string>

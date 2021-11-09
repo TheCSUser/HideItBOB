@@ -69,8 +69,8 @@ namespace com.github.TheCSUser.HideItBobby.Translation
             //decorations
             { DecorationsGroup,"Sprites" },
             { CliffDecorations,"Hide cliff decorations" },
-            { FertileDecorations,"Hide grass decorations" },
-            { GrassDecorations,"Hide fertile decorations" },
+            { FertileDecorations,"Hide fertile decorations" },
+            { GrassDecorations,"Hide grass decorations" },
             //ruining
             { RuiningGroup,"Ruining" },
             { TreeRuining,"Hide trees ruining" },

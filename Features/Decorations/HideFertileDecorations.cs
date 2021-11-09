@@ -1,26 +1,24 @@
-﻿using ColossalFramework;
-using com.github.TheCSUser.Shared.Common;
+﻿using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Decorations
 {
-    internal sealed class HideFertileDecorations : FeatureBase
+    internal sealed class HideFertileDecorations : HideDecorations
     {
         public override FeatureKey Key => FeatureKey.HideFertileDecorations;
 
         public HideFertileDecorations(IModContext context) : base(context) { }
 
-        protected override bool OnEnable()
+        protected override bool OnUpdate()
         {
-            if (!Singleton<TerrainManager>.exists) return false;
-
-            Singleton<TerrainManager>.instance.m_properties.m_useFertileDecorations = false;
-            return true;
-        }
-        protected override bool OnDisable()
-        {
-            if (!Singleton<TerrainManager>.exists) return false;
-
-            Singleton<TerrainManager>.instance.m_properties.m_useFertileDecorations = true;
+            var properties = TerrainProperties;
+            if (properties is null)
+            {
+#if DEV
+                Log.Info($"{GetType().Name}.{nameof(OnUpdate)} {nameof(TerrainProperties)} is null");
+#endif
+                return false;
+            }
+            properties.m_useFertileDecorations = !IsEnabled;
             return true;
         }
     }

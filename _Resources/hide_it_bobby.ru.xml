@@ -48,8 +48,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">Спрайты</string>
   <string name="CliffDecorations">Скрыть декорации на скалах</string>
-  <string name="FertileDecorations">Скрыть декорации травы</string>
-  <string name="GrassDecorations">Скрыть декорации плодородной почвы</string>
+  <string name="GrassDecorations">Скрыть декорации травы</string>
+  <string name="FertileDecorations">Скрыть декорации плодородной почвы</string>
   <!-- ruining -->
   <string name="RuiningGroup">Разрушение почвы возле объектов</string>
   <string name="TreeRuining">Скрыть разрушение под деревьями</string>

@@ -49,8 +49,8 @@
   <!-- decorations -->
   <string name="DecorationsGroup">Sprites</string>
   <string name="CliffDecorations">Esconder decoraciones de acantilados</string>
-  <string name="FertileDecorations">Esconder decoraciones de césped</string>
-  <string name="GrassDecorations">Esconder decoraciones de tierra fértil</string>
+  <string name="GrassDecorations">Esconder decoraciones de césped</string>
+  <string name="FertileDecorations">Esconder decoraciones de tierra fértil</string>
   <!-- ruining -->
   <string name="RuiningGroup">Arruinado</string>
   <string name="TreeRuining">Ocultar terreno arruinado debajo de árboles</string>
