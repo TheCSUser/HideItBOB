@@ -35,6 +35,8 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
             .Register(new HideEdgeFog(context))
             .Register(new HidePollutionFog(context))
             .Register(new HideVolumeFog(context))
+            .Register(new DisablePlacementEffect(context))
+            .Register(new DisableBulldozingEffect(context))
             //GroundAndWaterColor
             .Register(new DisableDirtyWaterColor(context))
             .Register(new DisableGrassFertilityGroundColor(context))
@@ -69,11 +71,9 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
             .Register(new HideBulldozerBar(context))
             .Register(new HideThermometer(context))
             .Register(new ToolbarPosition(context))
-#if DEV
             //Problems
             .Register(new HideTerraformNetworkFloodNotification(context))
             .Register(new HideDisconnectedPowerLinesNotification(context))
-#endif
             //Fixes
             .Register(new LowerInfoPanelZOrder(context))
             ;
@@ -100,6 +100,8 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
                 .Register(FeatureKey.HideEdgeFog, () => mod.Settings.HideEdgeFog)
                 .Register(FeatureKey.HidePollutionFog, () => mod.Settings.HidePollutionFog)
                 .Register(FeatureKey.HideVolumeFog, () => mod.Settings.HideVolumeFog)
+                .Register(FeatureKey.DisablePlacementEffect, () => mod.Settings.DisablePlacementEffect)
+                .Register(FeatureKey.DisableBulldozingEffect, () => mod.Settings.DisableBulldozingEffect)
                 //GroundAndWaterColor
                 .Register(FeatureKey.DisableDirtyWaterColor, () => mod.Settings.DisableDirtyWaterColor)
                 .Register(FeatureKey.DisableGrassFertilityGroundColor, () => mod.Settings.DisableGrassFertilityGroundColor)
@@ -134,11 +136,9 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
                 .Register(FeatureKey.HideBulldozerBar, () => mod.Settings.HideBulldozerBar)
                 .Register(FeatureKey.HideThermometer, () => mod.Settings.HideThermometer)
                 .Register(FeatureKey.ToolbarPosition, () => mod.Settings.ModifyToolbarPosition)
-#if DEV
                 //Problems
                 .Register(FeatureKey.HideTerraformNetworkFloodNotification, () => mod.Settings.HideTerraformNetworkFloodNotification)
                 .Register(FeatureKey.HideDisconnectedPowerLinesNotification, () => mod.Settings.HideDisconnectedPowerLinesNotification)
-#endif
                 //Fixes
                 .Register(FeatureKey.LowerInfoPanelZOrder, () => true)
                 ;

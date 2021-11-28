@@ -16,6 +16,7 @@ namespace com.github.TheCSUser.HideItBobby.Translation
         public static readonly Phrase DevToolsReloadSettings = Create(nameof(DevToolsReloadSettings));
         public static readonly Phrase DevToolsApplySettings = Create(nameof(DevToolsApplySettings));
         public static readonly Phrase DevToolsOverwriteLanguageFiles = Create(nameof(DevToolsOverwriteLanguageFiles));
+        public static readonly Phrase DevToolsReloadLanguageFiles = Create(nameof(DevToolsReloadLanguageFiles));
         //language
         public static readonly Phrase LanguageName = Create(nameof(LanguageName));
         public static readonly Phrase LanguageHeader = Create(nameof(LanguageHeader));
@@ -97,6 +98,11 @@ namespace com.github.TheCSUser.HideItBobby.Translation
         public static readonly Phrase VolumeFog = Create(nameof(VolumeFog));
         public static readonly Phrase DistanceFog = Create(nameof(DistanceFog));
         public static readonly Phrase EdgeFog = Create(nameof(EdgeFog));
+        public static readonly Phrase PlacementEffect = Create(nameof(PlacementEffect));
+        public static readonly Phrase BulldozingEffect = Create(nameof(BulldozingEffect));
+        public static readonly Phrase DisablePlacementBulldozingEffectUnavailableDescriptionLine1 = Create(nameof(DisablePlacementBulldozingEffectUnavailableDescriptionLine1));
+        public static readonly Phrase DisablePlacementBulldozingEffectUnavailableDescriptionLine2 = Create(nameof(DisablePlacementBulldozingEffectUnavailableDescriptionLine2));
+        public static readonly Phrase DisablePlacementBulldozingEffectUnavailableDescriptionLine3 = Create(nameof(DisablePlacementBulldozingEffectUnavailableDescriptionLine3));
         //Problems
         public static readonly Phrase ProblemsGroup = Create(nameof(ProblemsGroup));
         public static readonly Phrase TerraformNetworkFloodNotification = Create(nameof(TerraformNetworkFloodNotification));

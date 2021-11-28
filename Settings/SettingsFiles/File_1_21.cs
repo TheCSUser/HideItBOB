@@ -113,6 +113,14 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
         [XmlElement("HideEdgeFog")]
         public bool HideEdgeFog { get => _hideEdgeFog; set => Set(ref _hideEdgeFog, value, nameof(HideEdgeFog)); }
 
+        private bool _disablePlacementEffect;
+        [XmlElement("DisablePlacementEffect")]
+        public bool DisablePlacementEffect { get => _disablePlacementEffect; set => Set(ref _disablePlacementEffect, value, nameof(DisablePlacementEffect)); }
+
+        private bool _disableBulldozingEffect;
+        [XmlElement("DisableBulldozingEffect")]
+        public bool DisableBulldozingEffect { get => _disableBulldozingEffect; set => Set(ref _disableBulldozingEffect, value, nameof(DisableBulldozingEffect)); }
+
         //Ground and water color
         private bool _disableGrassFertilityGroundColor;
         [XmlElement("DisableGrassFertilityGroundColor")]
@@ -240,7 +248,7 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
         private float _toolbarPosition;
         [XmlElement("ToolbarPosition")]
         public float ToolbarPosition { get => _toolbarPosition; set => Set(ref _toolbarPosition, value, nameof(ToolbarPosition)); }
-#if DEV
+
         //problems
         private bool _hideTerraformNetworkFloodNotification;
         [XmlElement("HideTerraformNetworkFloodNotification")]
@@ -249,7 +257,7 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
         private bool _hideDisconnectedPowerLinesNotification;
         [XmlElement("HideDisconnectedPowerLinesNotification")]
         public bool HideDisconnectedPowerLinesNotification { get => _hideDisconnectedPowerLinesNotification; set => Set(ref _hideDisconnectedPowerLinesNotification, value, nameof(HideDisconnectedPowerLinesNotification)); }
-#endif
+
         #endregion
     }
 }

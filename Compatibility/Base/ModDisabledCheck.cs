@@ -17,8 +17,8 @@ namespace com.github.TheCSUser.HideItBobby.Compatibility.Base
 
         private readonly Func<PluginManager.PluginInfo, bool> _predicate;
 
-        public ModDisabledCheck(IModContext context, string name) : this(context, (p) => p.name == name) { }
-        public ModDisabledCheck(IModContext context, Func<string, bool> namePredicate) : this(context, (p) => namePredicate(p.name)) { }
+        public ModDisabledCheck(IModContext context, string name) : this(context, (p) => p?.name == name) { }
+        public ModDisabledCheck(IModContext context, Func<string, bool> namePredicate) : this(context, (p) => namePredicate(p?.name)) { }
         public ModDisabledCheck(IModContext context, Func<PluginManager.PluginInfo, bool> predicate) : base(context)
         {
             _predicate = predicate;

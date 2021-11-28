@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
 
-namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared.Patches
+namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
 {
     internal static class NaturalResourceManagerProxy
     {

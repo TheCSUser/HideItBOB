@@ -24,6 +24,8 @@ namespace com.github.TheCSUser.HideItBobby.Features
         public static readonly FeatureKey HideVolumeFog = Create(nameof(HideVolumeFog));
         public static readonly FeatureKey HideDistanceFog = Create(nameof(HideDistanceFog));
         public static readonly FeatureKey HideEdgeFog = Create(nameof(HideEdgeFog));
+        public static readonly FeatureKey DisablePlacementEffect = Create(nameof(DisablePlacementEffect));
+        public static readonly FeatureKey DisableBulldozingEffect = Create(nameof(DisableBulldozingEffect));
 
         //GroundAndWaterColor
         public static readonly FeatureKey DisableGrassFertilityGroundColor = Create(nameof(DisableGrassFertilityGroundColor));

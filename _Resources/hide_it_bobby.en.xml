@@ -79,4 +79,13 @@
   <string name="VolumeFog">Hide volume fog</string>
   <string name="DistanceFog">Hide distance fog</string>
   <string name="EdgeFog">Hide edge fog</string>
+  <string name="PlacementEffect">Disable placement effect</string>
+  <string name="BulldozingEffect">Disable bulldozing effect</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Disabling placement and bulldozing effect is unavailable</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">because you have Subtle Bulldozing, Dragging and More! mod enabled.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problems</string>
+  <string name="TerraformNetworkFloodNotification">Hide flood notification for Terraform Network</string>
+  <string name="HideDisconnectedPowerLinesNotification">Hide notification for disconnected power lines</string>
 </resources>

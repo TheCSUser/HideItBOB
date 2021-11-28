@@ -13,6 +13,7 @@ namespace com.github.TheCSUser.HideItBobby
 			.Register(Use(new TerraformNetworkSubscribedCheck(Context)))
 			.Register(Use(new UIResolutionModEnabledCheck(Context)))
 			.Register(Use(new TreeAnarchyModEnabledCheck(Context)))
+			.Register(Use(new SubtleBulldozingModDisabledCheck(Context)))
 			;
 		}
 	}

@@ -1,4 +1,4 @@
-﻿using com.github.TheCSUser.HideItBobby.Features.Effects.Shared.Patches;
+﻿using com.github.TheCSUser.HideItBobby.Features.Effects.Shared;
 using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Effects

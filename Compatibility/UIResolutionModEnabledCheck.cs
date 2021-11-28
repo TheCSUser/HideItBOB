@@ -5,10 +5,6 @@ namespace com.github.TheCSUser.HideItBobby.Compatibility
 {
     internal sealed class UIResolutionModEnabledCheck : ModEnabledCheck
     {
-        public UIResolutionModEnabledCheck(IModContext context) : base(
-            context,
-            (pluginInfo) => pluginInfo?.name == "2487213155"
-        )
-        { }
+        public UIResolutionModEnabledCheck(IModContext context) : base(context, "2487213155") { }
     }
 }

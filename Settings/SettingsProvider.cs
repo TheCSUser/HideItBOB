@@ -131,6 +131,10 @@ namespace com.github.TheCSUser.HideItBobby.Settings
                     HideThermometer = false,
                     ModifyToolbarPosition = false,
                     ToolbarPosition = 0f,
+
+                    //Problems
+                    HideTerraformNetworkFloodNotification = true,
+                    HideDisconnectedPowerLinesNotification = false,
                     #endregion
                 };
                 Provider.Save(_data);

@@ -83,11 +83,15 @@
     <Compile Include="Compatibility\Base\ModDisabledCheck.cs" />
     <Compile Include="Compatibility\Base\ModEnabledCheck.cs" />
     <Compile Include="Compatibility\Base\RequiredDLCCheck.cs" />
+    <Compile Include="Compatibility\SubtleBulldozingModDisabledCheck.cs" />
     <Compile Include="Compatibility\TreeAnarchyModEnabledCheck.cs" />
     <Compile Include="Compatibility\UIResolutionModEnabledCheck.cs" />
     <Compile Include="Features\Decorations\Base\HideDecorations.cs" />
     <Compile Include="Features\Effects\Base\HideFog.cs" />
     <Compile Include="Compatibility\TerraformNetworkSubscribedCheck.cs" />
+    <Compile Include="Features\Effects\DisableBulldozingEffect.cs" />
+    <Compile Include="Features\Effects\DisablePlacementEffect.cs" />
+    <Compile Include="Features\Effects\Shared\DispatchPlacementEffectProxy.cs" />
     <Compile Include="Features\Problems\HideDisconnectedPowerLinesNotification.cs" />
     <Compile Include="Features\Problems\HideTerraformNetworkFloodNotification.cs" />
     <Compile Include="Features\UIElements\Shared\UIViewProxy.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="UserInterface\Styles.cs" />
     <Compile Include="VersionMigrations\Migrate_1_20_to_1_21.cs" />
     <Compile Include="VersionMigrations\Migrate_1_18_to_1_21.cs" />
+    <Compile Include="VersionMigrations\Migrate_1_28_1_to_1_29 .cs" />
     <Compile Include="VersionMigrations\Migrate_1_28_to_1_28_1.cs" />
     <Compile Include="VersionMigrations\Migrate_1_24_to_1_25.cs" />
     <Compile Include="VersionMigrations\Migrate_1_21_to_1_22.cs" />
@@ -136,7 +141,7 @@
     <Compile Include="Features\Effects\HidePollutedAreaEffect.cs" />
     <Compile Include="Features\Effects\HideBurnedAreaEffect.cs" />
     <Compile Include="Features\Effects\HideOreAreaEffect.cs" />
-    <Compile Include="Features\Effects\Shared\Patches\NaturalResourceManagerProxy.cs" />
+    <Compile Include="Features\Effects\Shared\NaturalResourceManagerProxy.cs" />
     <Compile Include="Features\Effects\Shared\TexturesUpdater.cs" />
     <Compile Include="Features\FeatureBase.cs" />
     <Compile Include="Features\FeatureFlags.cs" />

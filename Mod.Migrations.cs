@@ -24,6 +24,7 @@ namespace com.github.TheCSUser.HideItBobby
                 new Migrate_1_21_to_1_22(Context),
                 new Migrate_1_24_to_1_25(Context),
                 new Migrate_1_28_to_1_28_1(Context),
+                new Migrate_1_28_1_to_1_29(Context),
             };
         }
 

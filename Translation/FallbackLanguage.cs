@@ -9,17 +9,20 @@ namespace com.github.TheCSUser.HideItBobby.Translation
     {
         public static ILanguageDictionary Build(IModContext context) => new LanguageDictionary(context, new Dictionary<string, string>()
         {
+#if DEV
             //dev tools
-            { DevToolsHeader,"Dev Tools" },
-            { DevToolsDescriptionLine1,"You are seeing this section because you are using the development version of this mod." },
-            { DevToolsDescriptionLine2,"Please make sure that you know what you are doing." },
-            { DevToolsEnable,"Enable %1" },
-            { DevToolsDisable,"Disable %1" },
-            { DevToolsInitialize,"Initialize %1" },
-            { DevToolsTerminate,"Terminate %1" },
-            { DevToolsReloadSettings,"Reload settings" },
-            { DevToolsApplySettings,"Force apply settings" },
-            { DevToolsOverwriteLanguageFiles,"Overwrite language files with default versions" },
+            { DevToolsHeader, "Dev Tools" },
+            { DevToolsDescriptionLine1, "You are seeing this section because you are using the development version of this mod." },
+            { DevToolsDescriptionLine2, "Please make sure that you know what you are doing." },
+            { DevToolsEnable, "Enable %1" },
+            { DevToolsDisable, "Disable %1" },
+            { DevToolsInitialize, "Initialize %1" },
+            { DevToolsTerminate, "Terminate %1" },
+            { DevToolsReloadSettings, "Reload settings" },
+            { DevToolsApplySettings, "Force apply settings" },
+            { DevToolsOverwriteLanguageFiles, "Overwrite language files with default versions" },
+            { DevToolsReloadLanguageFiles, "Reload language files" },
+#endif
             //language
             { LanguageName, "English" },
             { LanguageHeader, "Language" },
@@ -101,6 +104,11 @@ namespace com.github.TheCSUser.HideItBobby.Translation
             { VolumeFog,"Hide volume fog" },
             { DistanceFog,"Hide distance fog" },
             { EdgeFog,"Hide edge fog" },
+            { PlacementEffect, "Disable placement effect"},
+            { BulldozingEffect, "Disable bulldozing effect"},
+            { DisablePlacementBulldozingEffectUnavailableDescriptionLine1, "Disabling placement and bulldozing effect is unavailable"},
+            { DisablePlacementBulldozingEffectUnavailableDescriptionLine2, "because you have Subtle Bulldozing, Dragging and More! mod enabled."},
+            { DisablePlacementBulldozingEffectUnavailableDescriptionLine3, ""},
             //problems
             { ProblemsGroup, "Problems" },
             { TerraformNetworkFloodNotification, "Hide flood notification for Terraform Network" },

@@ -30,6 +30,7 @@ namespace com.github.TheCSUser.HideItBobby
                 var snowFallDLCEnabledCheck = Context.Resolve<SnowFallDLCEnabledCheck>();
                 var bobModDisabledCheck = Context.Resolve<BOBModDisabledCheck>();
                 var terraformNetworkSubscribedCheck = Context.Resolve<TerraformNetworkSubscribedCheck>();
+                var subtleBulldozingModDisabledCheck = Context.Resolve<SubtleBulldozingModDisabledCheck>();
 
                 #region Dev tools
 #if DEV
@@ -73,6 +74,23 @@ namespace com.github.TheCSUser.HideItBobby
                         if (File.Exists(Paths.Translations.PL)) File.Delete(Paths.Translations.PL);
                         if (File.Exists(Paths.Translations.ZH)) File.Delete(Paths.Translations.ZH);
                         UnpackLocaleFiles();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"{nameof(Mod)}.{nameof(BuildSettingsUI)}.Button eventCallback failed", e);
+                    }
+                });
+                devTools.AddButton(DevToolsReloadLanguageFiles, button =>
+                {
+                    try
+                    {
+                        var libraryLM = Context.Resolve<LocaleLibrary>()?.GetLifecycleManager();
+                        libraryLM?.Terminate();
+                        libraryLM?.Initialize();
+                        typeof(LocaleManager)
+                            .GetEvent(nameof(LocaleManager.LanguageChanged))
+                            ?.GetRaiseMethod()
+                            ?.Invoke(LocaleManager, new[] { Settings.UseGameLanguage ? LocaleManager.GameLanguage : Settings.SelectedLanguage });
                     }
                     catch (Exception e)
                     {
@@ -139,10 +157,10 @@ namespace com.github.TheCSUser.HideItBobby
                 #endregion
 
                 var availableFeatures = builder.AddGroup(AvailableFeaturesHeader, textScale: 2, textColor: White).Builder;
-                var unAvailableFeatures = builder.AddGroup(UnavailableFeaturesHeader, textScale: 2, textColor: White).Builder;
-                unAvailableFeatures.AddLabel(UnavailableFeaturesDescription, textColor: HoneyYellow)
+                var unavailableFeatures = builder.AddGroup(UnavailableFeaturesHeader, textScale: 2, textColor: White).Builder;
+                unavailableFeatures.AddLabel(UnavailableFeaturesDescription, textColor: HoneyYellow)
                     .ApplyStyle(HideEmptyLabel);
-                unAvailableFeatures.AddLabel(UnavailableFeaturesDescriptionLine2, textColor: HoneyYellow)
+                unavailableFeatures.AddLabel(UnavailableFeaturesDescriptionLine2, textColor: HoneyYellow)
                     .ApplyStyle(HideEmptyLabel);
 
                 #region MainMenu
@@ -238,16 +256,16 @@ namespace com.github.TheCSUser.HideItBobby
                 }
                 else
                 {
-                    unAvailableFeatures.AddGroupHeader(RuiningGroup);
-                    unAvailableFeatures.AddLabel(RuiningUnavailableDescriptionLine1, textColor: White)
+                    unavailableFeatures.AddGroupHeader(RuiningGroup);
+                    unavailableFeatures.AddLabel(RuiningUnavailableDescriptionLine1, textColor: White)
                         .ApplyStyle(HideEmptyLabel);
-                    unAvailableFeatures.AddLabel(RuiningUnavailableDescriptionLine2, textColor: White)
+                    unavailableFeatures.AddLabel(RuiningUnavailableDescriptionLine2, textColor: White)
                         .ApplyStyle(HideEmptyLabel);
-                    unAvailableFeatures.AddLabel(RuiningUnavailableDescriptionLine3, textColor: White)
+                    unavailableFeatures.AddLabel(RuiningUnavailableDescriptionLine3, textColor: White)
                         .ApplyStyle(HideEmptyLabel);
-                    unAvailableFeatures.AddSpace(3);
-                    unAvailableFeatures.AddUnavailableFeatureCheckbox(TreeRuining, Settings.HideTreeRuining, value => Settings.HideTreeRuining = value);
-                    unAvailableFeatures.AddUnavailableFeatureCheckbox(PropRuining, Settings.HidePropRuining, value => Settings.HidePropRuining = value);
+                    unavailableFeatures.AddSpace(3);
+                    unavailableFeatures.AddUnavailableFeatureCheckbox(TreeRuining, Settings.HideTreeRuining, value => Settings.HideTreeRuining = value);
+                    unavailableFeatures.AddUnavailableFeatureCheckbox(PropRuining, Settings.HidePropRuining, value => Settings.HidePropRuining = value);
                 }
                 #endregion
 
@@ -275,14 +293,32 @@ namespace com.github.TheCSUser.HideItBobby
                 availableFeatures.AddFeatureCheckbox(VolumeFog, Settings.HideVolumeFog, value => Settings.HideVolumeFog = value);
                 availableFeatures.AddFeatureCheckbox(DistanceFog, Settings.HideDistanceFog, value => Settings.HideDistanceFog = value);
                 availableFeatures.AddFeatureCheckbox(EdgeFog, Settings.HideEdgeFog, value => Settings.HideEdgeFog = value);
+
+                var disablePlacementAndBulldozeEffectsCompatible = subtleBulldozingModDisabledCheck.Result;
+                if (disablePlacementAndBulldozeEffectsCompatible)
+                {
+                    availableFeatures.AddFeatureCheckbox(PlacementEffect, Settings.DisablePlacementEffect, value => Settings.DisablePlacementEffect = value);
+                    availableFeatures.AddFeatureCheckbox(BulldozingEffect, Settings.DisableBulldozingEffect, value => Settings.DisableBulldozingEffect = value);
+                }
+                else
+                {
+                    unavailableFeatures.AddGroupHeader(EffectsGroup);
+                    unavailableFeatures.AddLabel(DisablePlacementBulldozingEffectUnavailableDescriptionLine1, textColor: White)
+                        .ApplyStyle(HideEmptyLabel);
+                    unavailableFeatures.AddLabel(DisablePlacementBulldozingEffectUnavailableDescriptionLine2, textColor: White)
+                        .ApplyStyle(HideEmptyLabel);
+                    unavailableFeatures.AddLabel(DisablePlacementBulldozingEffectUnavailableDescriptionLine3, textColor: White)
+                        .ApplyStyle(HideEmptyLabel);
+                    unavailableFeatures.AddUnavailableFeatureCheckbox(PlacementEffect, Settings.DisablePlacementEffect, value => Settings.DisablePlacementEffect = value);
+                    unavailableFeatures.AddUnavailableFeatureCheckbox(BulldozingEffect, Settings.DisableBulldozingEffect, value => Settings.DisableBulldozingEffect = value);
+                }
+
                 #endregion
 
                 #region Problems
-#if DEV
                 availableFeatures.AddGroupHeader(ProblemsGroup);
                 if (terraformNetworkSubscribedCheck.Result) availableFeatures.AddFeatureCheckbox(TerraformNetworkFloodNotification, Settings.HideTerraformNetworkFloodNotification, value => Settings.HideTerraformNetworkFloodNotification = value);
                 availableFeatures.AddFeatureCheckbox(HideDisconnectedPowerLinesNotification, Settings.HideDisconnectedPowerLinesNotification, value => Settings.HideDisconnectedPowerLinesNotification = value);
-#endif
                 #endregion
             }
             catch (Exception e)

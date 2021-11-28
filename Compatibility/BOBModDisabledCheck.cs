@@ -5,10 +5,6 @@ namespace com.github.TheCSUser.HideItBobby.Compatibility
 {
     internal sealed class BOBModDisabledCheck : ModDisabledCheck
     {
-        public BOBModDisabledCheck(IModContext context) : base(
-            context,
-            (pluginInfo) => pluginInfo?.name == "2197863850"
-        )
-        { }
+        public BOBModDisabledCheck(IModContext context) : base(context, "2197863850") { }
     }
 }
