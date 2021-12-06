@@ -2,7 +2,7 @@
 
 namespace com.github.TheCSUser.HideItBobby.Compatibility.Base
 {
-    internal abstract class RequiredDLCCheck : CompatibilityCheck
+    internal abstract class RequiredDLCCheck : CompatibilityCheckBase
     {
         private readonly SteamHelper.DLC _requiredDLC;
 

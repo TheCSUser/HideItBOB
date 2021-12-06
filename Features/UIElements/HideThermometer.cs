@@ -38,8 +38,8 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         #region TreeAnarchy mod compatibility
         private readonly TreeAnarchyModEnabledCheck _treeAnarchyModCheck;
 
-        private readonly Vector3 _treeAnarchyPanelPositionOnEnabled = new Vector3(-0.2f, 0.1f, 0f);
-        private readonly Vector3 _treeAnarchyPanelPositionOnDisabled = new Vector3(-0.2f, 0.0f, 0f);
+        private readonly Vector3 _treeAnarchyPanelPositionOnEnabled = new Vector3(-0.245f, 0.1f, 0f);
+        private readonly Vector3 _treeAnarchyPanelPositionOnDisabled = new Vector3(-0.245f, 0.0f, 0f);
 
         private readonly Cached<GameObject> _treeAnarchyPanelObject;
 
@@ -72,11 +72,11 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 
         private GameObject GetTreeAnarchyPanelObject()
         {
-            var obj = GameObject.Find("TreeAnarchyIndicatorPanel");
+            var obj = GameObject.Find("Heat'o'meter")?.transform?.Find("IndicatorPanel")?.gameObject;
 #if DEV || PREVIEW
             if (obj is null)
             {
-                Log.Info($"{nameof(HideThermometer)}.{nameof(GetTreeAnarchyPanelObject)} could not find TreeAnarchyIndicatorPanel.");
+                Log.Info($"{nameof(HideThermometer)}.{nameof(GetTreeAnarchyPanelObject)} could not find Heat'o'meter/IndicatorPanel.");
             }
 #endif
             return obj;

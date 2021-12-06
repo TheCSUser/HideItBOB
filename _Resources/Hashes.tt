@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Security.Cryptography" #>
+<#@ output extension="tmp" #>
+<#
+
+var currentHashes = new Dictionary<string,string>();
+foreach (var fileName in Directory
+    .GetFiles(Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "sha"))
+    .Where(fn => Path.GetFileName(fn).EndsWith(".sha256.txt")))
+{
+    var hash = File.ReadAllText(fileName);
+    var key = fileName.Replace(".sha256.txt","").Split('.').Last();
+    //Console.WriteLine(Path.GetFileName(fileName) + " SHA256: " + hash);
+    currentHashes[key] = hash;
+}
+
+Encoding UTF8WithoutBOMEncoding = new UTF8Encoding(false);
+foreach (var fileName in Directory
+    .GetFiles(Path.GetDirectoryName(Host.TemplateFile))
+    .Where(fn => Path.GetExtension(fn) == ".xml")
+    .Where(fn => Path.GetFileName(fn) != "hide_it_bobby.xml"))
+{
+    var hash = GetHash(fileName);
+    //Console.WriteLine(Path.GetFileName(fileName) + " SHA256: " + hash);
+    if(!currentHashes.Values.Contains(hash))
+    {
+        var parts = Path.GetFileNameWithoutExtension(fileName).Split('.');
+        string outputFilePath = Path.Combine(Path.GetDirectoryName(fileName), parts[0] + ".NEW." + parts[1] + ".sha256.txt");
+        if(File.Exists(outputFilePath)) File.Delete(outputFilePath);
+        File.WriteAllText(outputFilePath, hash, UTF8WithoutBOMEncoding);
+    }
+}
+#>
+<#+
+public string GetHash(string fileName)
+{
+    using (SHA256 sha256 = SHA256.Create())
+    {
+        byte[] data;
+        using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+        {
+            data = sha256.ComputeHash(stream);
+        }
+
+        var sBuilder = new StringBuilder();
+        for (int i = 0; i < data.Length; i++)
+        {
+            sBuilder.Append(data[i].ToString("x2"));
+        }
+        return sBuilder.ToString();
+    }
+}
+#>

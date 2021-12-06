@@ -141,6 +141,26 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;resources&gt;
         ///  &lt;!-- language --&gt;
+        ///  &lt;string name=&quot;LanguageName&quot;&gt;한국어&lt;/string&gt;
+        ///  &lt;string name=&quot;LanguageHeader&quot;&gt;언어&lt;/string&gt;
+        ///  &lt;string name=&quot;UseGameLanguage&quot;&gt;게임 언어 사용&lt;/string&gt;
+        ///  &lt;string name=&quot;SelectLanguage&quot;&gt;언어 선택&lt;/string&gt;
+        ///  &lt;!-- features --&gt;
+        ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;사용 가능한 기능&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;사용할 수 없는 기능&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;여기 표시되는 기능들은 다른 모드와의 충돌로 인해 비활성화된 기능들입니다.&lt;/string&gt;
+        ///   [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hide_it_bobby_ko {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_ko", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;resources&gt;
+        ///  &lt;!-- language --&gt;
         ///  &lt;string name=&quot;LanguageName&quot;&gt;Polski&lt;/string&gt;
         ///  &lt;string name=&quot;LanguageHeader&quot;&gt;Język&lt;/string&gt;
         ///  &lt;string name=&quot;UseGameLanguage&quot;&gt;Użyj języka gry&lt;/string&gt;

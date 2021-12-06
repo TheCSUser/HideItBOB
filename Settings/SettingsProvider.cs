@@ -57,95 +57,103 @@ namespace com.github.TheCSUser.HideItBobby.Settings
 #endif
                 if (!(file is null)) return file;
 
-                var _data = new File
-                {
-                    SelectedLanguage = "en",
-                    UseGameLanguage = true,
-
-                    #region Main menu features
-                    HideMainMenuChirper = false,
-                    HideMainMenuDLCPanel = false,
-                    HideMainMenuLogo = false,
-                    HideMainMenuNewsPanel = false,
-                    HideMainMenuParadoxAccountPanel = false,
-                    HideMainMenuVersionNumber = false,
-                    HideMainMenuWorkshopPanel = false,
-                    #endregion
-
-                    #region In game features
-                    //Decorations
-                    HideCliffDecorations = false,
-                    HideFertileDecorations = false,
-                    HideGrassDecorations = false,
-
-                    //Effects
-                    HideOreArea = false,
-                    HideOilArea = false,
-                    HideSandArea = false,
-                    HideFertilityArea = false,
-                    HideForestArea = false,
-                    HideShoreArea = false,
-                    HidePollutedArea = false,
-                    HideBurnedArea = false,
-                    HideDestroyedArea = false,
-                    HidePollutionFog = false,
-                    HideVolumeFog = false,
-                    HideDistanceFog = false,
-                    HideEdgeFog = false,
-
-                    //Ground and water color
-                    DisableGrassFertilityGroundColor = false,
-                    DisableGrassFieldGroundColor = false,
-                    DisableGrassForestGroundColor = false,
-                    DisableGrassPollutionGroundColor = false,
-                    DisableDirtyWaterColor = false,
-
-                    //Objects
-                    HideSeagulls = false,
-                    HideWildlife = false,
-
-                    //Ruining - Deprecated
-                    HideTreeRuining = false,
-                    HidePropRuining = false,
-
-                    //In game ui elements
-                    HideInfoViewsButton = false,
-                    HideDisastersButton = false,
-                    HideChirperButton = false,
-                    HideRadioButton = false,
-                    HideGearButton = false,
-                    HideZoomButton = false,
-                    HideUnlockButton = false,
-                    HideAdvisorButton = false,
-                    HideBulldozerButton = false,
-                    HideCinematicCameraButton = false,
-                    HideFreeCameraButton = false,
-                    HideCongratulationPanel = false,
-                    HideAdvisorPanel = false,
-                    HideTimePanel = false,
-                    HideZoomAndUnlockBackground = false,
-                    HideSeparators = false,
-                    HideCityName = false,
-                    HidePauseOutline = false,
-                    HideBulldozerBar = false,
-                    HideThermometer = false,
-                    ModifyToolbarPosition = false,
-                    ToolbarPosition = 0f,
-
-                    //Problems
-                    HideTerraformNetworkFloodNotification = true,
-                    HideDisconnectedPowerLinesNotification = false,
-                    #endregion
-                };
+                var _data = Default();
                 Provider.Save(_data);
                 return _data;
             }
             catch (Exception e)
             {
                 Log.Error($"{nameof(SettingsProvider)}.{nameof(Load)} failed", e);
-                return new File();
+                return Default();
             }
         }
+
+        private File Default() => new File
+        {
+            SelectedLanguage = "en",
+            UseGameLanguage = true,
+
+            #region Main menu features
+            HideMainMenuChirper = false,
+            HideMainMenuDLCPanel = false,
+            HideMainMenuLogo = false,
+            HideMainMenuNewsPanel = false,
+            HideMainMenuParadoxAccountPanel = false,
+            HideMainMenuVersionNumber = false,
+            HideMainMenuWorkshopPanel = false,
+            #endregion
+
+            #region In game features
+            //Decorations
+            HideCliffDecorations = false,
+            HideFertileDecorations = false,
+            HideGrassDecorations = false,
+
+            //Effects
+            HideOreArea = false,
+            HideOilArea = false,
+            HideSandArea = false,
+            HideFertilityArea = false,
+            HideForestArea = false,
+            HideShoreArea = false,
+            HidePollutedArea = false,
+            HideBurnedArea = false,
+            HideDestroyedArea = false,
+            HidePollutionFog = false,
+            HideVolumeFog = false,
+            HideDistanceFog = false,
+            HideEdgeFog = false,
+            DisableBulldozingEffect = false,
+            DisablePlacementEffect = false,
+
+            //Ground and water color
+            DisableGrassFertilityGroundColor = false,
+            DisableGrassFieldGroundColor = false,
+            DisableGrassForestGroundColor = false,
+            DisableGrassPollutionGroundColor = false,
+            DisableDirtyWaterColor = false,
+
+            //Objects
+            HideSeagulls = false,
+            HideWildlife = false,
+
+            //Ruining - Deprecated
+            HideTreeRuining = false,
+            HidePropRuining = false,
+
+            //In game ui elements
+            HideInfoViewsButton = false,
+            HideDisastersButton = false,
+            HideChirperButton = false,
+            HideRadioButton = false,
+            HideGearButton = false,
+            HideZoomButton = false,
+            HideUnlockButton = false,
+            HideAdvisorButton = false,
+            HideBulldozerButton = false,
+            HideCinematicCameraButton = false,
+            HideFreeCameraButton = false,
+            HideCongratulationPanel = false,
+            HideAdvisorPanel = false,
+            HideTimePanel = false,
+            HideZoomAndUnlockBackground = false,
+            HideSeparators = false,
+            HideCityName = false,
+            HidePauseOutline = false,
+            HideBulldozerBar = false,
+            HideThermometer = false,
+            ModifyToolbarPosition = false,
+            ToolbarPosition = 0f,
+            HideBuildingsCursorInfo = false,
+            HideNetworksCursorInfo = false,
+            HidePropsCursorInfo = false,
+            HideTreesCursorInfo = false,
+
+            //Problems
+            HideTerraformNetworkFloodNotification = true,
+            HideDisconnectedPowerLinesNotification = false,
+            #endregion
+        };
 
         ISettings ISettingsReader.Load() => Load();
         #endregion

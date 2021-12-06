@@ -79,11 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compatibility\Base\AssetDisabledCheck.cs" />
+    <Compile Include="Compatibility\Base\AssetSubscribedCheck.cs" />
     <Compile Include="Compatibility\Base\AssetEnabledCheck.cs" />
     <Compile Include="Compatibility\Base\ModDisabledCheck.cs" />
+    <Compile Include="Compatibility\Base\ModSubscribedCheck.cs" />
     <Compile Include="Compatibility\Base\ModEnabledCheck.cs" />
     <Compile Include="Compatibility\Base\RequiredDLCCheck.cs" />
     <Compile Include="Compatibility\SubtleBulldozingModDisabledCheck.cs" />
+    <Compile Include="Compatibility\PropLineToolModSubscribedCheck.cs" />
+    <Compile Include="Compatibility\TreeAnarchyModSubscribedCheck.cs" />
     <Compile Include="Compatibility\TreeAnarchyModEnabledCheck.cs" />
     <Compile Include="Compatibility\UIResolutionModEnabledCheck.cs" />
     <Compile Include="Features\Decorations\Base\HideDecorations.cs" />
@@ -94,15 +98,24 @@
     <Compile Include="Features\Effects\Shared\DispatchPlacementEffectProxy.cs" />
     <Compile Include="Features\Problems\HideDisconnectedPowerLinesNotification.cs" />
     <Compile Include="Features\Problems\HideTerraformNetworkFloodNotification.cs" />
+    <Compile Include="Features\UIElements\HidePropsCursorInfo.cs" />
+    <Compile Include="Features\UIElements\HideTreesCursorInfo.cs" />
+    <Compile Include="Features\UIElements\HideBuildingsCursorInfo.cs" />
+    <Compile Include="Features\UIElements\HideNetworksCursorInfo.cs" />
     <Compile Include="Features\UIElements\Shared\UIViewProxy.cs" />
+    <Compile Include="Features\UIElements\Shared\ToolBaseProxy.cs" />
     <Compile Include="Mod.Migrations.cs" />
+    <Compile Include="Properties\ResourcesSHA1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesSHA.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\Containers\FeaturesContainer.cs" />
     <Compile Include="Scripts\Base\FeaturesScript.cs" />
     <Compile Include="Scripts\Containers\IFeaturesContainer.cs" />
     <Compile Include="Scripts\InGameFeatures.cs" />
-    <Compile Include="Scripts\Containers\ISettingsContainer.cs" />
     <Compile Include="Scripts\MainMenuFeatures.cs" />
-    <Compile Include="Compatibility\Base\CompatibilityCheck.cs" />
+    <Compile Include="Compatibility\Base\CompatibilityCheckBase.cs" />
     <Compile Include="Compatibility\ICheck.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPosition.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPositionByName.cs" />
@@ -119,16 +132,13 @@
     <Compile Include="Settings\Paths.cs" />
     <Compile Include="Settings\Providers\Provider_Version.cs" />
     <Compile Include="Settings\SettingsFiles\File_Version.cs" />
-    <Compile Include="Translation\FallbackLanguage.cs" />
+    <Compile Include="Localization\FallbackLanguage.cs" />
+    <Compile Include="Localization\LocaleFilesManager.cs" />
     <Compile Include="UserInterface\Helpers.cs" />
     <Compile Include="UserInterface\Styles.cs" />
+    <Compile Include="VersionMigrations\Migrate_1_29_to_1_30.cs" />
     <Compile Include="VersionMigrations\Migrate_1_20_to_1_21.cs" />
     <Compile Include="VersionMigrations\Migrate_1_18_to_1_21.cs" />
-    <Compile Include="VersionMigrations\Migrate_1_28_1_to_1_29 .cs" />
-    <Compile Include="VersionMigrations\Migrate_1_28_to_1_28_1.cs" />
-    <Compile Include="VersionMigrations\Migrate_1_24_to_1_25.cs" />
-    <Compile Include="VersionMigrations\Migrate_1_21_to_1_22.cs" />
-    <Compile Include="Scripts\Containers\SettingsContainer.cs" />
     <Compile Include="Features\Decorations\HideGrassDecorations.cs" />
     <Compile Include="Features\Decorations\HideFertileDecorations.cs" />
     <Compile Include="Features\Decorations\HideCliffDecorations.cs" />
@@ -199,7 +209,7 @@
     <Compile Include="Settings\SettingsFiles\File_1_17.cs" />
     <Compile Include="Settings\SettingsFiles\File_1_19.cs" />
     <Compile Include="Settings\SettingsFiles\File_1_21.cs" />
-    <Compile Include="Translation\Phrase.cs" />
+    <Compile Include="Localization\Phrase.cs" />
     <Compile Include="UserInterface\Palette.cs" />
     <Compile Include="Mod.BuildSettingsUI.cs" />
     <Compile Include="Settings\SettingsProvider.cs" />
@@ -236,9 +246,14 @@
     <None Include="_Resources\hide_it_bobby.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\ResourcesSHA.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesSHA1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +276,54 @@
       <Project>{d57f3061-d07b-4a98-bbd8-dcde4995e388}</Project>
       <Name>Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_Resources\hide_it_bobby.ko.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_Resources\Hashes.tt" />
+    <None Include="_Resources\Screen05.png" />
+    <None Include="_Resources\Screen04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_Resources\sha\hide_it_bobby.21.BOM.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.21.BOM.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.21.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.21.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.BOM.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.BOM.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.BOM.zh.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.22.zh.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.23.BOM.ja.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.23.ja.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.25.BOM.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.25.BOM.es.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.25.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.25.es.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.es.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.ja.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.ru.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.BOM.zh.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.de.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.es.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.ja.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.pl.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.ru.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.29.zh.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.30.BOM.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.30.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.31.en.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.31.ja.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.31.ko.sha256.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Dev' ">
@@ -298,5 +361,11 @@
       xcopy /y "CitiesHarmony.API.dll" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
       xcopy /y "_Resources\PreviewImage.png" "%25PROGRAMFILES(X86)%25\Steam\steamapps\workshop\content\255710\2513657277"
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+      "$(SolutionDir)packages\Mono.TextTransform.1.0.0\tools\TextTransform.exe" "$(ProjectDir)_Resources\Hashes.tt" -P="$(TargetDir.TrimEnd('\'))"
+      del "$(ProjectDir)_Resources\Hashes.tmp"
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

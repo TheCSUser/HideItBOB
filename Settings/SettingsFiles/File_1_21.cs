@@ -249,6 +249,22 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
         [XmlElement("ToolbarPosition")]
         public float ToolbarPosition { get => _toolbarPosition; set => Set(ref _toolbarPosition, value, nameof(ToolbarPosition)); }
 
+        private bool _hideNetworksCursorInfo;
+        [XmlElement("HideNetworksCursorInfo")]
+        public bool HideNetworksCursorInfo { get => _hideNetworksCursorInfo; set => Set(ref _hideNetworksCursorInfo, value, nameof(HideNetworksCursorInfo)); }
+
+        private bool _hideBuildingsCursorInfo;
+        [XmlElement("HideBuildingsCursorInfo")]
+        public bool HideBuildingsCursorInfo { get => _hideBuildingsCursorInfo; set => Set(ref _hideBuildingsCursorInfo, value, nameof(HideBuildingsCursorInfo)); }
+
+        private bool _hideTreesCursorInfo;
+        [XmlElement("HideTreesCursorInfo")]
+        public bool HideTreesCursorInfo { get => _hideTreesCursorInfo; set => Set(ref _hideTreesCursorInfo, value, nameof(HideTreesCursorInfo)); }
+
+        private bool _hidePropsCursorInfo;
+        [XmlElement("HidePropsCursorInfo")]
+        public bool HidePropsCursorInfo { get => _hidePropsCursorInfo; set => Set(ref _hidePropsCursorInfo, value, nameof(HidePropsCursorInfo)); }
+
         //problems
         private bool _hideTerraformNetworkFloodNotification;
         [XmlElement("HideTerraformNetworkFloodNotification")]

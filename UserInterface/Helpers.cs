@@ -1,7 +1,7 @@
 ﻿using com.github.TheCSUser.Shared.UserInterface.Localization;
-using com.github.TheCSUser.HideItBobby.Translation;
 using System;
 using com.github.TheCSUser.Shared.UserInterface.Localization.Components;
+using com.github.TheCSUser.HideItBobby.Localization;
 
 namespace com.github.TheCSUser.HideItBobby.UserInterface
 {

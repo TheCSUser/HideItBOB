@@ -69,6 +69,10 @@ namespace com.github.TheCSUser.HideItBobby.Features
         public static readonly FeatureKey HideBulldozerBar = Create(nameof(HideBulldozerBar));
         public static readonly FeatureKey HideThermometer = Create(nameof(HideThermometer));
         public static readonly FeatureKey ToolbarPosition = Create(nameof(ToolbarPosition));
+        public static readonly FeatureKey HideNetworksCursorInfo = Create(nameof(HideNetworksCursorInfo));
+        public static readonly FeatureKey HideBuildingsCursorInfo = Create(nameof(HideBuildingsCursorInfo));
+        public static readonly FeatureKey HideTreesCursorInfo = Create(nameof(HideTreesCursorInfo));
+        public static readonly FeatureKey HidePropsCursorInfo = Create(nameof(HidePropsCursorInfo));
 
         //Ruining
         public static readonly FeatureKey HideTreeRuining = Create(nameof(HideTreeRuining));

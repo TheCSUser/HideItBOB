@@ -12,15 +12,33 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 
         protected Mod Mod { get; }
 
-        public virtual IFeaturesContainer Features { get; }
-        public virtual ISettingsContainer Settings { get; }
+        private IFeaturesContainer _features;
+        public virtual IFeaturesContainer Features
+        {
+            get => _features;
+            protected set
+            {
+                _features = value ?? FeaturesContainer.Empty;
+                if (_features.Count == 0)
+                {
+                    Log.Error($"{GetType().Name}.{nameof(Features)}.Set There are no features registered with the script");
+                    IsError = true;
+                }
+                else if (IsError)
+                {
+#if DEV
+                    Log.Info($"{GetType().Name}.{nameof(Features)}.Set Non empty container set, IsError=false");
+#endif
+                    IsError = false;
+                }
+            }
+        }
 
-        public FeaturesScript(Mod mod, IFeaturesContainer features, ISettingsContainer settings) : base(mod.Context)
+        public FeaturesScript(Mod mod, IFeaturesContainer features) : base(mod.Context)
         {
             _lifecycleManager = new LifecycleManager(this);
             Mod = mod;
             Features = features;
-            Settings = settings;
         }
 
         protected override bool OnEnable()
@@ -28,13 +46,13 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 #if DEV
             Log.Info($"{GetType().Name} enabling");
 #endif
-            foreach (var feature in Features.Values)
+            foreach (var feature in Features)
                 feature.IsError = false;
 
             var success = true;
-            foreach (var feature in Features.Values)
+            foreach (var feature in Features)
             {
-                var shouldBeEnabled = Settings.Get(feature.Key);
+                var shouldBeEnabled = Features.IsSettingEnabled(feature.Key);
 
                 if (feature.IsEnabled == shouldBeEnabled) continue;
 
@@ -57,7 +75,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 #if DEV
             Log.Info($"{GetType().Name} disabling");
 #endif
-            foreach (var feature in Features.Values.Reverse())
+            foreach (var feature in Features.Reverse())
             {
                 if (!feature.IsEnabled) continue;
 
@@ -89,9 +107,9 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
                 try
                 {
                     var success = true;
-                    foreach (var feature in Features.Values)
+                    foreach (var feature in Features)
                     {
-                        var shouldBeEnabled = Settings.Get(feature.Key);
+                        var shouldBeEnabled = Features.IsSettingEnabled(feature.Key);
                         if (feature.IsEnabled == shouldBeEnabled) continue;
 
                         var flags = shouldBeEnabled ? feature.Enable() : feature.Disable();
@@ -114,7 +132,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 
             try
             {
-                foreach (var feature in Features.Values.Where(f => f is IUpdatableFeature).Cast<IUpdatableFeature>())
+                foreach (var feature in Features.Where(f => f is IUpdatableFeature).Cast<IUpdatableFeature>())
                 {
                     var flags = feature.Update();
 #if DEV
@@ -134,7 +152,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
         public sealed override IInitializable GetLifecycleManager() => _lifecycleManager;
         private readonly LifecycleManager _lifecycleManager;
 
-        private class LifecycleManager : Shared.Common.LifecycleManager
+        private sealed class LifecycleManager : Shared.Common.LifecycleManager
         {
             private readonly FeaturesScript Script;
             public LifecycleManager(FeaturesScript script) : base(((IWithContext)script).Context)
@@ -147,7 +165,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 #if DEV
                 Log.Info($"{Script.GetType().Name}.{GetType().Name} initializing");
 #endif
-                foreach (var feature in Script.Features.Values)
+                foreach (var feature in Script.Features)
                 {
                     feature.IsError = false;
                     feature.Initialize();
@@ -160,7 +178,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
 #if DEV
                 Log.Info($"{Script.GetType().Name}.{GetType().Name} terminating");
 #endif
-                foreach (var feature in Script.Features.Values.Reverse())
+                foreach (var feature in Script.Features.Reverse())
                     feature.Terminate();
                 return true;
             }
@@ -180,7 +198,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
                 if (++_counter % THROTTLE_BY != 0) return;
                 base.OnUpdate();
             }
-        } 
+        }
         #endregion
     }
 }

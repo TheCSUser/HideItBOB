@@ -1,5 +1,4 @@
-﻿using com.github.TheCSUser.HideItBobby.Features;
-using com.github.TheCSUser.HideItBobby.Features.Decorations;
+﻿using com.github.TheCSUser.HideItBobby.Features.Decorations;
 using com.github.TheCSUser.HideItBobby.Features.Effects;
 using com.github.TheCSUser.HideItBobby.Features.Effects.Shared;
 using com.github.TheCSUser.HideItBobby.Features.Fixes;
@@ -9,139 +8,88 @@ using com.github.TheCSUser.HideItBobby.Features.Problems;
 using com.github.TheCSUser.HideItBobby.Features.Ruining;
 using com.github.TheCSUser.HideItBobby.Features.UIElements;
 using com.github.TheCSUser.HideItBobby.Properties;
-using com.github.TheCSUser.Shared.Common;
+using System;
 
 namespace com.github.TheCSUser.HideItBobby.Scripts
 {
     internal sealed class InGameFeatures : FeaturesScript
     {
         #region Features
-        private static IFeaturesContainer GetFeatures(IModContext context) => new FeaturesContainer(context)
-            //Decorations
-            .Register(new HideCliffDecorations(context))
-            .Register(new HideFertileDecorations(context))
-            .Register(new HideGrassDecorations(context))
-            //Effects
-            .Register(new HideOreAreaEffect(context))
-            .Register(new HideOilAreaEffect(context))
-            .Register(new HideSandAreaEffect(context))
-            .Register(new HideFertilityAreaEffect(context))
-            .Register(new HideForestAreaEffect(context))
-            .Register(new HideShoreAreaEffect(context))
-            .Register(new HidePollutedAreaEffect(context))
-            .Register(new HideBurnedAreaEffect(context))
-            .Register(new HideDestroyedAreaEffect(context))
-            .Register(new HideDistanceFog(context))
-            .Register(new HideEdgeFog(context))
-            .Register(new HidePollutionFog(context))
-            .Register(new HideVolumeFog(context))
-            .Register(new DisablePlacementEffect(context))
-            .Register(new DisableBulldozingEffect(context))
-            //GroundAndWaterColor
-            .Register(new DisableDirtyWaterColor(context))
-            .Register(new DisableGrassFertilityGroundColor(context))
-            .Register(new DisableGrassFieldGroundColor(context))
-            .Register(new DisableGrassForestGroundColor(context))
-            .Register(new DisableGrassPollutionGroundColor(context))
-            //Objects
-            .Register(new HideSeagulls(context))
-            .Register(new HideWildlife(context))
-            //Ruining
-            .Register(new HideTreeRuining(context))
-            .Register(new HidePropRuining(context))
-            //UIElements
-            .Register(new HideAdvisorButton(context))
-            .Register(new HideBulldozerButton(context))
-            .Register(new HideChirperButton(context))
-            .Register(new HideCinematicCameraButton(context))
-            .Register(new HideCityName(context))
-            .Register(new HideDisastersButton(context))
-            .Register(new HideFreeCameraButton(context))
-            .Register(new HideGearButton(context))
-            .Register(new HideInfoViewsButton(context))
-            .Register(new HideRadioButton(context))
-            .Register(new HideSeparators(context))
-            .Register(new HideTimePanel(context))
-            .Register(new HideUnlockButton(context))
-            .Register(new HideZoomAndUnlockBackground(context))
-            .Register(new HideZoomButton(context))
-            .Register(new HideCongratulationPanel(context))
-            .Register(new HideAdvisorPanel(context))
-            .Register(new HidePauseOutline(context))
-            .Register(new HideBulldozerBar(context))
-            .Register(new HideThermometer(context))
-            .Register(new ToolbarPosition(context))
-            //Problems
-            .Register(new HideTerraformNetworkFloodNotification(context))
-            .Register(new HideDisconnectedPowerLinesNotification(context))
-            //Fixes
-            .Register(new LowerInfoPanelZOrder(context))
-            ;
-        #endregion
-        #region Settings
-        private static ISettingsContainer GetSettings(Mod mod)
+        private static IFeaturesContainer GetFeatures(Mod mod)
         {
-            return new SettingsContainer(mod.Context)
+            try
+            {
+                return new FeaturesContainer(mod.Context)
                 //Decorations
-                .Register(FeatureKey.HideCliffDecorations, () => mod.Settings.HideCliffDecorations)
-                .Register(FeatureKey.HideFertileDecorations, () => mod.Settings.HideFertileDecorations)
-                .Register(FeatureKey.HideGrassDecorations, () => mod.Settings.HideGrassDecorations)
+                .Register(new HideCliffDecorations(mod.Context), () => mod.Settings.HideCliffDecorations)
+                .Register(new HideFertileDecorations(mod.Context), () => mod.Settings.HideFertileDecorations)
+                .Register(new HideGrassDecorations(mod.Context), () => mod.Settings.HideGrassDecorations)
                 //Effects
-                .Register(FeatureKey.HideOreAreaEffect, () => mod.Settings.HideOreArea)
-                .Register(FeatureKey.HideOilAreaEffect, () => mod.Settings.HideOilArea)
-                .Register(FeatureKey.HideSandAreaEffect, () => mod.Settings.HideSandArea)
-                .Register(FeatureKey.HideFertilityAreaEffect, () => mod.Settings.HideFertilityArea)
-                .Register(FeatureKey.HideForestAreaEffect, () => mod.Settings.HideForestArea)
-                .Register(FeatureKey.HideShoreAreaEffect, () => mod.Settings.HideShoreArea)
-                .Register(FeatureKey.HidePollutedAreaEffect, () => mod.Settings.HidePollutedArea)
-                .Register(FeatureKey.HideBurnedAreaEffect, () => mod.Settings.HideBurnedArea)
-                .Register(FeatureKey.HideDestroyedAreaEffect, () => mod.Settings.HideDestroyedArea)
-                .Register(FeatureKey.HideDistanceFog, () => mod.Settings.HideDistanceFog)
-                .Register(FeatureKey.HideEdgeFog, () => mod.Settings.HideEdgeFog)
-                .Register(FeatureKey.HidePollutionFog, () => mod.Settings.HidePollutionFog)
-                .Register(FeatureKey.HideVolumeFog, () => mod.Settings.HideVolumeFog)
-                .Register(FeatureKey.DisablePlacementEffect, () => mod.Settings.DisablePlacementEffect)
-                .Register(FeatureKey.DisableBulldozingEffect, () => mod.Settings.DisableBulldozingEffect)
+                .Register(new HideOreAreaEffect(mod.Context), () => mod.Settings.HideOreArea)
+                .Register(new HideOilAreaEffect(mod.Context), () => mod.Settings.HideOilArea)
+                .Register(new HideSandAreaEffect(mod.Context), () => mod.Settings.HideSandArea)
+                .Register(new HideFertilityAreaEffect(mod.Context), () => mod.Settings.HideFertilityArea)
+                .Register(new HideForestAreaEffect(mod.Context), () => mod.Settings.HideForestArea)
+                .Register(new HideShoreAreaEffect(mod.Context), () => mod.Settings.HideShoreArea)
+                .Register(new HidePollutedAreaEffect(mod.Context), () => mod.Settings.HidePollutedArea)
+                .Register(new HideBurnedAreaEffect(mod.Context), () => mod.Settings.HideBurnedArea)
+                .Register(new HideDestroyedAreaEffect(mod.Context), () => mod.Settings.HideDestroyedArea)
+                .Register(new HideDistanceFog(mod.Context), () => mod.Settings.HideDistanceFog)
+                .Register(new HideEdgeFog(mod.Context), () => mod.Settings.HideEdgeFog)
+                .Register(new HidePollutionFog(mod.Context), () => mod.Settings.HidePollutionFog)
+                .Register(new HideVolumeFog(mod.Context), () => mod.Settings.HideVolumeFog)
+                .Register(new DisablePlacementEffect(mod.Context), () => mod.Settings.DisablePlacementEffect)
+                .Register(new DisableBulldozingEffect(mod.Context), () => mod.Settings.DisableBulldozingEffect)
                 //GroundAndWaterColor
-                .Register(FeatureKey.DisableDirtyWaterColor, () => mod.Settings.DisableDirtyWaterColor)
-                .Register(FeatureKey.DisableGrassFertilityGroundColor, () => mod.Settings.DisableGrassFertilityGroundColor)
-                .Register(FeatureKey.DisableGrassFieldGroundColor, () => mod.Settings.DisableGrassFieldGroundColor)
-                .Register(FeatureKey.DisableGrassForestGroundColor, () => mod.Settings.DisableGrassForestGroundColor)
-                .Register(FeatureKey.DisableGrassPollutionGroundColor, () => mod.Settings.DisableGrassPollutionGroundColor)
+                .Register(new DisableDirtyWaterColor(mod.Context), () => mod.Settings.DisableDirtyWaterColor)
+                .Register(new DisableGrassFertilityGroundColor(mod.Context), () => mod.Settings.DisableGrassFertilityGroundColor)
+                .Register(new DisableGrassFieldGroundColor(mod.Context), () => mod.Settings.DisableGrassFieldGroundColor)
+                .Register(new DisableGrassForestGroundColor(mod.Context), () => mod.Settings.DisableGrassForestGroundColor)
+                .Register(new DisableGrassPollutionGroundColor(mod.Context), () => mod.Settings.DisableGrassPollutionGroundColor)
                 //Objects
-                .Register(FeatureKey.HideSeagulls, () => mod.Settings.HideSeagulls)
-                .Register(FeatureKey.HideWildlife, () => mod.Settings.HideWildlife)
+                .Register(new HideSeagulls(mod.Context), () => mod.Settings.HideSeagulls)
+                .Register(new HideWildlife(mod.Context), () => mod.Settings.HideWildlife)
                 //Ruining
-                .Register(FeatureKey.HideTreeRuining, () => mod.Settings.HideTreeRuining)
-                .Register(FeatureKey.HidePropRuining, () => mod.Settings.HidePropRuining)
+                .Register(new HideTreeRuining(mod.Context), () => mod.Settings.HideTreeRuining)
+                .Register(new HidePropRuining(mod.Context), () => mod.Settings.HidePropRuining)
                 //UIElements
-                .Register(FeatureKey.HideAdvisorButton, () => mod.Settings.HideAdvisorButton)
-                .Register(FeatureKey.HideBulldozerButton, () => mod.Settings.HideBulldozerButton)
-                .Register(FeatureKey.HideChirperButton, () => mod.Settings.HideChirperButton)
-                .Register(FeatureKey.HideCinematicCameraButton, () => mod.Settings.HideCinematicCameraButton)
-                .Register(FeatureKey.HideCityName, () => mod.Settings.HideCityName)
-                .Register(FeatureKey.HideDisastersButton, () => mod.Settings.HideDisastersButton)
-                .Register(FeatureKey.HideFreeCameraButton, () => mod.Settings.HideFreeCameraButton)
-                .Register(FeatureKey.HideGearButton, () => mod.Settings.HideGearButton)
-                .Register(FeatureKey.HideInfoViewsButton, () => mod.Settings.HideInfoViewsButton)
-                .Register(FeatureKey.HideRadioButton, () => mod.Settings.HideRadioButton)
-                .Register(FeatureKey.HideSeparators, () => mod.Settings.HideSeparators)
-                .Register(FeatureKey.HideTimePanel, () => mod.Settings.HideTimePanel)
-                .Register(FeatureKey.HideUnlockButton, () => mod.Settings.HideUnlockButton)
-                .Register(FeatureKey.HideZoomAndUnlockBackground, () => mod.Settings.HideZoomAndUnlockBackground)
-                .Register(FeatureKey.HideZoomButton, () => mod.Settings.HideZoomButton)
-                .Register(FeatureKey.HideCongratulationPanel, () => mod.Settings.HideCongratulationPanel)
-                .Register(FeatureKey.HideAdvisorPanel, () => mod.Settings.HideAdvisorPanel)
-                .Register(FeatureKey.HidePauseOutline, () => mod.Settings.HidePauseOutline)
-                .Register(FeatureKey.HideBulldozerBar, () => mod.Settings.HideBulldozerBar)
-                .Register(FeatureKey.HideThermometer, () => mod.Settings.HideThermometer)
-                .Register(FeatureKey.ToolbarPosition, () => mod.Settings.ModifyToolbarPosition)
+                .Register(new HideAdvisorButton(mod.Context), () => mod.Settings.HideAdvisorButton)
+                .Register(new HideBulldozerButton(mod.Context), () => mod.Settings.HideBulldozerButton)
+                .Register(new HideChirperButton(mod.Context), () => mod.Settings.HideChirperButton)
+                .Register(new HideCinematicCameraButton(mod.Context), () => mod.Settings.HideCinematicCameraButton)
+                .Register(new HideCityName(mod.Context), () => mod.Settings.HideCityName)
+                .Register(new HideDisastersButton(mod.Context), () => mod.Settings.HideDisastersButton)
+                .Register(new HideFreeCameraButton(mod.Context), () => mod.Settings.HideFreeCameraButton)
+                .Register(new HideGearButton(mod.Context), () => mod.Settings.HideGearButton)
+                .Register(new HideInfoViewsButton(mod.Context), () => mod.Settings.HideInfoViewsButton)
+                .Register(new HideRadioButton(mod.Context), () => mod.Settings.HideRadioButton)
+                .Register(new HideSeparators(mod.Context), () => mod.Settings.HideSeparators)
+                .Register(new HideTimePanel(mod.Context), () => mod.Settings.HideTimePanel)
+                .Register(new HideUnlockButton(mod.Context), () => mod.Settings.HideUnlockButton)
+                .Register(new HideZoomAndUnlockBackground(mod.Context), () => mod.Settings.HideZoomAndUnlockBackground)
+                .Register(new HideZoomButton(mod.Context), () => mod.Settings.HideZoomButton)
+                .Register(new HideCongratulationPanel(mod.Context), () => mod.Settings.HideCongratulationPanel)
+                .Register(new HideAdvisorPanel(mod.Context), () => mod.Settings.HideAdvisorPanel)
+                .Register(new HidePauseOutline(mod.Context), () => mod.Settings.HidePauseOutline)
+                .Register(new HideBulldozerBar(mod.Context), () => mod.Settings.HideBulldozerBar)
+                .Register(new HideThermometer(mod.Context), () => mod.Settings.HideThermometer)
+                .Register(new ToolbarPosition(mod.Context), () => mod.Settings.ModifyToolbarPosition)
+                .Register(new HideNetworksCursorInfo(mod.Context), () => mod.Settings.HideNetworksCursorInfo)
+                .Register(new HideBuildingsCursorInfo(mod.Context), () => mod.Settings.HideBuildingsCursorInfo)
+                .Register(new HideTreesCursorInfo(mod.Context), () => mod.Settings.HideTreesCursorInfo)
+                .Register(new HidePropsCursorInfo(mod.Context), () => mod.Settings.HidePropsCursorInfo)
                 //Problems
-                .Register(FeatureKey.HideTerraformNetworkFloodNotification, () => mod.Settings.HideTerraformNetworkFloodNotification)
-                .Register(FeatureKey.HideDisconnectedPowerLinesNotification, () => mod.Settings.HideDisconnectedPowerLinesNotification)
+                .Register(new HideTerraformNetworkFloodNotification(mod.Context), () => mod.Settings.HideTerraformNetworkFloodNotification)
+                .Register(new HideDisconnectedPowerLinesNotification(mod.Context), () => mod.Settings.HideDisconnectedPowerLinesNotification)
                 //Fixes
-                .Register(FeatureKey.LowerInfoPanelZOrder, () => true)
+                .Register(new LowerInfoPanelZOrder(mod.Context), () => true)
                 ;
+            }
+            catch (Exception e)
+            {
+                mod.Context.Log.Error($"{nameof(InGameFeatures)}.{nameof(GetFeatures)} failed", e);
+                return FeaturesContainer.Empty;
+            }
         }
         #endregion
 
@@ -150,7 +98,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
         private readonly InfoViewUpdater InfoViewUpdater;
         private readonly TexturesUpdater TexturesUpdater;
 
-        public InGameFeatures(Mod mod) : base(mod, GetFeatures(mod.Context), GetSettings(mod))
+        public InGameFeatures(Mod mod) : base(mod, GetFeatures(mod))
         {
             InfoViewUpdater = new InfoViewUpdater(mod.Context);
             TexturesUpdater = new TexturesUpdater(mod.Context);

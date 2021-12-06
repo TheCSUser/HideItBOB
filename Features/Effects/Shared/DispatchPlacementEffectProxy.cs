@@ -1,27 +1,27 @@
 ﻿using ColossalFramework;
-using ColossalFramework.Math;
-using ColossalFramework.UI;
-using com.github.TheCSUser.HideItBobby.Properties;
+using com.github.TheCSUser.HideItBobby.Compatibility;
 using com.github.TheCSUser.Shared.Common;
-using com.github.TheCSUser.Shared.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using UnityEngine;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
 {
+    [SuppressMessage("Style", "IDE0079:Remove unnecessary suppression", Justification = "Personal preference")]
     [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Personal preference")]
-    internal static class DispatchPlacementEffectProxy
+    internal class DispatchPlacementEffectProxy : WithContext, IManagedLifecycle
     {
-        public static bool DisablePlacementEffect;
-        public static bool DisableBulldozingEffect;
+        private static bool _disablePlacementEffect;
+        public bool DisablePlacementEffect { get => _disablePlacementEffect; set => _disablePlacementEffect = value; }
 
-        public static IEnumerable<PatchData> Patches
+        private static bool _disableBulldozingEffect;
+        public bool DisableBulldozingEffect { get => _disableBulldozingEffect; set => _disableBulldozingEffect = value; }
+
+        public IEnumerable<PatchData> Patches
         {
             get
             {
@@ -30,11 +30,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
                 yield return NetToolDispatchPlacementEffectPatch;
                 yield return PropToolDispatchPlacementEffectPatch;
                 yield return TreeToolDispatchPlacementEffectPatch;
+                if (!(PropLineToolDispatchPlacementEffectPatch is null)) yield return PropLineToolDispatchPlacementEffectPatch;
             }
         }
 
-        #region PatchData
-        public static readonly PatchData BuildingToolDispatchPlacementEffectPatch = new PatchData(
+        #region C:S PatchData
+        private static readonly PatchData BuildingToolDispatchPlacementEffectPatch = new PatchData(
             patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(BuildingToolDispatchPlacementEffectPatch)}",
             target: () => typeof(BuildingTool).GetMethod(
                 "DispatchPlacementEffect",
@@ -45,7 +46,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             prefix: () => typeof(DispatchPlacementEffectProxy).GetMethod(nameof(BuildingToolDispatchPlacementEffect), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
 
-        public static readonly PatchData DisasterToolDispatchPlacementEffectPatch = new PatchData(
+        private static readonly PatchData DisasterToolDispatchPlacementEffectPatch = new PatchData(
             patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(DisasterToolDispatchPlacementEffectPatch)}",
             target: () => typeof(DisasterTool).GetMethod(
                 "DispatchPlacementEffect",
@@ -56,7 +57,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             prefix: () => typeof(DispatchPlacementEffectProxy).GetMethod(nameof(DisasterToolDispatchPlacementEffect), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
 
-        public static readonly PatchData NetToolDispatchPlacementEffectPatch = new PatchData(
+        private static readonly PatchData NetToolDispatchPlacementEffectPatch = new PatchData(
             patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(NetToolDispatchPlacementEffectPatch)}",
             target: () => typeof(NetTool).GetMethod(
                 "DispatchPlacementEffect",
@@ -67,7 +68,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             prefix: () => typeof(DispatchPlacementEffectProxy).GetMethod(nameof(NetToolDispatchPlacementEffect), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
 
-        public static readonly PatchData PropToolDispatchPlacementEffectPatch = new PatchData(
+        private static readonly PatchData PropToolDispatchPlacementEffectPatch = new PatchData(
             patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(PropToolDispatchPlacementEffectPatch)}",
             target: () => typeof(PropTool).GetMethod(
                 "DispatchPlacementEffect",
@@ -78,7 +79,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             prefix: () => typeof(DispatchPlacementEffectProxy).GetMethod(nameof(PropToolDispatchPlacementEffect), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
         );
 
-        public static readonly PatchData TreeToolDispatchPlacementEffectPatch = new PatchData(
+        private static readonly PatchData TreeToolDispatchPlacementEffectPatch = new PatchData(
             patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(TreeToolDispatchPlacementEffectPatch)}",
             target: () => typeof(TreeTool).GetMethod(
                 "DispatchPlacementEffect",
@@ -90,10 +91,19 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         );
         #endregion
 
+        #region Mods PatchData
+
+        private PatchData PropLineToolDispatchPlacementEffectPatch = null;
+
+        #endregion
+
+        public DispatchPlacementEffectProxy(IModContext context) : base(context) { }
+
+        #region Patch methods
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool BuildingToolDispatchPlacementEffect(BuildingTool __instance, BuildingInfo info, ushort buildingID, Vector3 pos, float angle, int width, int length, bool bulldozing, bool collapsed)
+        private static bool BuildingToolDispatchPlacementEffect(BuildingTool __instance, BuildingInfo info, ushort buildingID, Vector3 pos, float angle, int width, int length, bool bulldozing, bool collapsed)
         {
-            if (bulldozing ? !DisableBulldozingEffect : !DisablePlacementEffect) return true;
+            if (bulldozing ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
             if (!Singleton<BuildingManager>.exists) return false;
 
             var properties = Singleton<BuildingManager>.instance.m_properties;
@@ -103,9 +113,9 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool DisasterToolDispatchPlacementEffect(BuildingTool __instance, Vector3 pos, bool bulldozing)
+        private static bool DisasterToolDispatchPlacementEffect(DisasterTool __instance, Vector3 pos, bool bulldozing)
         {
-            if (bulldozing ? !DisableBulldozingEffect : !DisablePlacementEffect) return true;
+            if (bulldozing ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
             if (!Singleton<PropManager>.exists) return false;
 
             var properties = Singleton<PropManager>.instance.m_properties;
@@ -115,9 +125,9 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool NetToolDispatchPlacementEffect(BuildingTool __instance, Vector3 startPos, Vector3 middlePos1, Vector3 middlePos2, Vector3 endPos, float halfWidth, bool bulldozing)
+        private static bool NetToolDispatchPlacementEffect(NetTool __instance, Vector3 startPos, Vector3 middlePos1, Vector3 middlePos2, Vector3 endPos, float halfWidth, bool bulldozing)
         {
-            if (bulldozing ? !DisableBulldozingEffect : !DisablePlacementEffect) return true;
+            if (bulldozing ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
             if (!Singleton<NetManager>.exists) return false;
 
             var properties = Singleton<NetManager>.instance.m_properties;
@@ -127,9 +137,9 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool PropToolDispatchPlacementEffect(BuildingTool __instance, Vector3 pos, bool bulldozing)
+        private static bool PropToolDispatchPlacementEffect(PropTool __instance, Vector3 pos, bool bulldozing)
         {
-            if (bulldozing ? !DisableBulldozingEffect : !DisablePlacementEffect) return true;
+            if (bulldozing ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
             if (!Singleton<PropManager>.exists) return false;
 
             var properties = Singleton<PropManager>.instance.m_properties;
@@ -139,9 +149,9 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static bool TreeToolDispatchPlacementEffect(BuildingTool __instance, Vector3 pos, bool bulldozing)
+        private static bool TreeToolDispatchPlacementEffect(TreeTool __instance, Vector3 pos, bool bulldozing)
         {
-            if (bulldozing ? !DisableBulldozingEffect : !DisablePlacementEffect) return true;
+            if (bulldozing ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
             if (!Singleton<TreeManager>.exists) return false;
 
             var properties = Singleton<TreeManager>.instance.m_properties;
@@ -150,6 +160,19 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static bool PropLineToolDispatchPlacementEffect(ToolBase __instance, Vector3 position, bool isBulldozeEffect)
+        {
+            if (isBulldozeEffect ? !_disableBulldozingEffect : !_disablePlacementEffect) return true;
+            if (!Singleton<TreeManager>.exists) return false;
+
+            var properties = Singleton<TreeManager>.instance.m_properties;
+            var effect = isBulldozeEffect ? properties.m_bulldozeEffect : properties.m_placementEffect;
+            DispatchSoundEffect(effect, position);
+            return false;
+        }
+
+        #region Helpers
         private static void DispatchSoundEffect(EffectInfo effect, Vector3 pos)
         {
             if (effect is null) return;
@@ -171,5 +194,74 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
             }
             return null;
         }
+        #endregion
+        #endregion
+
+        #region ManagedLifecycle
+        private IInitializable _lifecycleManager;
+        public IInitializable GetLifecycleManager() => _lifecycleManager ?? (_lifecycleManager = new DispatchPlacementEffectProxyLifecycleManager(this));
+
+        private sealed class DispatchPlacementEffectProxyLifecycleManager : LifecycleManager
+        {
+            private readonly DispatchPlacementEffectProxy _parent;
+
+            private readonly PropLineToolModSubscribedCheck _propLineToolModSubscribedCheck;
+
+            public DispatchPlacementEffectProxyLifecycleManager(DispatchPlacementEffectProxy parent) : base(parent.Context)
+            {
+                _parent = parent;
+                _propLineToolModSubscribedCheck = Context.Resolve<PropLineToolModSubscribedCheck>();
+            }
+
+            protected override bool OnInitialize()
+            {
+                if (_propLineToolModSubscribedCheck.Result)
+                {
+                    var propLineTool = _propLineToolModSubscribedCheck
+                        .ModInstance.GetType()
+                        .Assembly.GetTypes()
+                        .FirstOrDefault(t => t.IsSubclassOf(typeof(ToolBase)) && t.Name == "PropLineTool");
+                    if (!(propLineTool is null))
+                    {
+                        var target = propLineTool.GetMethod(
+                            "DispatchPlacementEffect",
+                            BindingFlags.Public | BindingFlags.Static,
+                            null,
+                            new Type[] { typeof(Vector3), typeof(bool) },
+                            null);
+                        if (!(target is null))
+                        {
+                            _parent.PropLineToolDispatchPlacementEffectPatch = new PatchData(
+                                patchId: $"{nameof(DispatchPlacementEffectProxy)}.{nameof(PropLineToolDispatchPlacementEffectPatch)}",
+                                target: () => target,
+                                prefix: () => typeof(DispatchPlacementEffectProxy).GetMethod(nameof(PropLineToolDispatchPlacementEffect), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
+                                );
+                        }
+                        else
+                        {
+                            _parent.PropLineToolDispatchPlacementEffectPatch = null;
+                            Log.Error($"{nameof(DispatchPlacementEffectProxyLifecycleManager)}.{nameof(OnInitialize)} invalid PropLineToolDispatchPlacementEffectPatch target");
+                        }
+                    }
+                    else
+                    {
+                        _parent.PropLineToolDispatchPlacementEffectPatch = null;
+                        Log.Error($"{nameof(DispatchPlacementEffectProxyLifecycleManager)}.{nameof(OnInitialize)} could not find PropLineTool BaseTool implementation");
+                    }
+                }
+                else
+                {
+                    _parent.PropLineToolDispatchPlacementEffectPatch = null;
+                }
+                return true;
+            }
+
+            protected override bool OnTerminate()
+            {
+                _parent.PropLineToolDispatchPlacementEffectPatch = null;
+                return true;
+            }
+        }
+        #endregion
     }
 }

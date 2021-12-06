@@ -1,14 +1,14 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using ColossalFramework.UI;
+using com.github.TheCSUser.HideItBobby.Compatibility;
 using com.github.TheCSUser.HideItBobby.Features;
+using com.github.TheCSUser.HideItBobby.Localization;
 using com.github.TheCSUser.HideItBobby.Properties;
 using com.github.TheCSUser.HideItBobby.Scripts;
-using com.github.TheCSUser.HideItBobby.Settings;
-using com.github.TheCSUser.HideItBobby.Translation;
 using com.github.TheCSUser.HideItBobby.UserInterface;
 using com.github.TheCSUser.Shared.UserInterface;
 using com.github.TheCSUser.Shared.UserInterface.Localization;
+using com.github.TheCSUser.Shared.UserInterface.Localization.Components;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace com.github.TheCSUser.HideItBobby
@@ -32,6 +32,8 @@ namespace com.github.TheCSUser.HideItBobby
                 var terraformNetworkSubscribedCheck = Context.Resolve<TerraformNetworkSubscribedCheck>();
                 var subtleBulldozingModDisabledCheck = Context.Resolve<SubtleBulldozingModDisabledCheck>();
 
+                var mainMenuFeatures = Context.Resolve<MainMenuFeatures>();
+                var inGameFeatures = Context.Resolve<InGameFeatures>();
                 #region Dev tools
 #if DEV
                 var devTools = builder.AddGroup(DevToolsHeader, textScale: 2, textColor: HoneyYellow).Builder;
@@ -44,20 +46,20 @@ namespace com.github.TheCSUser.HideItBobby
                 devTools.AddButton(new LocaleText(DevToolsEnable, ShortName), button => OnEnabled());
                 devTools.AddButton(new LocaleText(DevToolsDisable, ShortName), button => OnDisabled());
                 devTools.AddSpace(6);
-                devTools.AddButton(new LocaleText(DevToolsInitialize, nameof(MainMenuFeatures)), button => MainMenuFeatures.GetLifecycleManager().Initialize());
-                devTools.AddButton(new LocaleText(DevToolsEnable, nameof(MainMenuFeatures)), button => MainMenuFeatures.Enable());
-                devTools.AddButton(new LocaleText(DevToolsTerminate, nameof(MainMenuFeatures)), button =>
+                devTools.AddButton(new LocaleText(DevToolsInitialize, nameof(mainMenuFeatures)), button => mainMenuFeatures.GetLifecycleManager().Initialize());
+                devTools.AddButton(new LocaleText(DevToolsEnable, nameof(mainMenuFeatures)), button => mainMenuFeatures.Enable());
+                devTools.AddButton(new LocaleText(DevToolsTerminate, nameof(mainMenuFeatures)), button =>
                 {
-                    MainMenuFeatures.Disable();
-                    MainMenuFeatures.GetLifecycleManager().Terminate();
+                    mainMenuFeatures.Disable();
+                    mainMenuFeatures.GetLifecycleManager().Terminate();
                 });
                 devTools.AddSpace(6);
-                devTools.AddButton(new LocaleText(DevToolsInitialize, nameof(InGameFeatures)), button => InGameFeatures.GetLifecycleManager().Initialize());
-                devTools.AddButton(new LocaleText(DevToolsEnable, nameof(InGameFeatures)), button => InGameFeatures.Enable());
-                devTools.AddButton(new LocaleText(DevToolsTerminate, nameof(InGameFeatures)), button =>
+                devTools.AddButton(new LocaleText(DevToolsInitialize, nameof(inGameFeatures)), button => inGameFeatures.GetLifecycleManager().Initialize());
+                devTools.AddButton(new LocaleText(DevToolsEnable, nameof(inGameFeatures)), button => inGameFeatures.Enable());
+                devTools.AddButton(new LocaleText(DevToolsTerminate, nameof(inGameFeatures)), button =>
                 {
-                    InGameFeatures.Disable();
-                    InGameFeatures.GetLifecycleManager().Terminate();
+                    inGameFeatures.Disable();
+                    inGameFeatures.GetLifecycleManager().Terminate();
                 });
                 devTools.AddSpace(6);
                 devTools.AddButton(DevToolsReloadSettings, button => LoadSettings());
@@ -67,13 +69,7 @@ namespace com.github.TheCSUser.HideItBobby
                 {
                     try
                     {
-                        if (File.Exists(Paths.Translations.DE)) File.Delete(Paths.Translations.DE);
-                        if (File.Exists(Paths.Translations.EN)) File.Delete(Paths.Translations.EN);
-                        if (File.Exists(Paths.Translations.ES)) File.Delete(Paths.Translations.ES);
-                        if (File.Exists(Paths.Translations.JA)) File.Delete(Paths.Translations.JA);
-                        if (File.Exists(Paths.Translations.PL)) File.Delete(Paths.Translations.PL);
-                        if (File.Exists(Paths.Translations.ZH)) File.Delete(Paths.Translations.ZH);
-                        UnpackLocaleFiles();
+                        Context.Resolve<LocaleFilesManager>().Unpack(true);
                     }
                     catch (Exception e)
                     {
@@ -84,13 +80,13 @@ namespace com.github.TheCSUser.HideItBobby
                 {
                     try
                     {
-                        var libraryLM = Context.Resolve<LocaleLibrary>()?.GetLifecycleManager();
-                        libraryLM?.Terminate();
-                        libraryLM?.Initialize();
+                        var libraryLM = Context.Resolve<LocaleLibrary>().GetLifecycleManager();
+                        libraryLM.Terminate();
+                        libraryLM.Initialize();
                         typeof(LocaleManager)
                             .GetEvent(nameof(LocaleManager.LanguageChanged))
-                            ?.GetRaiseMethod()
-                            ?.Invoke(LocaleManager, new[] { Settings.UseGameLanguage ? LocaleManager.GameLanguage : Settings.SelectedLanguage });
+                            .GetRaiseMethod()
+                            .Invoke(LocaleManager, new[] { Settings.UseGameLanguage ? LocaleManager.GameLanguage : Settings.SelectedLanguage });
                     }
                     catch (Exception e)
                     {
@@ -207,6 +203,18 @@ namespace com.github.TheCSUser.HideItBobby
                     .AddSlider(null, 0.0f, 1.0f, 0.01f, Settings.ToolbarPosition, (_, newValue) => Settings.ToolbarPosition = newValue, width: 700f)
                     .ApplyStyle(HideEmptyLabel)
                     .ApplyStyle(DisableWhenNotModifyingPosition);
+
+                var cursorInfo = availableFeatures.AddGroup(CursorInfoHeader, textColor: White);
+                var contentPanel = (UIPanel)cursorInfo.Panel.Find("Content");
+                contentPanel.autoLayoutPadding = new UnityEngine.RectOffset(10, 0, 5, 0);
+                contentPanel.backgroundSprite = null;
+                cursorInfo.Panel.autoLayoutPadding = new UnityEngine.RectOffset(0, 0, 0, 0);
+                cursorInfo.Panel.backgroundSprite = null;
+                var cursorInfoBuilder = cursorInfo.Builder;
+                cursorInfoBuilder.AddFeatureCheckbox(NetworksCursorInfo, Settings.HideNetworksCursorInfo, value => Settings.HideNetworksCursorInfo = value);
+                cursorInfoBuilder.AddFeatureCheckbox(BuildingsCursorInfo, Settings.HideBuildingsCursorInfo, value => Settings.HideBuildingsCursorInfo = value);
+                cursorInfoBuilder.AddFeatureCheckbox(TreesCursorInfo, Settings.HideTreesCursorInfo, value => Settings.HideTreesCursorInfo = value);
+                cursorInfoBuilder.AddFeatureCheckbox(PropsCursorInfo, Settings.HidePropsCursorInfo, value => Settings.HidePropsCursorInfo = value);
                 #endregion
 
                 #region Objects
@@ -238,12 +246,12 @@ namespace com.github.TheCSUser.HideItBobby
                             Log.Info($"updating ruining under trees");
 #endif
                             FeatureFlags flags;
-                            flags = InGameFeatures.Features.Resolve(FeatureKey.HideTreeRuining).Run();
+                            flags = inGameFeatures.Features.Resolve(FeatureKey.HideTreeRuining).Run();
 #if DEV
                             Log.Info($"flags: {flags}");
                             Log.Info($"updating ruining under props");
 #endif
-                            flags = InGameFeatures.Features.Resolve(FeatureKey.HidePropRuining).Run();
+                            flags = inGameFeatures.Features.Resolve(FeatureKey.HidePropRuining).Run();
 #if DEV
                             Log.Info($"flags: {flags}");
 #endif

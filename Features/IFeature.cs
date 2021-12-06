@@ -2,7 +2,7 @@
 
 namespace com.github.TheCSUser.HideItBobby.Features
 {
-    internal interface IFeature : IInitializable<FeatureFlags>, IForceToggleable<FeatureFlags>, IErrorInfo, IAvailabilityInfo, IDisposableEx
+    internal interface IFeature : IInitializable<FeatureFlags>, IForceToggleable<FeatureFlags>, IErrorInfo, IAvailabilityInfo, IDisposableEx, IWithContext
     {
         FeatureKey Key { get; }
     }

@@ -79,4 +79,13 @@
   <string name="VolumeFog">マップ内のフォグを非表示</string>
   <string name="DistanceFog">都市境界のフォグを非表示</string>
   <string name="EdgeFog">エッジ部分のフォグを非表示</string>
+  <string name="PlacementEffect">設置時のエフェクトを無効化</string>
+  <string name="BulldozingEffect">撤去時のエフェクトを無効化</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">設置時と撤去時のエフェクトが無効化できません</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">Subtle Bulldozing, Dragging and More! MODが有効になっています</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <!-- problems -->
+  <string name="ProblemsGroup">通知</string>
+  <string name="TerraformNetworkFloodNotification">Terraform Network使用時は浸水の通知を非表示</string>
+  <string name="HideDisconnectedPowerLinesNotification">接続が無い送電線の通知を非表示</string>
 </resources>

@@ -1,10 +1,10 @@
 ﻿namespace com.github.TheCSUser.HideItBobby.Properties
 {
-    internal static class ModProperties
+    public static class ModProperties
     {
         public const string HarmonyId = "com.github.TheCSUser.HideItBobby";
-        public const string Version = "1.29";
-        public const int VersionInteger = 30;
+        public const string Version = "1.30";
+        public const int VersionInteger = 31;
         public const string Name = "Hide it, Bobby!";
         public const string ShortName = "HideItBobby";
 #if DEV

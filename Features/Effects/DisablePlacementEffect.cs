@@ -11,30 +11,33 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects
         private readonly ICheck _compatibilityCheck;
         public override bool IsAvailable => _compatibilityCheck.Result;
 
+        private readonly DispatchPlacementEffectProxy _dispatchPlacementEffectProxy;
+
         public DisablePlacementEffect(IModContext context) : base(context)
         {
             _compatibilityCheck = context.Resolve<SubtleBulldozingModDisabledCheck>();
+            _dispatchPlacementEffectProxy = context.Resolve<DispatchPlacementEffectProxy>();
         }
 
         protected override bool OnInitialize()
         {
-            Patcher.Patch(DispatchPlacementEffectProxy.Patches);
+            Patcher.Patch(_dispatchPlacementEffectProxy.Patches);
             return true;
         }
         protected override bool OnTerminate()
         {
-            Patcher.Unpatch(DispatchPlacementEffectProxy.Patches);
+            Patcher.Unpatch(_dispatchPlacementEffectProxy.Patches);
             return true;
         }
 
         protected override bool OnEnable()
         {
-            DispatchPlacementEffectProxy.DisablePlacementEffect = true;
+            _dispatchPlacementEffectProxy.DisablePlacementEffect = true;
             return true;
         }
         protected override bool OnDisable()
         {
-            DispatchPlacementEffectProxy.DisablePlacementEffect = false;
+            _dispatchPlacementEffectProxy.DisablePlacementEffect = false;
             return true;
         }
     }

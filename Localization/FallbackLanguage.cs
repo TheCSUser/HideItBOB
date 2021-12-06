@@ -1,9 +1,9 @@
 ﻿using com.github.TheCSUser.Shared.Common;
 using com.github.TheCSUser.Shared.UserInterface.Localization;
 using System.Collections.Generic;
-using static com.github.TheCSUser.HideItBobby.Translation.Phrase;
+using static com.github.TheCSUser.HideItBobby.Localization.Phrase;
 
-namespace com.github.TheCSUser.HideItBobby.Translation
+namespace com.github.TheCSUser.HideItBobby.Localization
 {
     internal static class FallbackLanguage
     {
@@ -65,6 +65,11 @@ namespace com.github.TheCSUser.HideItBobby.Translation
             { BulldozerBar,"Hide bulldozer bar" },
             { Thermometer,"Hide thermometer" },
             { ModifyToolbarPosition,"Modify toolbar position" },
+            { CursorInfoHeader,"Hide cursor info popup when placing or destroying:" },
+            { NetworksCursorInfo,"roads and other networks" },
+            { BuildingsCursorInfo,"buildings" },
+            { TreesCursorInfo,"trees" },
+            { PropsCursorInfo,"props" },
             //objects and props
             { ObjectsAndPropsGroup,"Objects and props" },
             { Seagulls,"Remove seagulls" },

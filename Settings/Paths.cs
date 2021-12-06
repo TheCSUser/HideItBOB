@@ -66,6 +66,9 @@ namespace com.github.TheCSUser.HideItBobby.Settings
             private static readonly Lazy<string> _ja = new Lazy<string>(() => Combine(Directory, "hide_it_bobby.ja.xml"));
             public static string JA => _ja.Value;
 
+            private static readonly Lazy<string> _ko = new Lazy<string>(() => Combine(Directory, "hide_it_bobby.ko.xml"));
+            public static string KO => _ko.Value;
+
             private static readonly Lazy<string> _pl = new Lazy<string>(() => Combine(Directory, "hide_it_bobby.pl.xml"));
             public static string PL => _pl.Value;
 

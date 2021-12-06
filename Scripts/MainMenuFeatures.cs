@@ -1,40 +1,36 @@
-﻿using com.github.TheCSUser.HideItBobby.Features;
-using com.github.TheCSUser.HideItBobby.Features.Menu;
+﻿using com.github.TheCSUser.HideItBobby.Features.Menu;
 using com.github.TheCSUser.HideItBobby.Properties;
-using com.github.TheCSUser.Shared.Common;
+using System;
 
 namespace com.github.TheCSUser.HideItBobby.Scripts
 {
     internal sealed class MainMenuFeatures : FeaturesScript
     {
         #region Features
-        private static IFeaturesContainer GetFeatures(IModContext context) => new FeaturesContainer(context)
-            .Register(new HideMainMenuChirper(context))
-            .Register(new HideMainMenuDLCPanel(context))
-            .Register(new HideMainMenuLogo(context))
-            .Register(new HideMainMenuNewsPanel(context))
-            .Register(new HideMainMenuParadoxAccountPanel(context))
-            .Register(new HideMainMenuVersionNumber(context))
-            .Register(new HideMainMenuWorkshopPanel(context))
-            ;
-        #endregion
-        #region Settings
-        private static ISettingsContainer GetSettings(Mod mod)
+        private static IFeaturesContainer GetFeatures(Mod mod)
         {
-            return new SettingsContainer(mod.Context)
-                .Register(FeatureKey.HideMainMenuChirper, () => mod.Settings.HideMainMenuChirper)
-                .Register(FeatureKey.HideMainMenuDLCPanel, () => mod.Settings.HideMainMenuDLCPanel)
-                .Register(FeatureKey.HideMainMenuLogo, () => mod.Settings.HideMainMenuLogo)
-                .Register(FeatureKey.HideMainMenuNewsPanel, () => mod.Settings.HideMainMenuNewsPanel)
-                .Register(FeatureKey.HideMainMenuParadoxAccountPanel, () => mod.Settings.HideMainMenuParadoxAccountPanel)
-                .Register(FeatureKey.HideMainMenuVersionNumber, () => mod.Settings.HideMainMenuVersionNumber)
-                .Register(FeatureKey.HideMainMenuWorkshopPanel, () => mod.Settings.HideMainMenuWorkshopPanel)
+            try
+            {
+                return new FeaturesContainer(mod.Context)
+                .Register(new HideMainMenuChirper(mod.Context), () => mod.Settings.HideMainMenuChirper)
+                .Register(new HideMainMenuDLCPanel(mod.Context), () => mod.Settings.HideMainMenuDLCPanel)
+                .Register(new HideMainMenuLogo(mod.Context), () => mod.Settings.HideMainMenuLogo)
+                .Register(new HideMainMenuNewsPanel(mod.Context), () => mod.Settings.HideMainMenuNewsPanel)
+                .Register(new HideMainMenuParadoxAccountPanel(mod.Context), () => mod.Settings.HideMainMenuParadoxAccountPanel)
+                .Register(new HideMainMenuVersionNumber(mod.Context), () => mod.Settings.HideMainMenuVersionNumber)
+                .Register(new HideMainMenuWorkshopPanel(mod.Context), () => mod.Settings.HideMainMenuWorkshopPanel)
                 ;
+            }
+            catch (Exception e)
+            {
+                mod.Context.Log.Error($"{nameof(MainMenuFeatures)}.{nameof(GetFeatures)} failed", e);
+                return FeaturesContainer.Empty;
+            }
         }
         #endregion
 
         protected override string Name => $"{ModProperties.ShortName}.{nameof(MainMenuFeatures)}";
 
-        public MainMenuFeatures(Mod mod) : base(mod, GetFeatures(mod.Context), GetSettings(mod)) { }
+        public MainMenuFeatures(Mod mod) : base(mod, GetFeatures(mod)) { }
     }
 }

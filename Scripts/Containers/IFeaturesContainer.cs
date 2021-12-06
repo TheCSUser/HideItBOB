@@ -1,11 +1,17 @@
 ﻿using com.github.TheCSUser.HideItBobby.Features;
+using System;
 using System.Collections.Generic;
 
 namespace com.github.TheCSUser.HideItBobby.Scripts
 {
-    internal interface IFeaturesContainer : IDictionary<FeatureKey, IFeature>
+    internal interface IFeaturesContainer : IEnumerable<IFeature>
     {
-        IFeaturesContainer Register(IFeature feature);
+        int Count { get; }
+
+        IFeaturesContainer Register(IFeature feature, Func<bool> isEnabled);
         IFeature Resolve(FeatureKey key);
+        bool IsSettingEnabled(FeatureKey key);
+
+        void Clear();
     }
 }
