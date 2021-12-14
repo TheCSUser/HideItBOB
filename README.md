@@ -12,6 +12,7 @@ This fork was created to be compatible with [BOB, the Tree and Prop Replacer](ht
 - adon for the Janapese translation
 - Citadino for the Spanish translation
 - vitalii201 for the Russian translation
+- DNSE for the Korean translation
 
 # Translation project
 Translation project is available at https://crowdin.com/project/cities-skylines-hide-it-bobby.
