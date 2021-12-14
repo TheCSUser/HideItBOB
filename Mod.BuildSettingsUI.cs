@@ -13,7 +13,6 @@ using System.Linq;
 
 namespace com.github.TheCSUser.HideItBobby
 {
-    using static ModProperties;
     using static Palette;
     using static Phrase;
     using static Styles;

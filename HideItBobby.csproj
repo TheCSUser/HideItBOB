@@ -85,6 +85,7 @@
     <Compile Include="Compatibility\Base\ModSubscribedCheck.cs" />
     <Compile Include="Compatibility\Base\ModEnabledCheck.cs" />
     <Compile Include="Compatibility\Base\RequiredDLCCheck.cs" />
+    <Compile Include="Compatibility\PropLineToolModEnabledCheck.cs" />
     <Compile Include="Compatibility\SubtleBulldozingModDisabledCheck.cs" />
     <Compile Include="Compatibility\PropLineToolModSubscribedCheck.cs" />
     <Compile Include="Compatibility\TreeAnarchyModSubscribedCheck.cs" />

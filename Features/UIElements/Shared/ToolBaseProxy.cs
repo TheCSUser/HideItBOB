@@ -1,7 +1,6 @@
 ﻿using com.github.TheCSUser.HideItBobby.Compatibility;
 using com.github.TheCSUser.HideItBobby.Compatibility.Base;
 using com.github.TheCSUser.Shared.Common;
-using com.github.TheCSUser.Shared.Imports;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -36,10 +35,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         }
 
         private static IModCheck _propLineToolModSubscribedCheck = ModCheck.NotCompatible;
+        private static IModCheck _propLineToolModEnabledCheck = ModCheck.NotCompatible;
 
         public ToolBaseProxy(IModContext context) : base(context)
         {
             _propLineToolModSubscribedCheck = context.Resolve<PropLineToolModSubscribedCheck>();
+            _propLineToolModEnabledCheck = context.Resolve<PropLineToolModEnabledCheck>();
             _context = context;
         }
 
@@ -78,7 +79,8 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
                         if (m_hoverInstance.Tree != 0U) return !_disableTreeToolCursorInfo;
                         return true;
                     case "PropLineTool":
-                        switch (GetPropLineToolObjectMode())
+                        if (!_propLineToolModEnabledCheck.Result) return true;
+                        switch (GetPropLineToolObjectMode(__instance))
                         {
                             case 1:
                                 return !_disablePropToolCursorInfo;
@@ -98,14 +100,11 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
             }
         }
 
-        private static int GetPropLineToolObjectMode()
+        private static int GetPropLineToolObjectMode(ToolBase instance)
         {
-            if (_propLineToolModSubscribedCheck.Result) return 0;
-
-            var value = _propLineToolModSubscribedCheck
-                ?.ModInstance
+            var value = instance
                 ?.GetType()
-                ?.GetStaticField<object>("objectMode");
+                ?.GetStaticField<object>("m_objectMode");
             return value is null ? 0 : (int)value;
         }
 

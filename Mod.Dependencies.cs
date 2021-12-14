@@ -23,6 +23,7 @@ namespace com.github.TheCSUser.HideItBobby
 			.Register(Use(new SubtleBulldozingModDisabledCheck(Context)))
 			.Register(Use(new TreeAnarchyModSubscribedCheck(Context)))
 			.Register(Use(new PropLineToolModSubscribedCheck(Context)))
+			.Register(Use(new PropLineToolModEnabledCheck(Context)))
 			//proxies
 			.Register(Use(new DispatchPlacementEffectProxy(Context)))
 			.Register(Use(new ToolBaseProxy(Context)))
