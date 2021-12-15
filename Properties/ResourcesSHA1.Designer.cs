@@ -374,5 +374,14 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
                 return ResourceManager.GetString("hide_it_bobby_31_ko_sha256", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2f2406dff75675b8e34d24eaf7a4471aefb8637b4f69d47eb979e3e61343c45b.
+        /// </summary>
+        internal static string hide_it_bobby_32_ja_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_32_ja_sha256", resourceCulture);
+            }
+        }
     }
 }

@@ -41,6 +41,11 @@
   <string name="BulldozerBar">ブルドーザーバーを非表示</string>
   <string name="Thermometer">温度計を非表示</string>
   <string name="ModifyToolbarPosition">ツールバーの位置を変更</string>
+  <string name="CursorInfoHeader">設置時と撤去時に出るポップアップ情報を非表示:</string>
+  <string name="NetworksCursorInfo">道路や他のネットワーク</string>
+  <string name="BuildingsCursorInfo">建物</string>
+  <string name="TreesCursorInfo">ツリー</string>
+  <string name="PropsCursorInfo">Prop</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">オブジェクトとProp</string>
   <string name="Seagulls">カモメを取り除く</string>

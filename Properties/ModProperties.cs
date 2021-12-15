@@ -4,7 +4,7 @@
     {
         public const string HarmonyId = "com.github.TheCSUser.HideItBobby";
         public const string Version = "1.30";
-        public const int VersionInteger = 31;
+        public const int VersionInteger = 32;
         public const string Name = "Hide it, Bobby!";
         public const string ShortName = "HideItBobby";
 #if DEV

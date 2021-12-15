@@ -325,6 +325,7 @@
     <Content Include="_Resources\sha\hide_it_bobby.31.en.sha256.txt" />
     <Content Include="_Resources\sha\hide_it_bobby.31.ja.sha256.txt" />
     <Content Include="_Resources\sha\hide_it_bobby.31.ko.sha256.txt" />
+    <Content Include="_Resources\sha\hide_it_bobby.32.ja.sha256.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Dev' ">

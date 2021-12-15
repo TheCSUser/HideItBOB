@@ -223,4 +223,7 @@
   <data name="hide_it_bobby_31_ko_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_resources\sha\hide_it_bobby.31.ko.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
+  <data name="hide_it_bobby_32_ja_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.32.ja.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
 </root>
