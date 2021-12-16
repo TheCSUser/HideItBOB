@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- language -->
+  <string name="LanguageName">Português (Brasil)</string>
+  <string name="LanguageHeader">Idioma</string>
+  <string name="UseGameLanguage">Usar idioma do jogo</string>
+  <string name="SelectLanguage">Selecionar idioma</string>
+  <!-- features -->
+  <string name="AvailableFeaturesHeader">Recursos disponíveis</string>
+  <string name="UnavailableFeaturesHeader">Recursos indisponíveis</string>
+  <string name="UnavailableFeaturesDescription">Funções visíveis nesta seção estão desabilitadas devido a um conflito com outro mod.</string>
+  <!-- main menu -->
+  <string name="MainMenuGroup">Interface do menu principal</string>
+  <string name="MainMenuChirper">Ocultar chirper</string>
+  <string name="MainMenuDLCPanel">Ocultar painel de DLC</string>
+  <string name="MainMenuLogoImage">Ocultar logo</string>
+  <string name="MainMenuNewsPanel">Ocultar painel de notícias</string>
+  <string name="MainMenuParadoxAccountPanel">Ocultar painel de conta Paradox</string>
+  <string name="MainMenuVersionNumber">Ocultar versão</string>
+  <string name="MainMenuWorkshopPanel">Ocultar painel do workshop</string>
+  <!-- ui elements -->
+  <string name="InGameUIGroup">Interface dentro do jogo</string>
+  <string name="AdvisorButton">Ocultar botão de avisos</string>
+  <string name="BulldozerButton">Ocultar botão de demolir</string>
+  <string name="ChirperButton">Ocultar botão do chirper</string>
+  <string name="CinematicCameraButton">Ocultar botão de câmera cinematográfica</string>
+  <string name="CityName">Ocultar nome da cidade</string>
+  <string name="DisastersButton">Ocultar botão de desastres</string>
+  <string name="FreeCameraButton">Ocultar botão de câmera livre</string>
+  <string name="GearButton">Ocultar botão da engrenagem</string>
+  <string name="InfoViewsButton">Ocultar botão do visualizador de informações</string>
+  <string name="RadioButton">Ocultar botão do rádio</string>
+  <string name="Separators">Ocultar separadores da barra de ferramentas</string>
+  <string name="TimePanel">Ocultar tempo do painel</string>
+  <string name="UnlockButton">Ocultar botão de marcos (cadeado)</string>
+  <string name="ZoomAndUnlockBackground">Ocultar zoom e desbloquear plano de fundo</string>
+  <string name="ZoomButton">Ocultar botão do zoom</string>
+  <string name="CongratulationPanel">Ocultar painel de congratulações</string>
+  <string name="AdvisorPanel">Ocultar painel de avisos</string>
+  <string name="PauseOutlineEffect">Ocultar contorno do pause</string>
+  <string name="BulldozerBar">Ocultar barra de demolição</string>
+  <string name="Thermometer">Ocultar termômetro</string>
+  <string name="ModifyToolbarPosition">Modificar posição da barra de ferramentas</string>
+  <string name="CursorInfoHeader">Ocultar pop-up de informações quando construir ou destruir:</string>
+  <string name="NetworksCursorInfo">estradas e outras vias</string>
+  <string name="BuildingsCursorInfo">construções</string>
+  <string name="TreesCursorInfo">árvores</string>
+  <string name="PropsCursorInfo">props</string>
+  <!-- objects and props -->
+  <string name="ObjectsAndPropsGroup">Objetos e props</string>
+  <string name="Seagulls">Remover gaivotas</string>
+  <string name="Wildlife">Remover vida selvagem</string>
+  <!-- decorations -->
+  <string name="DecorationsGroup">Sprites</string>
+  <string name="CliffDecorations">Ocultar decorações de penhascos</string>
+  <string name="GrassDecorations">Oculta decorações da grama</string>
+  <string name="FertileDecorations">Ocultar decorações de áreas férteis</string>
+  <!-- ruining -->
+  <string name="RuiningGroup">Ruína</string>
+  <string name="TreeRuining">Ocultar ruína das árvores</string>
+  <string name="PropRuining">Ocultar ruína dos props</string>
+  <string name="UpdateRuiningButton">Atualizar ruína em árvores e props existentes agora!</string>
+  <string name="RuiningUnavailableDescriptionLine1">Você está usando BOB com a opção de esconder a ruína.</string>
+  <string name="RuiningUnavailableDescriptionLine2">Por favor use BOB ao invés deste mod para esconder a ruína de árvore e prop.</string>
+  <!-- ground and water colors -->
+  <string name="GroundAndWaterColorGroup">Cores do solo e água</string>
+  <string name="GrassFertilityGroundColor">Remover a cor de área fértil no solo</string>
+  <string name="GrassFieldGroundColor">Remover a cor de área de campo no solo</string>
+  <string name="GrassForestGroundColor">Remover a cor de área de floresta no solo</string>
+  <string name="GrassPollutionGroundColor">Remover a cor de área poluída no solo</string>
+  <string name="DirtyWaterColor">Remover a cor de sujeira na água</string>
+  <!-- effects -->
+  <string name="EffectsGroup">Efeitos</string>
+  <string name="OreAreaEffect">Ocultar área de mineração</string>
+  <string name="OilAreaEffect">Ocultar área com petróleo</string>
+  <string name="SandAreaEffect">Ocultar área com areia</string>
+  <string name="FertilityAreaEffect">Ocultar área de fertilidade</string>
+  <string name="ForestAreaEffect">Ocultar área de floresta</string>
+  <string name="ShoreAreaEffect">Ocultar área da costa</string>
+  <string name="PollutedAreaEffect">Ocultar área poluída</string>
+  <string name="BurnedAreaEffect">Ocultar área queimada</string>
+  <string name="DestroyedAreaEffect">Ocultar área destruída</string>
+  <string name="PollutionFog">Esconder nevoeiro de poluição</string>
+  <string name="VolumeFog">Ocultar nevoeiro</string>
+  <string name="DistanceFog">Ocultar nevoeiro distante</string>
+  <string name="EdgeFog">Ocultar nevoeiro da borda do mapa</string>
+  <string name="PlacementEffect">Desativar efeito ao construir (nuvem de poeira)</string>
+  <string name="BulldozingEffect">Desativar efeito ao demolir</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Desativar efeitos de demolição e construção não está disponível</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">porque você tem o mod \'Subtle Bulldozing, Dragging and More!\' ativado.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problemas</string>
+  <string name="TerraformNetworkFloodNotification">Ocultar notificação de inundação para a ferramenta Terraform</string>
+  <string name="HideDisconnectedPowerLinesNotification">Ocultar notificação para linhas de energia desconectadas</string>
+</resources>

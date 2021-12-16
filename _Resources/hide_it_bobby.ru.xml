@@ -41,6 +41,11 @@
   <string name="BulldozerBar">Скрыть кнопки режимов бульдозера</string>
   <string name="Thermometer">Скрыть термометр</string>
   <string name="ModifyToolbarPosition">Изменить положение панели инструментов</string>
+  <string name="CursorInfoHeader">Скрыть всплывающее окно возле курсора, с информацией, при размещении или уничтожении:</string>
+  <string name="NetworksCursorInfo">дороги, линии электропередачи и т. п.</string>
+  <string name="BuildingsCursorInfo">здания</string>
+  <string name="TreesCursorInfo">деревья</string>
+  <string name="PropsCursorInfo">объекты</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">Объекты и реквизит</string>
   <string name="Seagulls">Убрать чаек</string>
@@ -54,7 +59,7 @@
   <string name="RuiningGroup">Разрушение почвы возле объектов</string>
   <string name="TreeRuining">Скрыть разрушение под деревьями</string>
   <string name="PropRuining">Скрыть разрушение возле объектов</string>
-  <string name="UpdateRuiningButton">Обновить текстуры разрушения возле существующих деревьев и объектов</string>
+  <string name="UpdateRuiningButton">Обновить текстуры разрушения возле существующих деревьев и объектов!</string>
   <string name="RuiningUnavailableDescriptionLine1">Вы используете мод BOB с функцией скрытия разрушения.</string>
   <string name="RuiningUnavailableDescriptionLine2">Используйте BOB вместо этого мода для скрытия разруш. возле деревьев и объектов.</string>
   <!-- ground and water colors -->
@@ -79,4 +84,13 @@
   <string name="VolumeFog">Скрыть объёмный туман</string>
   <string name="DistanceFog">Скрыть туман расстояния</string>
   <string name="EdgeFog">Скрыть туман края карты</string>
+  <string name="PlacementEffect">Отключить эффект размещения</string>
+  <string name="BulldozingEffect">Отключить эффект бульдозера</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Отключение эффекта размещения и бульдозера недоступно</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">потому, что у вас есть Subtle Bulldozing, Dragging and More! мод включён.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Проблемы</string>
+  <string name="TerraformNetworkFloodNotification">Скрыть уведомление о наводнении для Terraform Network</string>
+  <string name="HideDisconnectedPowerLinesNotification">Скрыть уведомление об отключённых линиях электропередачи</string>
 </resources>

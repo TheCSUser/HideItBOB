@@ -90,7 +90,7 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
         ///  &lt;!-- features --&gt;
         ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Available features&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Unavailable features&lt;/string&gt;
-        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;Feature [rest of string was truncated]&quot;;.
+        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;Features visible  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hide_it_bobby_en {
             get {
@@ -129,7 +129,8 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
         ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;利用可能な機能&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;利用不可の機能&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;このセクションで表示される機能は、他のMODと競合して無効になっています&lt;/string&gt;
-        ///  &lt;!-- mai [rest of string was truncated]&quot;;.
+        ///  &lt;!-- main menu --&gt;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hide_it_bobby_ja {
             get {
@@ -180,6 +181,25 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;resources&gt;
         ///  &lt;!-- language --&gt;
+        ///  &lt;string name=&quot;LanguageName&quot;&gt;Português (Brasil)&lt;/string&gt;
+        ///  &lt;string name=&quot;LanguageHeader&quot;&gt;Idioma&lt;/string&gt;
+        ///  &lt;string name=&quot;UseGameLanguage&quot;&gt;Usar idioma do jogo&lt;/string&gt;
+        ///  &lt;string name=&quot;SelectLanguage&quot;&gt;Selecionar idioma&lt;/string&gt;
+        ///  &lt;!-- features --&gt;
+        ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Recursos disponíveis&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Recursos indisponíveis&lt;/string&gt;
+        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hide_it_bobby_pt {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_pt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;resources&gt;
+        ///  &lt;!-- language --&gt;
         ///  &lt;string name=&quot;LanguageName&quot;&gt;Русский&lt;/string&gt;
         ///  &lt;string name=&quot;LanguageHeader&quot;&gt;Язык&lt;/string&gt;
         ///  &lt;string name=&quot;UseGameLanguage&quot;&gt;Язык игры&lt;/string&gt;
@@ -187,7 +207,7 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
         ///  &lt;!-- features --&gt;
         ///  &lt;string name=&quot;AvailableFeaturesHeader&quot;&gt;Доступные функции&lt;/string&gt;
         ///  &lt;string name=&quot;UnavailableFeaturesHeader&quot;&gt;Недоступные функции&lt;/string&gt;
-        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;Функции, отображаемые в э [rest of string was truncated]&quot;;.
+        ///  &lt;string name=&quot;UnavailableFeaturesDescription&quot;&gt;Функции, отображаемые в этом раздел [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hide_it_bobby_ru {
             get {
