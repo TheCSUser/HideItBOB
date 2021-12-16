@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">可用特性</string>
   <string name="UnavailableFeaturesHeader">不可用特性</string>
   <string name="UnavailableFeaturesDescription">由于与另一个mod冲突，在这部分可见的功能被禁用。</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">游戏主界面</string>
   <string name="MainMenuChirper">隐藏啾啾鸟</string>
@@ -41,6 +42,11 @@
   <string name="BulldozerBar">隐藏推土机栏</string>
   <string name="Thermometer">隐藏温度栏</string>
   <string name="ModifyToolbarPosition">调整工具栏位置</string>
+  <string name="CursorInfoHeader">Hide cursor info popup when placing or destroying:</string>
+  <string name="NetworksCursorInfo">roads and other networks</string>
+  <string name="BuildingsCursorInfo">buildings</string>
+  <string name="TreesCursorInfo">trees</string>
+  <string name="PropsCursorInfo">props</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">物品和道具</string>
   <string name="Seagulls">隐藏海鸥</string>
@@ -57,6 +63,7 @@
   <string name="UpdateRuiningButton">更新现有毁坏的树木和摆件</string>
   <string name="RuiningUnavailableDescriptionLine1">你正在使用BOB的隐藏毁坏特性。</string>
   <string name="RuiningUnavailableDescriptionLine2">请使用BOB代替该模组来隐藏树木和摆件毁坏。</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">底色</string>
   <string name="GrassFertilityGroundColor">移除沃土底色</string>
@@ -79,4 +86,13 @@
   <string name="VolumeFog">隐藏体积雾效果</string>
   <string name="DistanceFog">隐藏距离雾效果</string>
   <string name="EdgeFog">隐藏边界雾效果</string>
+  <string name="PlacementEffect">Disable placement effect</string>
+  <string name="BulldozingEffect">Disable bulldozing effect</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Disabling placement and bulldozing effect is unavailable</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">because you have Subtle Bulldozing, Dragging and More! mod enabled.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problems</string>
+  <string name="TerraformNetworkFloodNotification">Hide flood notification for Terraform Network</string>
+  <string name="HideDisconnectedPowerLinesNotification">Hide notification for disconnected power lines</string>
 </resources>

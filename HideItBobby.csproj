@@ -330,6 +330,17 @@
     <None Include="_Resources\sha\hide_it_bobby.33.pt.sha256.txt" />
     <None Include="_Resources\sha\hide_it_bobby.33.ru.sha256.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="_Resources\sha\hide_it_bobby.34.de.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.en.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.es.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.ja.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.ko.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.pl.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.pt.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.ru.sha256.txt" />
+    <None Include="_Resources\sha\hide_it_bobby.34.zh.sha256.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Dev' ">
     <PostBuildEvent>

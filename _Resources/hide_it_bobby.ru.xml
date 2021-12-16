@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">Доступные функции</string>
   <string name="UnavailableFeaturesHeader">Недоступные функции</string>
   <string name="UnavailableFeaturesDescription">Функции, отображаемые в этом разделе, отключены из-за конфликта с другим модом.</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">Интерфейс главного меню</string>
   <string name="MainMenuChirper">Скрыть Чипера</string>
@@ -41,7 +42,7 @@
   <string name="BulldozerBar">Скрыть кнопки режимов бульдозера</string>
   <string name="Thermometer">Скрыть термометр</string>
   <string name="ModifyToolbarPosition">Изменить положение панели инструментов</string>
-  <string name="CursorInfoHeader">Скрыть всплывающее окно возле курсора, с информацией, при размещении или уничтожении:</string>
+  <string name="CursorInfoHeader">Скрыть всплывающее окно возле курсора, с информацией, при размещении или&amp;#xD;&amp;#xA;уничтожении:</string>
   <string name="NetworksCursorInfo">дороги, линии электропередачи и т. п.</string>
   <string name="BuildingsCursorInfo">здания</string>
   <string name="TreesCursorInfo">деревья</string>
@@ -62,6 +63,7 @@
   <string name="UpdateRuiningButton">Обновить текстуры разрушения возле существующих деревьев и объектов!</string>
   <string name="RuiningUnavailableDescriptionLine1">Вы используете мод BOB с функцией скрытия разрушения.</string>
   <string name="RuiningUnavailableDescriptionLine2">Используйте BOB вместо этого мода для скрытия разруш. возле деревьев и объектов.</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">Цвет грунта и воды</string>
   <string name="GrassFertilityGroundColor">Удалить цвет травы на плодородной почве</string>
@@ -88,7 +90,7 @@
   <string name="BulldozingEffect">Отключить эффект бульдозера</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Отключение эффекта размещения и бульдозера недоступно</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">потому, что у вас есть Subtle Bulldozing, Dragging and More! мод включён.</string>
-  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
   <!-- problems -->
   <string name="ProblemsGroup">Проблемы</string>
   <string name="TerraformNetworkFloodNotification">Скрыть уведомление о наводнении для Terraform Network</string>

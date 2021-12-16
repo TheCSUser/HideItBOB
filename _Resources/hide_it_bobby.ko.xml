@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">사용 가능한 기능</string>
   <string name="UnavailableFeaturesHeader">사용할 수 없는 기능</string>
   <string name="UnavailableFeaturesDescription">여기 표시되는 기능들은 다른 모드와의 충돌로 인해 비활성화된 기능들입니다.</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">메인 메뉴 UI</string>
   <string name="MainMenuChirper">짹짹이 숨기기</string>
@@ -41,6 +42,11 @@
   <string name="BulldozerBar">불도저 바 숨기기</string>
   <string name="Thermometer">온도계 숨기기</string>
   <string name="ModifyToolbarPosition">도구 모음 위치 변경</string>
+  <string name="CursorInfoHeader">Hide cursor info popup when placing or destroying:</string>
+  <string name="NetworksCursorInfo">roads and other networks</string>
+  <string name="BuildingsCursorInfo">buildings</string>
+  <string name="TreesCursorInfo">trees</string>
+  <string name="PropsCursorInfo">props</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">개체 및 소품</string>
   <string name="Seagulls">갈매기 제거</string>
@@ -57,6 +63,7 @@
   <string name="UpdateRuiningButton">나무와 소품에 적용되는 황폐화를 즉시 갱신!</string>
   <string name="RuiningUnavailableDescriptionLine1">현재 BOB로 황폐화 숨기기 기능을 이용하고 있습니다.</string>
   <string name="RuiningUnavailableDescriptionLine2">나무와 소품의 황폐화를 숨기려면 이 모드 대신 BOB 모드를 이용하십시오.</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">지면 및 물 색상</string>
   <string name="GrassFertilityGroundColor">비옥한 땅 색상 제거</string>
@@ -83,7 +90,7 @@
   <string name="BulldozingEffect">철거 효과 비활성화</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">건설 및 철거 효과를 비활성화할 수 없습니다</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">Subtle Bulldozing, Dragging and More! 모드가 켜져 있기 때문입니다.</string>
-  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
   <!-- problems -->
   <string name="ProblemsGroup">문제</string>
   <string name="TerraformNetworkFloodNotification">Terraform Network 사용 시 침수 알림 숨기기</string>

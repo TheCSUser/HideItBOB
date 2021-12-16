@@ -8,7 +8,7 @@
   <!-- features -->
   <string name="AvailableFeaturesHeader">Características disponibles</string>
   <string name="UnavailableFeaturesHeader">Características no disponibles</string>
-  <string name="UnavailableFeaturesDescription">Características visibles en esta sección están deshabilitadas debido a algún conflicto </string>
+  <string name="UnavailableFeaturesDescription">Características visibles en esta sección están deshabilitadas debido a algún conflicto</string>
   <string name="UnavailableFeaturesDescriptionLine2">con otro mod.</string>
   <!-- main menu -->
   <string name="MainMenuGroup">Menú Principal</string>
@@ -42,6 +42,11 @@
   <string name="BulldozerBar">Ocultar barra de demolición</string>
   <string name="Thermometer">Ocultar termómetro</string>
   <string name="ModifyToolbarPosition">Modificar posición de la barra de herramientas</string>
+  <string name="CursorInfoHeader">Ocultar ventana de información del cursor cuando se colocaca o se destruye:</string>
+  <string name="NetworksCursorInfo">carreteras y otras \'redes\'</string>
+  <string name="BuildingsCursorInfo">edificios</string>
+  <string name="TreesCursorInfo">árboles</string>
+  <string name="PropsCursorInfo">props</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">Objetos y decoraciones</string>
   <string name="Seagulls">Eliminar gaviotas</string>
@@ -57,7 +62,7 @@
   <string name="PropRuining">Ocultar terreno arruinado debajo de elementos</string>
   <string name="UpdateRuiningButton">Actualizar terreno arruinado en árboles y decoraciones existentes!</string>
   <string name="RuiningUnavailableDescriptionLine1">Estás usando BOB para ocultar el terreno arruinado.</string>
-  <string name="RuiningUnavailableDescriptionLine2">Por favor utiliza BOB en lugar de este mod para esconder el terreno arruinado </string>
+  <string name="RuiningUnavailableDescriptionLine2">Por favor utiliza BOB en lugar de este mod para esconder el terreno arruinado</string>
   <string name="RuiningUnavailableDescriptionLine3">de árboles y decoraciones.</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">Colores de terreno y agua</string>
@@ -81,4 +86,13 @@
   <string name="VolumeFog">Ocultar volumen de niebla</string>
   <string name="DistanceFog">Ocultar niebla distante</string>
   <string name="EdgeFog">Ocultar niebla de los bordes del mapa</string>
+  <string name="PlacementEffect">Desactivar efecto al colocar</string>
+  <string name="BulldozingEffect">Desactivar efecto al destruir</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Deshabilitar los efectos al colocar y destruir no está disponible</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">porque \"Subtle Bulldozing, Dragging and More!\" está habilitado.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problemas</string>
+  <string name="TerraformNetworkFloodNotification">Ocultar notificación de inundación para la carreteras terraformadas</string>
+  <string name="HideDisconnectedPowerLinesNotification">Ocultar notificación para líneas de alimentación desconectadas</string>
 </resources>

@@ -232,4 +232,31 @@
   <data name="hide_it_bobby_33_ru_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_resources\sha\hide_it_bobby.33.ru.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
+  <data name="hide_it_bobby_34_de_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.de.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_en_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.en.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_es_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.es.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_ja_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.ja.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_ko_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.ko.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_pl_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.pl.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_pt_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.pt.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_ru_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.ru.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="hide_it_bobby_34_zh_sha256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_resources\sha\hide_it_bobby.34.zh.sha256.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
 </root>

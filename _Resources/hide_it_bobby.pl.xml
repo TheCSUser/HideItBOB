@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">Dostępne funkcje</string>
   <string name="UnavailableFeaturesHeader">Niedostępne funkcje</string>
   <string name="UnavailableFeaturesDescription">Funkcje wyświetlone w tej sekcji są niedostępne ze względu na konflikt z inną modyfikacją.</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">Menu główne</string>
   <string name="MainMenuChirper">Ukryj ćwierkacza</string>
@@ -41,6 +42,11 @@
   <string name="BulldozerBar">Ukryj pasek burzenia</string>
   <string name="Thermometer">Ukryj termometr</string>
   <string name="ModifyToolbarPosition">Zmień pozycję paska narzędzi</string>
+  <string name="CursorInfoHeader">Ukryj informacje przy kursorze podczas tworzenia i usuwania:</string>
+  <string name="NetworksCursorInfo">dróg, ścieżek, płotów itp.</string>
+  <string name="BuildingsCursorInfo">budynków</string>
+  <string name="TreesCursorInfo">drzew</string>
+  <string name="PropsCursorInfo">obiektów dekoracyjnych</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">Obiekty</string>
   <string name="Seagulls">Usuń mewy</string>
@@ -57,6 +63,7 @@
   <string name="UpdateRuiningButton">Aktualizuj zmiany terenu pod drzewami i budynkami</string>
   <string name="RuiningUnavailableDescriptionLine1">Używasz obecnie modyfikacji BOB z funkcją ukrywania zmian terenu.</string>
   <string name="RuiningUnavailableDescriptionLine2">Proszę użyj do ukrywania zmian terenu modyfikacji BOB zamiast tej.</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">Kolory ziemi i wody</string>
   <string name="GrassFertilityGroundColor">Wyłącz kolor żyznej ziemi</string>
@@ -79,4 +86,13 @@
   <string name="VolumeFog">Ukryj mgłę objętości</string>
   <string name="DistanceFog">Ukryj mgłę odległości</string>
   <string name="EdgeFog">Ukryj mgłę brzegu</string>
+  <string name="PlacementEffect">Wyłącz efekt budowania</string>
+  <string name="BulldozingEffect">Wyłącz efekt burzenia</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Wyłączenie efektów budowania i burzenia jest niedostępne</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">ponieważ masz włączony mod \"Subtle Bulldozing, Dragging and More!\"</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problemy</string>
+  <string name="TerraformNetworkFloodNotification">Ukryj powiadomienie o zalaniu dla Terraform Network</string>
+  <string name="HideDisconnectedPowerLinesNotification">Ukryj powiadomienie o nie podłączonych liniach zasilania</string>
 </resources>

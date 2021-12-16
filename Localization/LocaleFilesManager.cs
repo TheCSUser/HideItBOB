@@ -62,18 +62,27 @@ namespace com.github.TheCSUser.HideItBobby.Localization
                hide_it_bobby_32_ja_sha256,
                hide_it_bobby_33_pt_sha256,
                hide_it_bobby_33_ru_sha256,
+               hide_it_bobby_34_de_sha256,
+               hide_it_bobby_34_en_sha256,
+               hide_it_bobby_34_es_sha256,
+               hide_it_bobby_34_ja_sha256,
+               hide_it_bobby_34_ko_sha256,
+               hide_it_bobby_34_pl_sha256,
+               hide_it_bobby_34_pt_sha256,
+               hide_it_bobby_34_ru_sha256,
+               hide_it_bobby_34_zh_sha256
             });
         private static readonly Lazy<Dictionary<string, string>> _keyToHash = new Lazy<Dictionary<string, string>>(() => new Dictionary<string, string>
             {
-                { "de", hide_it_bobby_29_de_sha256 },
-                { "en", hide_it_bobby_31_en_sha256 },
-                { "es", hide_it_bobby_29_es_sha256 },
-                { "ja", hide_it_bobby_32_ja_sha256 },
-                { "ko", hide_it_bobby_31_ko_sha256 },
-                { "pl", hide_it_bobby_29_pl_sha256 },
-                { "pt", hide_it_bobby_33_pt_sha256 },
-                { "ru", hide_it_bobby_33_ru_sha256 },
-                { "zh", hide_it_bobby_29_zh_sha256 },
+                { "de", hide_it_bobby_34_de_sha256 },
+                { "en", hide_it_bobby_34_en_sha256 },
+                { "es", hide_it_bobby_34_es_sha256 },
+                { "ja", hide_it_bobby_34_ja_sha256 },
+                { "ko", hide_it_bobby_34_ko_sha256 },
+                { "pl", hide_it_bobby_34_pl_sha256 },
+                { "pt", hide_it_bobby_34_pt_sha256 },
+                { "ru", hide_it_bobby_34_ru_sha256 },
+                { "zh", hide_it_bobby_34_zh_sha256 },
             });
         private static readonly Lazy<ReadOnlyCollection<FileInfo>> _files = new Lazy<ReadOnlyCollection<FileInfo>>(() => new List<FileInfo>
             {

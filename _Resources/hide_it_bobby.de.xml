@@ -8,7 +8,7 @@
   <!-- features -->
   <string name="AvailableFeaturesHeader">Verfügbare Funktionen</string>
   <string name="UnavailableFeaturesHeader">Nicht verfügbare Funktionen</string>
-  <string name="UnavailableFeaturesDescription">In diesem Abschnitt sichtbare Funktionen sind aufgrund eines Konflikts mit einer </string>
+  <string name="UnavailableFeaturesDescription">In diesem Abschnitt sichtbare Funktionen sind aufgrund eines Konflikts mit einer</string>
   <string name="UnavailableFeaturesDescriptionLine2">anderen Mod deaktiviert.</string>
   <!-- main menu -->
   <string name="MainMenuGroup">Hauptmenü-Oberfläche</string>
@@ -42,6 +42,11 @@
   <string name="BulldozerBar">Bulldozerleiste ausblenden</string>
   <string name="Thermometer">Thermometer ausblenden</string>
   <string name="ModifyToolbarPosition">Position der Werkzeugleiste ändern</string>
+  <string name="CursorInfoHeader">Hide cursor info popup when placing or destroying:</string>
+  <string name="NetworksCursorInfo">roads and other networks</string>
+  <string name="BuildingsCursorInfo">buildings</string>
+  <string name="TreesCursorInfo">trees</string>
+  <string name="PropsCursorInfo">props</string>
   <!-- objects and props -->
   <string name="ObjectsAndPropsGroup">Objekte und Requisiten</string>
   <string name="Seagulls">Möwen entfernen</string>
@@ -57,7 +62,7 @@
   <string name="PropRuining">Abgenutzte Oberfläche unter Requisiten ausblenden</string>
   <string name="UpdateRuiningButton">Aktualisiere jetzt die Abnutzung unter bestehenden Bäumen und Requisiten!</string>
   <string name="RuiningUnavailableDescriptionLine1">Du verwendest BOB zum Verstecken der Abnutzung.</string>
-  <string name="RuiningUnavailableDescriptionLine2">Bitte benutze BOB anstelle dieser Mods, um die Abnutzung unter bestehenden </string>
+  <string name="RuiningUnavailableDescriptionLine2">Bitte benutze BOB anstelle dieser Mods, um die Abnutzung unter bestehenden</string>
   <string name="RuiningUnavailableDescriptionLine3">Bäumen und Requisiten zu verstecken.</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">Farben von Boden und Wasser</string>
@@ -81,4 +86,13 @@
   <string name="VolumeFog">Lautstärkenebel ausblenden</string>
   <string name="DistanceFog">Distanznebel ausblenden</string>
   <string name="EdgeFog">Randnebel ausblenden</string>
+  <string name="PlacementEffect">Disable placement effect</string>
+  <string name="BulldozingEffect">Disable bulldozing effect</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Disabling placement and bulldozing effect is unavailable</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">because you have Subtle Bulldozing, Dragging and More! mod enabled.</string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
+  <!-- problems -->
+  <string name="ProblemsGroup">Problems</string>
+  <string name="TerraformNetworkFloodNotification">Hide flood notification for Terraform Network</string>
+  <string name="HideDisconnectedPowerLinesNotification">Hide notification for disconnected power lines</string>
 </resources>

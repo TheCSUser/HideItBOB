@@ -401,5 +401,86 @@ namespace com.github.TheCSUser.HideItBobby.Properties {
                 return ResourceManager.GetString("hide_it_bobby_33_ru_sha256", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to f3712c2e204c67fb3dbc67a231786ff5db3fa061e998534b6f9c6a827f3d90ee.
+        /// </summary>
+        internal static string hide_it_bobby_34_de_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_de_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 25d135e0ed30040ea4d03a082d19d46267256044980ab5a51697bbd3088f4561.
+        /// </summary>
+        internal static string hide_it_bobby_34_en_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_en_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to d8a5473b4bffd0618f1ecdf50e1a8d357e5f7acc02f7b739bf7aedb7e85c9989.
+        /// </summary>
+        internal static string hide_it_bobby_34_es_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_es_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to f0661d460c30cbf448b739696e026955b31dbd04da2684646c262e70fcfad555.
+        /// </summary>
+        internal static string hide_it_bobby_34_ja_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_ja_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4eefc4d898a418c933886cf2f26fd8ef81a519c73b7cd56d27095a712bfd2f5b.
+        /// </summary>
+        internal static string hide_it_bobby_34_ko_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_ko_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0d7959e86138b6d0a0868ad0665453fc6eb0c211988a6b17e4503ef92e983210.
+        /// </summary>
+        internal static string hide_it_bobby_34_pl_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_pl_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to d6f7e786f49983fa2661a69fc5443fa08047e8a7ae9b431bb967bcf15ac9be66.
+        /// </summary>
+        internal static string hide_it_bobby_34_pt_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_pt_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 9073857cf75162412a44796d68bd56669a3dbcb52c7dede636d65c7b866235ea.
+        /// </summary>
+        internal static string hide_it_bobby_34_ru_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_ru_sha256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3f0cf73e56095089ec66d7cafc17336ac86c158eda92d817d7a80bce77da9ba2.
+        /// </summary>
+        internal static string hide_it_bobby_34_zh_sha256 {
+            get {
+                return ResourceManager.GetString("hide_it_bobby_34_zh_sha256", resourceCulture);
+            }
+        }
     }
 }

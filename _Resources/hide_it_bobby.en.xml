@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">Available features</string>
   <string name="UnavailableFeaturesHeader">Unavailable features</string>
   <string name="UnavailableFeaturesDescription">Features visible in this section are disabled due to a conflict with another mod.</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">Main menu UI</string>
   <string name="MainMenuChirper">Hide chirper</string>
@@ -62,6 +63,7 @@
   <string name="UpdateRuiningButton">Update ruining on existing trees and props</string>
   <string name="RuiningUnavailableDescriptionLine1">You are using BOB with hiding of ruining feature.</string>
   <string name="RuiningUnavailableDescriptionLine2">Please use BOB instead of this mod to hide tree and prop ruining.</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">Ground and water colors</string>
   <string name="GrassFertilityGroundColor">Remove grass fertility ground color</string>
@@ -88,7 +90,7 @@
   <string name="BulldozingEffect">Disable bulldozing effect</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">Disabling placement and bulldozing effect is unavailable</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">because you have Subtle Bulldozing, Dragging and More! mod enabled.</string>
-  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
   <!-- problems -->
   <string name="ProblemsGroup">Problems</string>
   <string name="TerraformNetworkFloodNotification">Hide flood notification for Terraform Network</string>

@@ -9,6 +9,7 @@
   <string name="AvailableFeaturesHeader">利用可能な機能</string>
   <string name="UnavailableFeaturesHeader">利用不可の機能</string>
   <string name="UnavailableFeaturesDescription">このセクションで表示される機能は、他のMODと競合して無効になっています</string>
+  <string name="UnavailableFeaturesDescriptionLine2">&#x200B;</string>
   <!-- main menu -->
   <string name="MainMenuGroup">メインメニューのUI</string>
   <string name="MainMenuChirper">チャーパーを非表示</string>
@@ -62,6 +63,7 @@
   <string name="UpdateRuiningButton">既にあるツリーやPropの下に出来る荒れ地を即座に除去する</string>
   <string name="RuiningUnavailableDescriptionLine1">BOBを使用中なら、荒れ地の除去が同じく可能です</string>
   <string name="RuiningUnavailableDescriptionLine2">このMODで無くBOBを使用して、ツリーとPropの荒れ地を非表示にしてください</string>
+  <string name="RuiningUnavailableDescriptionLine3">&#x200B;</string>
   <!-- ground and water colors -->
   <string name="GroundAndWaterColorGroup">地面と水域のカラー</string>
   <string name="GrassFertilityGroundColor">肥沃エリアにある地面色を削除</string>
@@ -88,7 +90,7 @@
   <string name="BulldozingEffect">撤去時のエフェクトを無効化</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine1">設置時と撤去時のエフェクトが無効化できません</string>
   <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine2">Subtle Bulldozing, Dragging and More! MODが有効になっています</string>
-  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3"></string>
+  <string name="DisablePlacementBulldozingEffectUnavailableDescriptionLine3">&#x200B;</string>
   <!-- problems -->
   <string name="ProblemsGroup">通知</string>
   <string name="TerraformNetworkFloodNotification">Terraform Network使用時は浸水の通知を非表示</string>
