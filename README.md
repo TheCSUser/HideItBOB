@@ -10,7 +10,7 @@ This fork was created to be compatible with [BOB, the Tree and Prop Replacer](ht
 - Mbyron26 for the [Simplified Chinese translation](https://github.com/Mbyron26/Hide-it-bobby-Translation)
 - Chamëleon TBN for the German translation
 - adon for the Janapese translation
-- Citadino for the Spanish translation
+- Citadino and Zeldslayer for the Spanish translation
 - vitalii201 for the Russian translation
 - DNSE for the Korean translation
 - Matheus de Carvalho for the Portuguese, Brazilian translation
