@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework;
+using ColossalFramework.UI;
 using com.github.TheCSUser.HideItBobby.Compatibility;
 using com.github.TheCSUser.HideItBobby.Features;
 using com.github.TheCSUser.HideItBobby.Localization;
@@ -42,8 +43,8 @@ namespace com.github.TheCSUser.HideItBobby
                 devTools.AddLabel(DevToolsDescriptionLine2, textColor: RedRYB);
                 devTools.AddSpace(3);
 
-                devTools.AddButton(new LocaleText(DevToolsEnable, ShortName), button => OnEnabled());
-                devTools.AddButton(new LocaleText(DevToolsDisable, ShortName), button => OnDisabled());
+                devTools.AddButton(new LocaleText(DevToolsEnable, ModProperties.ShortName), button => OnEnabled());
+                devTools.AddButton(new LocaleText(DevToolsDisable, ModProperties.ShortName), button => OnDisabled());
                 devTools.AddSpace(6);
                 devTools.AddButton(new LocaleText(DevToolsInitialize, nameof(mainMenuFeatures)), button => mainMenuFeatures.GetLifecycleManager().Initialize());
                 devTools.AddButton(new LocaleText(DevToolsEnable, nameof(mainMenuFeatures)), button => mainMenuFeatures.Enable());
