@@ -2,6 +2,7 @@
 using System;
 using com.github.TheCSUser.Shared.UserInterface.Localization.Components;
 using com.github.TheCSUser.HideItBobby.Localization;
+using ColossalFramework.UI;
 
 namespace com.github.TheCSUser.HideItBobby.UserInterface
 {
@@ -17,7 +18,7 @@ namespace com.github.TheCSUser.HideItBobby.UserInterface
             builder.AddSpace(3);
             return label;
         }
-        public static LCheckBoxComponent AddFeatureCheckbox(this LocalizedUIBuilder builder, LocaleText text, bool value, Action<bool> valueSetter)
+        public static LCheckBoxComponent AddFeatureCheckbox(this LocalizedUIBuilder builder, LocaleText text, bool value, Action<bool> valueSetter, Func<LCheckBoxComponent, IDisposable> overrideStyle = null)
         {
             return builder
                 .AddCheckbox(text, value, (component, newValue) =>
@@ -31,7 +32,7 @@ namespace com.github.TheCSUser.HideItBobby.UserInterface
                         builder.Context.Log.Error($"{nameof(LCheckBoxComponent)}.{nameof(LCheckBoxComponent.OnCheckChanged)} {nameof(valueSetter)} failed", e);
                     }
                 })
-                .ApplyStyle(GrayTextOnUnchecked);
+                .ApplyStyle(overrideStyle ?? GrayTextOnUnchecked);
         }
         public static LCheckBoxComponent AddUnavailableFeatureCheckbox(this LocalizedUIBuilder builder, LocaleText text, bool value, Action<bool> valueSetter)
         {
@@ -47,6 +48,16 @@ namespace com.github.TheCSUser.HideItBobby.UserInterface
                         builder.Context.Log.Error($"{nameof(LCheckBoxComponent)}.{nameof(LCheckBoxComponent.OnCheckChanged)} {nameof(valueSetter)} failed", e);
                     }
                 }, textColor: DarkGray);
+        }
+        public static LocalizedUIBuilder AddSubGroup(this LocalizedUIBuilder builder, LocaleText text)
+        {
+            var cursorInfo = builder.AddGroup(text, textColor: White);
+            var contentPanel = (UIPanel)cursorInfo.Panel.Find("Content");
+            contentPanel.autoLayoutPadding = new UnityEngine.RectOffset(10, 0, 5, 0);
+            contentPanel.backgroundSprite = null;
+            cursorInfo.Panel.autoLayoutPadding = new UnityEngine.RectOffset(0, 0, 0, 0);
+            cursorInfo.Panel.backgroundSprite = null;
+            return cursorInfo.Builder;
         }
     }
 

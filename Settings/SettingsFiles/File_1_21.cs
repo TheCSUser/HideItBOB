@@ -48,6 +48,10 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
 
         #region In game features
         //Decorations
+        private bool _overrideThemeMixer2;
+        [XmlElement("OverrideThemeMixer2")]
+        public bool OverrideThemeMixer2 { get => _overrideThemeMixer2; set => Set(ref _overrideThemeMixer2, value, nameof(OverrideThemeMixer2)); }
+
         private bool _hideCliffDecorations;
         [XmlElement("HideCliffDecorations")]
         public bool HideCliffDecorations { get => _hideCliffDecorations; set => Set(ref _hideCliffDecorations, value, nameof(HideCliffDecorations)); }
@@ -228,6 +232,14 @@ namespace com.github.TheCSUser.HideItBobby.Settings.SettingsFiles
         private bool _hideCityName;
         [XmlElement("HideCityName")]
         public bool HideCityName { get => _hideCityName; set => Set(ref _hideCityName, value, nameof(HideCityName)); }
+
+        private bool _modifyCityNamePosition;
+        [XmlElement("ModifyCityNamePosition")]
+        public bool ModifyCityNamePosition { get => _modifyCityNamePosition; set => Set(ref _modifyCityNamePosition, value, nameof(ModifyCityNamePosition)); }
+
+        private float _cityNamePosition;
+        [XmlElement("CityNamePosition")]
+        public float CityNamePosition { get => _cityNamePosition; set => Set(ref _cityNamePosition, value, nameof(CityNamePosition)); }
 
         private bool _hidePauseOutline;
         [XmlElement("HidePauseOutline")]

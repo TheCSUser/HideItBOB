@@ -43,6 +43,7 @@ namespace com.github.TheCSUser.HideItBobby.Localization
         public static readonly Phrase ChirperButton = Create(nameof(ChirperButton));
         public static readonly Phrase CinematicCameraButton = Create(nameof(CinematicCameraButton));
         public static readonly Phrase CityName = Create(nameof(CityName));
+        public static readonly Phrase ModifyCityNamePosition = Create(nameof(ModifyCityNamePosition));
         public static readonly Phrase DisastersButton = Create(nameof(DisastersButton));
         public static readonly Phrase FreeCameraButton = Create(nameof(FreeCameraButton));
         public static readonly Phrase GearButton = Create(nameof(GearButton));
@@ -70,6 +71,7 @@ namespace com.github.TheCSUser.HideItBobby.Localization
         public static readonly Phrase Wildlife = Create(nameof(Wildlife));
         //Decorations
         public static readonly Phrase DecorationsGroup = Create(nameof(DecorationsGroup));
+        public static readonly Phrase OverrideThemeMixer2 = Create(nameof(OverrideThemeMixer2));
         public static readonly Phrase CliffDecorations = Create(nameof(CliffDecorations));
         public static readonly Phrase FertileDecorations = Create(nameof(FertileDecorations));
         public static readonly Phrase GrassDecorations = Create(nameof(GrassDecorations));

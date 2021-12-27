@@ -1,12 +1,16 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
-using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.HideItBobby.Enums;
 using com.github.TheCSUser.HideItBobby.Features;
 using com.github.TheCSUser.HideItBobby.Localization;
 using com.github.TheCSUser.HideItBobby.Properties;
 using com.github.TheCSUser.HideItBobby.Scripts;
+using com.github.TheCSUser.HideItBobby.Settings.SettingsFiles;
 using com.github.TheCSUser.HideItBobby.UserInterface;
+using com.github.TheCSUser.Shared.Checks;
+using com.github.TheCSUser.Shared.Common;
 using com.github.TheCSUser.Shared.UserInterface;
+using com.github.TheCSUser.Shared.UserInterface.Components;
 using com.github.TheCSUser.Shared.UserInterface.Localization;
 using com.github.TheCSUser.Shared.UserInterface.Localization.Components;
 using System;
@@ -18,6 +22,8 @@ namespace com.github.TheCSUser.HideItBobby
     using static Phrase;
     using static Styles;
 
+    using CurrentSettingsFile = File_1_21;
+
     public sealed partial class Mod
     {
         protected override void BuildSettingsUI(BuilderSelection builders)
@@ -26,11 +32,12 @@ namespace com.github.TheCSUser.HideItBobby
 
             try
             {
-                var naturalDisastersDLCEnabledCheck = Context.Resolve<NaturalDisastersDLCEnabledCheck>();
-                var snowFallDLCEnabledCheck = Context.Resolve<SnowFallDLCEnabledCheck>();
-                var bobModDisabledCheck = Context.Resolve<BOBModDisabledCheck>();
-                var terraformNetworkSubscribedCheck = Context.Resolve<TerraformNetworkSubscribedCheck>();
-                var subtleBulldozingModDisabledCheck = Context.Resolve<SubtleBulldozingModDisabledCheck>();
+                var naturalDisastersDLC = Context.Resolve<DLCCheck>(DLC.NaturalDisasters);
+                var snowFallDLC = Context.Resolve<DLCCheck>(DLC.Snowfall);
+                var bobMod = Context.Resolve<ModCheck>(Mods.BOB);
+                var terraformNetwork = Context.Resolve<AssetCheck>(Assets.TerraformNetwork);
+                var subtleBulldozingMod = Context.Resolve<ModCheck>(Mods.SubtleBulldozing);
+                var themeMixer2 = Context.Resolve<ModCheck>(Mods.ThemeMixer2);
 
                 var mainMenuFeatures = Context.Resolve<MainMenuFeatures>();
                 var inGameFeatures = Context.Resolve<InGameFeatures>();
@@ -173,7 +180,7 @@ namespace com.github.TheCSUser.HideItBobby
                 #region UIElements
                 availableFeatures.AddGroupHeader(InGameUIGroup);
                 availableFeatures.AddFeatureCheckbox(InfoViewsButton, Settings.HideInfoViewsButton, value => Settings.HideInfoViewsButton = value);
-                if (naturalDisastersDLCEnabledCheck.Result)
+                if (naturalDisastersDLC.IsEnabled)
                 {
                     availableFeatures.AddFeatureCheckbox(DisastersButton, Settings.HideDisastersButton, value => Settings.HideDisastersButton = value);
                 }
@@ -193,8 +200,13 @@ namespace com.github.TheCSUser.HideItBobby
                 availableFeatures.AddFeatureCheckbox(ZoomAndUnlockBackground, Settings.HideZoomAndUnlockBackground, value => Settings.HideZoomAndUnlockBackground = value);
                 availableFeatures.AddFeatureCheckbox(Separators, Settings.HideSeparators, value => Settings.HideSeparators = value);
                 availableFeatures.AddFeatureCheckbox(CityName, Settings.HideCityName, value => Settings.HideCityName = value);
+                availableFeatures.AddFeatureCheckbox(ModifyCityNamePosition, Settings.ModifyCityNamePosition, value => Settings.ModifyCityNamePosition = value);
+                availableFeatures
+                    .AddSlider(null, -0.6f, 1.5f, 0.01f, Settings.CityNamePosition, (_, newValue) => Settings.CityNamePosition = newValue, width: 700f)
+                    .ApplyStyle(HideEmptyLabel)
+                    .ApplyStyle(DisableWhenNotModifyingCityNamePosition);
                 availableFeatures.AddFeatureCheckbox(PauseOutlineEffect, Settings.HidePauseOutline, value => Settings.HidePauseOutline = value);
-                if (snowFallDLCEnabledCheck.Result)
+                if (snowFallDLC.IsEnabled)
                 {
                     availableFeatures.AddFeatureCheckbox(Thermometer, Settings.HideThermometer, value => Settings.HideThermometer = value);
                 }
@@ -202,19 +214,12 @@ namespace com.github.TheCSUser.HideItBobby
                 availableFeatures
                     .AddSlider(null, 0.0f, 1.0f, 0.01f, Settings.ToolbarPosition, (_, newValue) => Settings.ToolbarPosition = newValue, width: 700f)
                     .ApplyStyle(HideEmptyLabel)
-                    .ApplyStyle(DisableWhenNotModifyingPosition);
-
-                var cursorInfo = availableFeatures.AddGroup(CursorInfoHeader, textColor: White);
-                var contentPanel = (UIPanel)cursorInfo.Panel.Find("Content");
-                contentPanel.autoLayoutPadding = new UnityEngine.RectOffset(10, 0, 5, 0);
-                contentPanel.backgroundSprite = null;
-                cursorInfo.Panel.autoLayoutPadding = new UnityEngine.RectOffset(0, 0, 0, 0);
-                cursorInfo.Panel.backgroundSprite = null;
-                var cursorInfoBuilder = cursorInfo.Builder;
-                cursorInfoBuilder.AddFeatureCheckbox(NetworksCursorInfo, Settings.HideNetworksCursorInfo, value => Settings.HideNetworksCursorInfo = value);
-                cursorInfoBuilder.AddFeatureCheckbox(BuildingsCursorInfo, Settings.HideBuildingsCursorInfo, value => Settings.HideBuildingsCursorInfo = value);
-                cursorInfoBuilder.AddFeatureCheckbox(TreesCursorInfo, Settings.HideTreesCursorInfo, value => Settings.HideTreesCursorInfo = value);
-                cursorInfoBuilder.AddFeatureCheckbox(PropsCursorInfo, Settings.HidePropsCursorInfo, value => Settings.HidePropsCursorInfo = value);
+                    .ApplyStyle(DisableWhenNotModifyingToolbarPosition);
+                var cursorInfo = availableFeatures.AddSubGroup(CursorInfoHeader);
+                cursorInfo.AddFeatureCheckbox(NetworksCursorInfo, Settings.HideNetworksCursorInfo, value => Settings.HideNetworksCursorInfo = value);
+                cursorInfo.AddFeatureCheckbox(BuildingsCursorInfo, Settings.HideBuildingsCursorInfo, value => Settings.HideBuildingsCursorInfo = value);
+                cursorInfo.AddFeatureCheckbox(TreesCursorInfo, Settings.HideTreesCursorInfo, value => Settings.HideTreesCursorInfo = value);
+                cursorInfo.AddFeatureCheckbox(PropsCursorInfo, Settings.HidePropsCursorInfo, value => Settings.HidePropsCursorInfo = value);
                 #endregion
 
                 #region Objects
@@ -224,14 +229,49 @@ namespace com.github.TheCSUser.HideItBobby
                 #endregion
 
                 #region Decorations
+
+                IDisposable decorationFeatureStyle(LCheckBoxComponent checkBox)
+                {
+                    void handler(ICheckbox c, bool value)
+                    {
+                        if (c is null) return;
+                        if (themeMixer2.IsEnabled && !Settings.OverrideThemeMixer2) c.TextColor = DarkGray;
+                        else c.TextColor = value ? White : DarkGray;
+                    }
+                    checkBox.OnCheckChanged += handler;
+
+                    void handler2(object s, string p)
+                    {
+                        if (!string.IsNullOrEmpty(p) && p != nameof(CurrentSettingsFile.OverrideThemeMixer2)) return;
+                        if (!(s is CurrentSettingsFile settings)) return;
+                        if (themeMixer2.IsEnabled && !settings.OverrideThemeMixer2)
+                        {
+                            checkBox.TextColor = DarkGray;
+                        }
+                        else
+                        {
+                            checkBox.TextColor = checkBox.IsChecked ? White : DarkGray;
+                        }
+                    }
+                    SettingsChanged += handler2;
+
+                    handler(checkBox, checkBox.IsChecked);
+                    return ((Action)(() =>
+                    {
+                        checkBox.OnCheckChanged -= handler;
+                        SettingsChanged -= handler2;
+                    })).AsDisposable();
+                }
+
                 availableFeatures.AddGroupHeader(DecorationsGroup);
-                availableFeatures.AddFeatureCheckbox(CliffDecorations, Settings.HideCliffDecorations, value => Settings.HideCliffDecorations = value);
-                availableFeatures.AddFeatureCheckbox(GrassDecorations, Settings.HideGrassDecorations, value => Settings.HideGrassDecorations = value);
-                availableFeatures.AddFeatureCheckbox(FertileDecorations, Settings.HideFertileDecorations, value => Settings.HideFertileDecorations = value);
+                if (themeMixer2.IsEnabled) availableFeatures.AddFeatureCheckbox(OverrideThemeMixer2, Settings.OverrideThemeMixer2, value => Settings.OverrideThemeMixer2 = value);
+                availableFeatures.AddFeatureCheckbox(CliffDecorations, Settings.HideCliffDecorations, value => Settings.HideCliffDecorations = value, overrideStyle: decorationFeatureStyle);
+                availableFeatures.AddFeatureCheckbox(GrassDecorations, Settings.HideGrassDecorations, value => Settings.HideGrassDecorations = value, overrideStyle: decorationFeatureStyle);
+                availableFeatures.AddFeatureCheckbox(FertileDecorations, Settings.HideFertileDecorations, value => Settings.HideFertileDecorations = value, overrideStyle: decorationFeatureStyle);
                 #endregion
 
                 #region Ruining
-                var ruiningIsCompatible = bobModDisabledCheck.Result;
+                var ruiningIsCompatible = bobMod.IsDisabled;
                 if (ruiningIsCompatible)
                 {
                     availableFeatures.AddGroupHeader(RuiningGroup);
@@ -302,7 +342,7 @@ namespace com.github.TheCSUser.HideItBobby
                 availableFeatures.AddFeatureCheckbox(DistanceFog, Settings.HideDistanceFog, value => Settings.HideDistanceFog = value);
                 availableFeatures.AddFeatureCheckbox(EdgeFog, Settings.HideEdgeFog, value => Settings.HideEdgeFog = value);
 
-                var disablePlacementAndBulldozeEffectsCompatible = subtleBulldozingModDisabledCheck.Result;
+                var disablePlacementAndBulldozeEffectsCompatible = subtleBulldozingMod.IsDisabled;
                 if (disablePlacementAndBulldozeEffectsCompatible)
                 {
                     availableFeatures.AddFeatureCheckbox(PlacementEffect, Settings.DisablePlacementEffect, value => Settings.DisablePlacementEffect = value);
@@ -320,12 +360,11 @@ namespace com.github.TheCSUser.HideItBobby
                     unavailableFeatures.AddUnavailableFeatureCheckbox(PlacementEffect, Settings.DisablePlacementEffect, value => Settings.DisablePlacementEffect = value);
                     unavailableFeatures.AddUnavailableFeatureCheckbox(BulldozingEffect, Settings.DisableBulldozingEffect, value => Settings.DisableBulldozingEffect = value);
                 }
-
                 #endregion
 
                 #region Problems
                 availableFeatures.AddGroupHeader(ProblemsGroup);
-                if (terraformNetworkSubscribedCheck.Result) availableFeatures.AddFeatureCheckbox(TerraformNetworkFloodNotification, Settings.HideTerraformNetworkFloodNotification, value => Settings.HideTerraformNetworkFloodNotification = value);
+                if (terraformNetwork.IsEnabled) availableFeatures.AddFeatureCheckbox(TerraformNetworkFloodNotification, Settings.HideTerraformNetworkFloodNotification, value => Settings.HideTerraformNetworkFloodNotification = value);
                 availableFeatures.AddFeatureCheckbox(HideDisconnectedPowerLinesNotification, Settings.HideDisconnectedPowerLinesNotification, value => Settings.HideDisconnectedPowerLinesNotification = value);
                 #endregion
             }

@@ -78,33 +78,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compatibility\Base\AssetDisabledCheck.cs" />
-    <Compile Include="Compatibility\Base\AssetSubscribedCheck.cs" />
-    <Compile Include="Compatibility\Base\AssetEnabledCheck.cs" />
-    <Compile Include="Compatibility\Base\ModDisabledCheck.cs" />
-    <Compile Include="Compatibility\Base\ModSubscribedCheck.cs" />
-    <Compile Include="Compatibility\Base\ModEnabledCheck.cs" />
-    <Compile Include="Compatibility\Base\RequiredDLCCheck.cs" />
-    <Compile Include="Compatibility\PropLineToolModEnabledCheck.cs" />
-    <Compile Include="Compatibility\SubtleBulldozingModDisabledCheck.cs" />
-    <Compile Include="Compatibility\PropLineToolModSubscribedCheck.cs" />
-    <Compile Include="Compatibility\TreeAnarchyModSubscribedCheck.cs" />
-    <Compile Include="Compatibility\TreeAnarchyModEnabledCheck.cs" />
-    <Compile Include="Compatibility\UIResolutionModEnabledCheck.cs" />
+    <Compile Include="Enums\Assets.cs" />
+    <Compile Include="Enums\DLC.cs" />
+    <Compile Include="Enums\Mods.cs" />
     <Compile Include="Features\Decorations\Base\HideDecorations.cs" />
     <Compile Include="Features\Effects\Base\HideFog.cs" />
-    <Compile Include="Compatibility\TerraformNetworkSubscribedCheck.cs" />
     <Compile Include="Features\Effects\DisableBulldozingEffect.cs" />
     <Compile Include="Features\Effects\DisablePlacementEffect.cs" />
     <Compile Include="Features\Effects\Shared\DispatchPlacementEffectProxy.cs" />
     <Compile Include="Features\Problems\HideDisconnectedPowerLinesNotification.cs" />
     <Compile Include="Features\Problems\HideTerraformNetworkFloodNotification.cs" />
     <Compile Include="Features\UIElements\HidePropsCursorInfo.cs" />
+    <Compile Include="Features\UIElements\HideTimePanelDate.cs" />
     <Compile Include="Features\UIElements\HideTreesCursorInfo.cs" />
     <Compile Include="Features\UIElements\HideBuildingsCursorInfo.cs" />
     <Compile Include="Features\UIElements\HideNetworksCursorInfo.cs" />
+    <Compile Include="Features\UIElements\Base\HideUISprite.cs" />
     <Compile Include="Features\UIElements\Shared\UIViewProxy.cs" />
     <Compile Include="Features\UIElements\Shared\ToolBaseProxy.cs" />
+    <Compile Include="Features\UIElements\CityNamePosition.cs" />
     <Compile Include="Mod.Migrations.cs" />
     <Compile Include="Properties\ResourcesSHA1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -116,12 +108,8 @@
     <Compile Include="Scripts\Containers\IFeaturesContainer.cs" />
     <Compile Include="Scripts\InGameFeatures.cs" />
     <Compile Include="Scripts\MainMenuFeatures.cs" />
-    <Compile Include="Compatibility\Base\CompatibilityCheckBase.cs" />
-    <Compile Include="Compatibility\ICheck.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPosition.cs" />
     <Compile Include="Features\UIElements\Base\ModifyUIComponentPositionByName.cs" />
-    <Compile Include="Compatibility\SnowFallDLCEnabledCheck.cs" />
-    <Compile Include="Compatibility\NaturalDisastersDLCEnabledCheck.cs" />
     <Compile Include="Features\Fixes\LowerInfoPanelZOrder.cs" />
     <Compile Include="Features\UIElements\HideThermometer.cs" />
     <Compile Include="Features\UIElements\ToolbarPosition.cs" />
@@ -182,7 +170,6 @@
     <Compile Include="Features\Objects\HideSeagulls.cs" />
     <Compile Include="Features\Ruining\HidePropRuining.cs" />
     <Compile Include="Features\Ruining\HideTreeRuining.cs" />
-    <Compile Include="Compatibility\BOBModDisabledCheck.cs" />
     <Compile Include="Features\UIElements\Base\HideUIComponent.cs" />
     <Compile Include="Features\UIElements\Base\HideUIComponentByName.cs" />
     <Compile Include="Features\UIElements\HideCinematicCameraButton.cs" />

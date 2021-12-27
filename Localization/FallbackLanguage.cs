@@ -49,6 +49,7 @@ namespace com.github.TheCSUser.HideItBobby.Localization
             { ChirperButton,"Hide chirper button" },
             { CinematicCameraButton,"Hide cinematic camera button" },
             { CityName,"Hide city name" },
+            { ModifyCityNamePosition,"Modify city name position" },
             { DisastersButton,"Hide disasters button" },
             { FreeCameraButton,"Hide free camera button" },
             { GearButton,"Hide gear button" },
@@ -76,6 +77,7 @@ namespace com.github.TheCSUser.HideItBobby.Localization
             { Wildlife,"Remove wildlife" },
             //decorations
             { DecorationsGroup,"Sprites" },
+            { OverrideThemeMixer2,"Override Theme Mixer 2 settings" },
             { CliffDecorations,"Hide cliff decorations" },
             { FertileDecorations,"Hide fertile decorations" },
             { GrassDecorations,"Hide grass decorations" },

@@ -1,4 +1,5 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Ruining
@@ -7,17 +8,17 @@ namespace com.github.TheCSUser.HideItBobby.Features.Ruining
     {
         public override FeatureKey Key => FeatureKey.HidePropRuining;
 
-        private readonly ICheck _compatibilityCheck;
-        public override bool IsAvailable => _compatibilityCheck.Result;
+        private readonly ModCheck _check;
+        public override bool IsAvailable => _check.IsDisabled;
 
         public HidePropRuining(IModContext context) : base(context)
         {
-            _compatibilityCheck = context.Resolve<BOBModDisabledCheck>();
+            _check = context.Resolve<ModCheck>(Mods.BOB);
         }
 
         protected override bool OnTerminate()
         {
-            _compatibilityCheck.Reset();
+            _check.Reset();
             return base.OnTerminate();
         }
 

@@ -1,7 +1,9 @@
 ﻿using ColossalFramework.UI;
-using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.HideItBobby.Enums;
 using com.github.TheCSUser.HideItBobby.Features.UIElements.Shared;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
+using System;
 using UnityEngine;
 
 namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
@@ -48,10 +50,23 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
 
         public ModifyUIComponentPosition(IModContext context) : base(context)
         {
-            _gameObject = new Cached<GameObject>(GetGameObject);
-            _uiResolutionModCheck = context.Resolve<UIResolutionModEnabledCheck>();
+            _gameObject = new Cached<GameObject>(GetGameObjectPrivate, int.MaxValue);
+            _check = context.Resolve<ModCheck>(Mods.UIResolution);
         }
 
+        private GameObject GetGameObjectPrivate()
+        {
+            try
+            {
+                return GetGameObject();
+            }
+            catch (Exception e)
+            {
+                IncreaseErrorCount();
+                Log.Error($"{GetType().Name}.{nameof(GetGameObject)} failed", e);
+                return null;
+            }
+        }
         protected abstract GameObject GetGameObject();
         protected abstract Vector3? GetDesiredComponentPosition();
 
@@ -85,11 +100,11 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
 
         #region UIResolution mod compatibility
         private bool _wasEnabled;
-        private readonly UIResolutionModEnabledCheck _uiResolutionModCheck;
+        private readonly ModCheck _check;
 
         protected override bool OnInitialize()
         {
-            if (_uiResolutionModCheck.Result)
+            if (_check.IsEnabled)
             {
                 Patcher.Patch(UIViewProxy.Patches);
                 UIViewProxy.BeforeResolutionChanged += BeforeResolutionChanged;
@@ -99,7 +114,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
         }
         protected override bool OnTerminate()
         {
-            if (_uiResolutionModCheck.Result)
+            if (_check.IsEnabled)
             {
                 UIViewProxy.BeforeResolutionChanged -= BeforeResolutionChanged;
                 UIViewProxy.AfterResolutionChanged -= AfterResolutionChanged;

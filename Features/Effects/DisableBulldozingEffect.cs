@@ -1,5 +1,6 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
 using com.github.TheCSUser.HideItBobby.Features.Effects.Shared;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.Effects
@@ -8,14 +9,14 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects
     {
         public override FeatureKey Key => FeatureKey.DisableBulldozingEffect;
 
-        private readonly ICheck _compatibilityCheck;
-        public override bool IsAvailable => _compatibilityCheck.Result;
+        private readonly IPluginCheck _check;
+        public override bool IsAvailable => _check.IsDisabled;
 
         private readonly DispatchPlacementEffectProxy _dispatchPlacementEffectProxy;
 
         public DisableBulldozingEffect(IModContext context) : base(context)
         {
-            _compatibilityCheck = context.Resolve<SubtleBulldozingModDisabledCheck>();
+            _check = context.Resolve<ModCheck>(Mods.SubtleBulldozing);
             _dispatchPlacementEffectProxy = context.Resolve<DispatchPlacementEffectProxy>();
         }
 

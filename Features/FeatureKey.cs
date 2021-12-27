@@ -53,6 +53,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
         public static readonly FeatureKey HideChirperButton = Create(nameof(HideChirperButton));
         public static readonly FeatureKey HideCinematicCameraButton = Create(nameof(HideCinematicCameraButton));
         public static readonly FeatureKey HideCityName = Create(nameof(HideCityName));
+        public static readonly FeatureKey CityNamePosition = Create(nameof(CityNamePosition));
         public static readonly FeatureKey HideDisastersButton = Create(nameof(HideDisastersButton));
         public static readonly FeatureKey HideFreeCameraButton = Create(nameof(HideFreeCameraButton));
         public static readonly FeatureKey HideGearButton = Create(nameof(HideGearButton));

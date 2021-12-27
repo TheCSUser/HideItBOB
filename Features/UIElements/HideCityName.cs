@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
 using com.github.TheCSUser.Shared.Common;
+using System;
 using UnityEngine;
 
 namespace com.github.TheCSUser.HideItBobby.Features.UIElements
@@ -13,16 +14,34 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
 
         private readonly Cached<UILabel> ComponentCache;
 
+        public override bool IsError
+        {
+            get
+            {
+                return base.IsError;
+            }
+            set
+            {
+                if (!value) ComponentCache.Invalidate();
+                base.IsError = value;
+            }
+        }
+
         public HideCityName(IModContext context) : base(context)
         {
-            ComponentCache = new Cached<UILabel>(() =>
+            ComponentCache = new Cached<UILabel>(GetComponent, int.MaxValue);
+        }
+
+        private UILabel GetComponent()
+        {
+            try
             {
                 var infoPanel = GameObject.Find("InfoPanel")?.GetComponent<UIComponent>();
                 if (infoPanel is null)
                 {
                     IncreaseErrorCount();
 #if DEV || PREVIEW
-                    Log.Warning($"{GetType().Name}.{nameof(ComponentCache)} could not find InfoPanel, current error count is {ErrorCount}.");
+                    Log.Warning($"{GetType().Name}.{nameof(GetComponent)} could not find InfoPanel, current error count is {ErrorCount}.");
 #endif
                     return null;
                 }
@@ -31,18 +50,22 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
                 {
                     IncreaseErrorCount();
 #if DEV || PREVIEW
-                    Log.Warning($"{GetType().Name}.{nameof(ComponentCache)} could not find Name, current error count is {ErrorCount}.");
+                    Log.Warning($"{GetType().Name}.{nameof(GetComponent)} could not find Name, current error count is {ErrorCount}.");
 #endif
                 }
                 return name;
-            }, int.MaxValue);
+            }
+            catch (Exception e)
+            {
+                IncreaseErrorCount();
+                Log.Error($"{nameof(HideCityName)}.{nameof(GetComponent)} failed", e);
+                return null;
+            }
         }
-
-        private UILabel GetComponent() => ComponentCache.Value;
 
         protected override bool OnEnable()
         {
-            var cityNameLabel = GetComponent();
+            var cityNameLabel = ComponentCache.Value;
             if (cityNameLabel is null) return false;
             if (string.IsNullOrEmpty(cityNameLabel.text)) return true;
 
@@ -53,7 +76,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         }
         protected override bool OnDisable()
         {
-            var cityNameLabel = GetComponent();
+            var cityNameLabel = ComponentCache.Value;
             if (cityNameLabel is null) return false;
             if (!string.IsNullOrEmpty(cityNameLabel.text)) return true;
 

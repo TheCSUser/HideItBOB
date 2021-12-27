@@ -139,6 +139,8 @@ namespace com.github.TheCSUser.HideItBobby.Settings
             HideZoomAndUnlockBackground = false,
             HideSeparators = false,
             HideCityName = false,
+            ModifyCityNamePosition = false,
+            CityNamePosition = 0f,
             HidePauseOutline = false,
             HideBulldozerBar = false,
             HideThermometer = false,

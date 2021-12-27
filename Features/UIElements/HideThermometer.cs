@@ -1,5 +1,6 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
 using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 using UnityEngine;
 
@@ -9,18 +10,17 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
     {
         public override FeatureKey Key => FeatureKey.HideThermometer;
 
-        private readonly SnowFallDLCEnabledCheck _snowFallDLCEnabled;
-        public override bool IsAvailable => _snowFallDLCEnabled.Result;
+        private readonly DLCCheck _snowfallDLC;
+        public override bool IsAvailable => _snowfallDLC.IsEnabled;
 
         public HideThermometer(IModContext context) : base(context, "Heat'o'meter")
         {
             _treeAnarchyPanelObject = new Cached<GameObject>(GetTreeAnarchyPanelObject);
-            _snowFallDLCEnabled = context.Resolve<SnowFallDLCEnabledCheck>();
-            _treeAnarchyModCheck = context.Resolve<TreeAnarchyModEnabledCheck>();
+            _snowfallDLC = context.Resolve<DLCCheck>(DLC.Snowfall);
+            _treeAnarchyMod = context.Resolve<ModCheck>(Mods.TreeAnarchy);
         }
         protected override bool OnTerminate()
         {
-            _snowFallDLCEnabled.Reset();
             return base.OnTerminate();
         }
 
@@ -36,7 +36,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         }
 
         #region TreeAnarchy mod compatibility
-        private readonly TreeAnarchyModEnabledCheck _treeAnarchyModCheck;
+        private readonly ModCheck _treeAnarchyMod;
 
         private readonly Vector3 _treeAnarchyPanelPositionOnEnabled = new Vector3(-0.245f, 0.1f, 0f);
         private readonly Vector3 _treeAnarchyPanelPositionOnDisabled = new Vector3(-0.245f, 0.0f, 0f);
@@ -46,7 +46,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         protected override bool OnUpdate()
         {
             var result = base.OnUpdate();
-            if (_treeAnarchyModCheck.Result)
+            if (_treeAnarchyMod.IsEnabled)
             {
                 var treeAnarchyPanel = _treeAnarchyPanelObject.Value;
                 if (!(treeAnarchyPanel is null) && treeAnarchyPanel.transform.localPosition != _treeAnarchyPanelPositionOnEnabled)
@@ -58,7 +58,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
         }
         protected override bool OnDisable()
         {
-            if (_treeAnarchyModCheck.Result)
+            if (_treeAnarchyMod.IsEnabled)
             {
                 var treeAnarchyPanel = _treeAnarchyPanelObject.Value;
                 if (!(treeAnarchyPanel is null))

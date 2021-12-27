@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
-using com.github.TheCSUser.HideItBobby.Compatibility;
+using com.github.TheCSUser.HideItBobby.Enums;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Collections.Generic;
@@ -205,19 +206,19 @@ namespace com.github.TheCSUser.HideItBobby.Features.Effects.Shared
         {
             private readonly DispatchPlacementEffectProxy _parent;
 
-            private readonly PropLineToolModSubscribedCheck _propLineToolModSubscribedCheck;
+            private readonly ModCheck _check;
 
             public DispatchPlacementEffectProxyLifecycleManager(DispatchPlacementEffectProxy parent) : base(parent.Context)
             {
                 _parent = parent;
-                _propLineToolModSubscribedCheck = Context.Resolve<PropLineToolModSubscribedCheck>();
+                _check = Context.Resolve<ModCheck>(Mods.PropLineTool);
             }
 
             protected override bool OnInitialize()
             {
-                if (_propLineToolModSubscribedCheck.Result)
+                if (_check.IsSubscribed)
                 {
-                    var propLineTool = _propLineToolModSubscribedCheck
+                    var propLineTool = _check
                         .ModInstance.GetType()
                         .Assembly.GetTypes()
                         .FirstOrDefault(t => t.IsSubclassOf(typeof(ToolBase)) && t.Name == "PropLineTool");

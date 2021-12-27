@@ -37,7 +37,7 @@ namespace com.github.TheCSUser.HideItBobby.UserInterface
             return ((Action)(() => checkBox.OnCheckChanged -= handler)).AsDisposable();
         };
 
-        public static readonly Func<LSliderComponent, IDisposable> DisableWhenNotModifyingPosition = (LSliderComponent slider) =>
+        public static readonly Func<LSliderComponent, IDisposable> DisableWhenNotModifyingToolbarPosition = (LSliderComponent slider) =>
         {
             void handler(object s, string p)
             {
@@ -46,6 +46,21 @@ namespace com.github.TheCSUser.HideItBobby.UserInterface
                 slider.TextColor = settings.ModifyToolbarPosition ? White : DarkGray;
                 slider.Color = settings.ModifyToolbarPosition ? White : DarkGray;
                 slider.IsEnabled = settings.ModifyToolbarPosition;
+            }
+            slider.Context.Mod.SettingsChanged += handler;
+            handler(((Mod)slider.Context.Mod).Settings, string.Empty);
+            return ((Action)(() => slider.Context.Mod.SettingsChanged -= handler)).AsDisposable();
+        };
+
+        public static readonly Func<LSliderComponent, IDisposable> DisableWhenNotModifyingCityNamePosition = (LSliderComponent slider) =>
+        {
+            void handler(object s, string p)
+            {
+                if (!string.IsNullOrEmpty(p) && p != nameof(CurrentSettingsFile.ModifyCityNamePosition)) return;
+                if (!(s is CurrentSettingsFile settings)) return;
+                slider.TextColor = settings.ModifyCityNamePosition ? White : DarkGray;
+                slider.Color = settings.ModifyCityNamePosition ? White : DarkGray;
+                slider.IsEnabled = settings.ModifyCityNamePosition;
             }
             slider.Context.Mod.SettingsChanged += handler;
             handler(((Mod)slider.Context.Mod).Settings, string.Empty);

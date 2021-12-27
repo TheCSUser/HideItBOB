@@ -1,5 +1,6 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
 using com.github.TheCSUser.HideItBobby.Features.UIElements.Base;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 
 namespace com.github.TheCSUser.HideItBobby.Features.UIElements
@@ -8,18 +9,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
     {
         public override FeatureKey Key => FeatureKey.HideDisastersButton;
 
-        private readonly ICheck _compatibilityCheck;
-        public override bool IsAvailable => _compatibilityCheck.Result;
+        private readonly DLCCheck _check;
+        public override bool IsAvailable => _check.IsEnabled;
 
         public HideDisastersButton(IModContext context) : base(context, "WarningPhasePanel")
         {
-            _compatibilityCheck = context.Resolve<NaturalDisastersDLCEnabledCheck>();
-        }
-
-        protected override bool OnTerminate()
-        {
-            _compatibilityCheck.Reset();
-            return base.OnTerminate();
+            _check = context.Resolve<DLCCheck>(DLC.NaturalDisasters);
         }
     }
 }

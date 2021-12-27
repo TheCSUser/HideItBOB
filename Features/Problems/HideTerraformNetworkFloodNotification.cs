@@ -1,4 +1,5 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -11,12 +12,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.Problems
     {
         public override FeatureKey Key => FeatureKey.HideTerraformNetworkFloodNotification;
 
-        private readonly ICheck _compatibilityCheck;
-        public override bool IsAvailable => _compatibilityCheck.Result;
+        private readonly AssetCheck _check;
+        public override bool IsAvailable => _check.IsEnabled;
 
         public HideTerraformNetworkFloodNotification(IModContext context) : base(context)
         {
-            _compatibilityCheck = context.Resolve<TerraformNetworkSubscribedCheck>();
+            _check = context.Resolve<AssetCheck>(Assets.TerraformNetwork);
         }
 
         protected override bool OnInitialize()
@@ -26,7 +27,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.Problems
         }
         protected override bool OnTerminate()
         {
-            _compatibilityCheck.Reset();
+            _check.Reset();
             Patcher.Unpatch(TerraformNetworkRoadBaseAIProxy.Patch);
             return true;
         }

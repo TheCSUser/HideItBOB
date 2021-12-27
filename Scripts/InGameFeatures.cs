@@ -1,4 +1,5 @@
-﻿using com.github.TheCSUser.HideItBobby.Features.Decorations;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
+using com.github.TheCSUser.HideItBobby.Features.Decorations;
 using com.github.TheCSUser.HideItBobby.Features.Effects;
 using com.github.TheCSUser.HideItBobby.Features.Effects.Shared;
 using com.github.TheCSUser.HideItBobby.Features.Fixes;
@@ -8,6 +9,7 @@ using com.github.TheCSUser.HideItBobby.Features.Problems;
 using com.github.TheCSUser.HideItBobby.Features.Ruining;
 using com.github.TheCSUser.HideItBobby.Features.UIElements;
 using com.github.TheCSUser.HideItBobby.Properties;
+using com.github.TheCSUser.Shared.Checks;
 using System;
 
 namespace com.github.TheCSUser.HideItBobby.Scripts
@@ -19,11 +21,13 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
         {
             try
             {
+                var themeMixer2 = mod.Context.Resolve<ModCheck>(Mods.ThemeMixer2);
+
                 return new FeaturesContainer(mod.Context)
                 //Decorations
-                .Register(new HideCliffDecorations(mod.Context), () => mod.Settings.HideCliffDecorations)
-                .Register(new HideFertileDecorations(mod.Context), () => mod.Settings.HideFertileDecorations)
-                .Register(new HideGrassDecorations(mod.Context), () => mod.Settings.HideGrassDecorations)
+                .Register(new HideCliffDecorations(mod.Context), () => mod.Settings.HideCliffDecorations && (themeMixer2.IsDisabled || mod.Settings.OverrideThemeMixer2))
+                .Register(new HideFertileDecorations(mod.Context), () => mod.Settings.HideFertileDecorations && (themeMixer2.IsDisabled || mod.Settings.OverrideThemeMixer2))
+                .Register(new HideGrassDecorations(mod.Context), () => mod.Settings.HideGrassDecorations && (themeMixer2.IsDisabled || mod.Settings.OverrideThemeMixer2))
                 //Effects
                 .Register(new HideOreAreaEffect(mod.Context), () => mod.Settings.HideOreArea)
                 .Register(new HideOilAreaEffect(mod.Context), () => mod.Settings.HideOilArea)
@@ -58,6 +62,7 @@ namespace com.github.TheCSUser.HideItBobby.Scripts
                 .Register(new HideChirperButton(mod.Context), () => mod.Settings.HideChirperButton)
                 .Register(new HideCinematicCameraButton(mod.Context), () => mod.Settings.HideCinematicCameraButton)
                 .Register(new HideCityName(mod.Context), () => mod.Settings.HideCityName)
+                .Register(new CityNamePosition(mod.Context), () => mod.Settings.ModifyCityNamePosition)
                 .Register(new HideDisastersButton(mod.Context), () => mod.Settings.HideDisastersButton)
                 .Register(new HideFreeCameraButton(mod.Context), () => mod.Settings.HideFreeCameraButton)
                 .Register(new HideGearButton(mod.Context), () => mod.Settings.HideGearButton)

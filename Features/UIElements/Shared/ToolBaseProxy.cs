@@ -1,5 +1,5 @@
-﻿using com.github.TheCSUser.HideItBobby.Compatibility;
-using com.github.TheCSUser.HideItBobby.Compatibility.Base;
+﻿using com.github.TheCSUser.HideItBobby.Enums;
+using com.github.TheCSUser.Shared.Checks;
 using com.github.TheCSUser.Shared.Common;
 using System;
 using System.Collections.Generic;
@@ -34,13 +34,11 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
             }
         }
 
-        private static IModCheck _propLineToolModSubscribedCheck = ModCheck.NotCompatible;
-        private static IModCheck _propLineToolModEnabledCheck = ModCheck.NotCompatible;
+        private static IPluginCheck _propLineToolMod = PluginCheck.NotSubscribed;
 
         public ToolBaseProxy(IModContext context) : base(context)
         {
-            _propLineToolModSubscribedCheck = context.Resolve<PropLineToolModSubscribedCheck>();
-            _propLineToolModEnabledCheck = context.Resolve<PropLineToolModEnabledCheck>();
+            _propLineToolMod = context.Resolve<ModCheck>(Mods.PropLineTool);
             _context = context;
         }
 
@@ -79,7 +77,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
                         if (m_hoverInstance.Tree != 0U) return !_disableTreeToolCursorInfo;
                         return true;
                     case "PropLineTool":
-                        if (!_propLineToolModEnabledCheck.Result) return true;
+                        if (_propLineToolMod.IsDisabled) return true;
                         switch (GetPropLineToolObjectMode(__instance))
                         {
                             case 1:
@@ -96,7 +94,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements
             catch (Exception e)
             {
                 Log.Error($"{nameof(ToolBaseProxy)}.{nameof(ShowToolInfoPrefix)} failed", e);
-                return false;
+                return true;
             }
         }
 

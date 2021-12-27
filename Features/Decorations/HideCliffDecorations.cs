@@ -6,20 +6,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.Decorations
     {
         public override FeatureKey Key => FeatureKey.HideCliffDecorations;
 
-        public HideCliffDecorations(IModContext context) : base(context) { }
-
-        protected override bool OnUpdate()
+        protected override bool PropertyValue
         {
-            var properties = TerrainProperties;
-            if (properties is null)
-            {
-#if DEV
-                Log.Info($"{GetType().Name}.{nameof(OnUpdate)} {nameof(TerrainProperties)} is null");
-#endif
-                return false;
-            }
-            properties.m_useCliffDecorations = !IsEnabled;
-            return true;
+            get => TerrainProperties.m_useCliffDecorations;
+            set => TerrainProperties.m_useCliffDecorations = value;
         }
+
+        public HideCliffDecorations(IModContext context) : base(context) { }
     }
 }

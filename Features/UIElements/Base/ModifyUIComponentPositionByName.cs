@@ -14,7 +14,7 @@ namespace com.github.TheCSUser.HideItBobby.Features.UIElements.Base
 
         protected override GameObject GetGameObject()
         {
-            var component = UnityEngine.GameObject.Find(ComponentName);
+            var component = GameObject.Find(ComponentName);
             if (component is null)
             {
                 IncreaseErrorCount();

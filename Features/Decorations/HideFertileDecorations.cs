@@ -6,20 +6,12 @@ namespace com.github.TheCSUser.HideItBobby.Features.Decorations
     {
         public override FeatureKey Key => FeatureKey.HideFertileDecorations;
 
-        public HideFertileDecorations(IModContext context) : base(context) { }
-
-        protected override bool OnUpdate()
+        protected override bool PropertyValue
         {
-            var properties = TerrainProperties;
-            if (properties is null)
-            {
-#if DEV
-                Log.Info($"{GetType().Name}.{nameof(OnUpdate)} {nameof(TerrainProperties)} is null");
-#endif
-                return false;
-            }
-            properties.m_useFertileDecorations = !IsEnabled;
-            return true;
+            get => TerrainProperties.m_useFertileDecorations;
+            set => TerrainProperties.m_useFertileDecorations = value;
         }
+
+        public HideFertileDecorations(IModContext context) : base(context) { }
     }
 }

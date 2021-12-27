@@ -28,7 +28,7 @@ namespace com.github.TheCSUser.HideItBobby.Features
 #endif
         private int _errorCount;
         public int ErrorCount => _errorCount;
-        public bool IsError
+        public virtual bool IsError
         {
             get
             {
